@@ -1,10 +1,17 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Inicio from "./pages/Inicio";
+import NoEncontrado from "./pages/NoEncontrado";
 
 export default function App() {
-  return <h1>Portal de Servicio Airkon</h1>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Inicio />} />
+          <Route path="*" element={<NoEncontrado />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
-

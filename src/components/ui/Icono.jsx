@@ -1,8 +1,4 @@
-/**
- * Iconos de línea (1.75 px) usados en todo el sitio.
- * Uso: <Icono nombre="telefono" tamano={20} />
- * Son decorativos (aria-hidden): el texto junto al icono da el significado.
- */
+
 const trazos = {
   copo: <path d="M2 12h20M12 2v20M20 16l-4-4 4-4M4 8l4 4-4 4M16 4l-4 4-4-4M8 20l4-4 4 4" />,
   aire: <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2" />,

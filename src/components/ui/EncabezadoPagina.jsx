@@ -1,6 +1,5 @@
 import styles from "./EncabezadoPagina.module.css";
 
-/** Banda gris con el h1 de cada página interior. `children` va a la derecha (p. ej. un botón). */
 export default function EncabezadoPagina({ titulo, descripcion, children }) {
   return (
     <section className={styles.banda} aria-labelledby="titulo-pagina">

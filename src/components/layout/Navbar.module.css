@@ -1,0 +1,114 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.barra {
+  height: var(--alto-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hamburguesa {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radio-control);
+  border: 1.5px solid var(--gris-borde);
+  background: var(--blanco);
+  color: var(--azul-marino);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.hamburguesa:hover {
+  background: var(--gris-claro);
+}
+
+.nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--gris-borde);
+  box-shadow: 0 12px 24px rgba(11, 42, 79, 0.12);
+}
+.nav.abierto {
+  display: block;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  padding: 0 20px;
+  font: 600 1.0625rem/1 var(--fuente-texto);
+  color: var(--gris-oscuro);
+  border-bottom: 1px solid var(--gris-linea);
+}
+.nav a:hover {
+  background: var(--gris-claro);
+}
+.nav a[aria-current="page"] {
+  color: var(--azul-marino);
+  background: var(--gris-claro);
+  box-shadow: inset 4px 0 0 var(--amarillo);
+}
+.nav a:focus-visible {
+  outline-offset: -3px;
+}
+
+.flechaMovil {
+  color: var(--gris-medio);
+}
+
+@media (min-width: 1024px) {
+  .hamburguesa {
+    display: none;
+  }
+
+  .nav,
+  .nav.abierto {
+    display: block;
+    position: static;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .nav ul {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav a {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 0.9375rem;
+    border-bottom: 3px solid transparent;
+    border-radius: 8px 8px 0 0;
+  }
+  .nav a[aria-current="page"] {
+    background: transparent;
+    box-shadow: none;
+    border-bottom-color: var(--amarillo);
+  }
+  .nav a:hover {
+    color: var(--azul-marino);
+  }
+  .nav a:focus-visible {
+    outline-offset: 3px;
+  }
+
+  .flechaMovil {
+    display: none;
+  }
+}

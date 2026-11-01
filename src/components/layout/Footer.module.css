@@ -1,0 +1,124 @@
+.footer {
+  background: var(--azul-noche);
+  color: #c9d6e8;
+  font-size: 0.9375rem;
+}
+
+.columnas {
+  padding-block: 48px 32px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+
+.marca {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.marca p {
+  max-width: 300px;
+}
+
+.redes {
+  display: flex;
+  gap: 12px;
+}
+.redes a {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radio-control);
+  border: 1px solid #2b4568;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blanco);
+}
+.redes a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.titulo {
+  font: 700 0.9375rem/1.2 var(--fuente-titulos);
+  color: var(--blanco);
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lista a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+}
+.lista a:hover,
+.contacto a:hover {
+  color: var(--blanco);
+  text-decoration: underline;
+}
+
+.contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.contacto li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+.contacto :global(.icono) {
+  color: var(--amarillo);
+}
+.contacto a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+}
+.contacto address {
+  font-style: normal;
+}
+
+.compacto {
+  padding-block: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.legal {
+  border-top: 1px solid #1e3858;
+}
+.legal p {
+  padding-block: 20px;
+  font-size: 0.8125rem;
+  color: #afc0d8;
+}
+
+@media (min-width: 768px) {
+  .columnas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .compacto {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .compacto .contacto {
+    flex-direction: row;
+    gap: 28px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .columnas {
+    padding-block: 64px 32px;
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+    gap: 48px;
+  }
+}

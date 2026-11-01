@@ -4,7 +4,6 @@ import styles from "./EstadoBadge.module.css";
 
 const iconoPorEstado = { pendiente: "reloj", proceso: "proceso", completada: "ok" };
 
-/** Etiqueta de estado: siempre combina color + icono + texto (no depende solo del color). */
 export default function EstadoBadge({ estado }) {
   return (
     <span className={`${styles.badge} ${styles[estado]}`}>

@@ -1,0 +1,122 @@
+.envoltura {
+  padding-block: 40px 64px;
+  display: flex;
+  justify-content: center;
+}
+
+.tarjeta {
+  width: 100%;
+  max-width: 640px;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.icono {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.exito {
+  background: var(--completada-fondo);
+  color: var(--completada-texto);
+}
+.neutro {
+  background: var(--azul-claro);
+  color: var(--azul-marino);
+}
+
+.texto {
+  font-size: 1.0625rem;
+  color: var(--gris-medio);
+  max-width: 480px;
+}
+
+.folio {
+  width: 100%;
+  margin-top: 8px;
+  padding: 18px;
+  border: 2px dashed var(--azul-marino);
+  border-radius: 12px;
+  background: var(--azul-claro);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.folio span {
+  font: 700 0.8125rem/1 var(--fuente-texto);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gris-medio);
+}
+.folio strong {
+  font: 800 1.75rem/1.1 var(--fuente-titulos);
+  color: var(--azul-marino);
+  letter-spacing: 0.02em;
+}
+
+.datos {
+  width: 100%;
+  margin: 4px 0 0;
+  text-align: left;
+}
+.fila {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gris-linea);
+  font-size: 0.9375rem;
+}
+.fila:last-child {
+  border-bottom: 0;
+}
+.fila dt {
+  color: var(--gris-medio);
+}
+.fila dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.nota {
+  font-size: 0.875rem;
+  color: var(--gris-medio);
+}
+
+.botones {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .envoltura {
+    padding-block: 64px 88px;
+  }
+  .tarjeta {
+    padding: 48px;
+  }
+  .fila {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .fila dd {
+    text-align: right;
+  }
+  .botones {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
