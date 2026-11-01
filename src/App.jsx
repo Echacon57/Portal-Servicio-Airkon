@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SolicitudesProvider } from "./context/SolicitudesContext";
 import Layout from "./components/layout/Layout";
 import Inicio from "./pages/Inicio";
 import NoEncontrado from "./pages/NoEncontrado";
