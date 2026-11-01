@@ -1,0 +1,49 @@
+/*
+ * Tokens del sistema de diseño (tomados de la Guía de estilos del bosquejo).
+ * Cambiar un color aquí lo cambia en todo el sitio.
+ */
+:root {
+  /* Paleta */
+  --azul-marino: #0b2a4f;   /* primario: títulos, botones, encabezados (14.4:1 con blanco) */
+  --azul-medio: #123e73;    /* hover del botón primario */
+  --azul-claro: #e6eef8;    /* fondos de iconos y hover secundario */
+  --azul-noche: #071b34;    /* footer */
+  --amarillo: #ffc72c;      /* acento sobre azul marino (9.2:1) */
+  --amarillo-hover: #ffd75e;
+  --blanco: #ffffff;
+  --gris-claro: #f4f6f9;    /* fondos de secciones alternas */
+  --gris-borde: #dde3eb;
+  --gris-linea: #e7ecf2;
+  --gris-campo: #6b7482;    /* borde de inputs (4.7:1) */
+  --gris-medio: #4b5563;    /* texto secundario (7.6:1) */
+  --gris-oscuro: #1f2937;   /* texto de cuerpo (14.7:1) */
+  --texto-claro: #d6e2f2;   /* texto sobre azul marino */
+  --error: #b42318;
+  --error-fondo: #fef3f2;
+
+  /* Estados de solicitud (texto / fondo) */
+  --pendiente-texto: #6b4a00;
+  --pendiente-fondo: #fff1bf;
+  --proceso-texto: #0b3a7a;
+  --proceso-fondo: #dcebff;
+  --completada-texto: #0a5c32;
+  --completada-fondo: #d5f2e1;
+
+  /* Tipografía */
+  --fuente-titulos: "Montserrat", "Inter", system-ui, sans-serif;
+  --fuente-texto: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Tamaños móviles (se suben en las media queries de global.css) */
+  --h1: 1.875rem;   /* 30px */
+  --h2: 1.625rem;   /* 26px */
+  --h3: 1.125rem;   /* 18px */
+
+  /* Forma y espaciado */
+  --radio-control: 10px;
+  --radio-tarjeta: 14px;
+  --sombra: 0 1px 2px rgba(11, 42, 79, 0.06), 0 8px 24px rgba(11, 42, 79, 0.07);
+  --ancho-max: 1200px;
+  --margen-lateral: 16px;
+  --espacio-seccion: 48px;
+  --alto-header: 68px;
+}
