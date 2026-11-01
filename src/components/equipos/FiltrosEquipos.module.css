@@ -1,0 +1,63 @@
+/* Móvil: el panel está oculto y se abre con el botón "Filtros" */
+.panel {
+  display: none;
+  padding: 20px;
+  flex-direction: column;
+  gap: 20px;
+}
+.panel.abierto {
+  display: flex;
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.encabezado h2 {
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.limpiar {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--azul-marino);
+  font: 600 0.875rem/1 var(--fuente-texto);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.grupo > :global(label) {
+  clear: both;
+}
+.grupo + .grupo {
+  border-top: 1px solid var(--gris-linea);
+  padding-top: 16px;
+}
+.grupo legend {
+  float: left;
+  width: 100%;
+  font: 700 0.875rem/1.3 var(--fuente-titulos);
+  color: var(--azul-marino);
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+/* Escritorio: panel lateral siempre visible, sin botón de resultados */
+@media (min-width: 1024px) {
+  .panel,
+  .panel.abierto {
+    display: flex;
+    position: sticky;
+    top: calc(var(--alto-header) + 24px);
+    padding: 24px;
+  }
+  .verResultados {
+    display: none;
+  }
+}

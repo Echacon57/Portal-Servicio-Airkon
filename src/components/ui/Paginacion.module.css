@@ -1,0 +1,36 @@
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.boton {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radio-control);
+  border: 1.5px solid #c5ced9;
+  background: var(--blanco);
+  color: var(--azul-marino);
+  font: 700 0.9375rem/1 var(--fuente-texto);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  cursor: pointer;
+}
+.boton:hover {
+  background: var(--azul-claro);
+}
+.boton[aria-current] {
+  background: var(--azul-marino);
+  color: var(--blanco);
+  border-color: var(--azul-marino);
+}
+.boton:disabled {
+  background: #eef1f5;
+  color: #5b6675;
+  border-color: #eef1f5;
+  cursor: not-allowed;
+}
