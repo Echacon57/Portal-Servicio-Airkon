@@ -5,13 +5,15 @@ import NoEncontrado from "./pages/NoEncontrado";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Inicio />} />
-          <Route path="*" element={<NoEncontrado />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <SolicitudesProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Inicio />} />
+            <Route path="*" element={<NoEncontrado />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </SolicitudesProvider>
   );
 }
