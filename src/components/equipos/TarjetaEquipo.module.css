@@ -34,7 +34,6 @@
   line-height: 1.4;
   color: var(--gris-medio);
   flex: 1;
-  margin-bottom: 6px;
 }
 .datos li {
   display: flex;
@@ -46,6 +45,35 @@
 }
 .datos strong {
   color: var(--gris-oscuro);
+}
+
+.precio {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gris-linea);
+}
+.desde {
+  font: 600 0.75rem/1.2 var(--fuente-texto);
+  color: var(--gris-medio);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.precio strong {
+  font: 800 1.5rem/1.2 var(--fuente-titulos);
+  color: var(--azul-marino);
+}
+.nota {
+  font-size: 0.8125rem;
+  color: var(--gris-medio);
+}
+
+.acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
 }
 
 @media (min-width: 768px) {

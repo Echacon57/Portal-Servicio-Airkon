@@ -68,6 +68,40 @@
   margin-bottom: 4px;
 }
 
+.precio {
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: var(--gris-claro);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.precio dl {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+}
+.precio dt {
+  font: 600 0.75rem/1.2 var(--fuente-texto);
+  color: var(--gris-medio);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.precio dd {
+  margin: 4px 0 0;
+  font: 700 1.0625rem/1.2 var(--fuente-titulos);
+  color: var(--azul-marino);
+}
+.precio dd.precioPrincipal {
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+.precio p {
+  font-size: 0.8125rem;
+  color: var(--gris-medio);
+}
+
 .botones {
   display: flex;
   flex-direction: column;

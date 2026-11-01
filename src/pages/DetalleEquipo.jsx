@@ -5,10 +5,10 @@ import IlustracionEquipo from "../components/equipos/IlustracionEquipo";
 import TarjetaEquipo from "../components/equipos/TarjetaEquipo";
 import { buscarEquipo, capacidadTexto, equipos } from "../data/equipos";
 import { useTituloPagina } from "../hooks/useTituloPagina";
+import { moneda } from "../utils/precios";
 import NoEncontrado from "./NoEncontrado";
 import styles from "./DetalleEquipo.module.css";
 
-/** Ficha de un equipo. El id llega por la URL: /catalogo/:id */
 export default function DetalleEquipo() {
   const { id } = useParams();
   const equipo = buscarEquipo(id);
@@ -18,6 +18,8 @@ export default function DetalleEquipo() {
 
   const relacionados = equipos.filter((e) => e.categoria === equipo.categoria && e.id !== equipo.id).slice(0, 3);
   const rutaSolicitar = `/solicitar?equipo=${equipo.id}`;
+  const rutaComprar = `/comprar/${equipo.id}`;
+  const requiereCotizacion = equipo.precioInstalacion === null;
 
   const ficha = [
     ["Tipo", equipo.categoria],
@@ -75,12 +77,32 @@ export default function DetalleEquipo() {
               </li>
             </ul>
 
+            <div className={styles.precio}>
+              <dl>
+                <div>
+                  <dt>Precio del equipo</dt>
+                  <dd className={styles.precioPrincipal}>{moneda(equipo.precio)}</dd>
+                </div>
+                <div>
+                  <dt>Instalación estándar</dt>
+                  <dd>{requiereCotizacion ? "Requiere proyecto y cotización" : moneda(equipo.precioInstalacion)}</dd>
+                </div>
+              </dl>
+              <p>Precios más IVA. La instalación en altura o con retiro del equipo anterior tiene un cargo adicional que verás antes de confirmar.</p>
+            </div>
+
             <div className={styles.botones}>
-              <Link to={rutaSolicitar} className="btn btn-primario">
-                Solicitar servicio para este equipo <Icono nombre="flecha" tamano={20} />
-              </Link>
-              <Link to="/catalogo" className="btn btn-secundario">
-                Volver al catálogo
+              {requiereCotizacion ? (
+                <Link to="/contacto" className="btn btn-primario">
+                  Solicitar cotización <Icono nombre="flecha" tamano={20} />
+                </Link>
+              ) : (
+                <Link to={rutaComprar} className="btn btn-primario">
+                  <Icono nombre="carrito" tamano={20} /> Comprar este equipo
+                </Link>
+              )}
+              <Link to={rutaSolicitar} className="btn btn-secundario">
+                Solicitar servicio para este equipo
               </Link>
             </div>
           </div>
@@ -105,8 +127,8 @@ export default function DetalleEquipo() {
               </div>
             </div>
             <div className={`tarjeta oscuro ${styles.llamado}`}>
-              <h2 id="titulo-llamado">¿Necesitas servicio para este equipo?</h2>
-              <p>Llena el formulario y agendamos una visita. El equipo quedará seleccionado automáticamente.</p>
+              <h2>¿Ya tienes este equipo?</h2>
+              <p>Solicita mantenimiento o reparación.</p>
               <Link to={rutaSolicitar} className="btn btn-acento">
                 Solicitar servicio
               </Link>

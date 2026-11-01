@@ -2,9 +2,13 @@ import { Link } from "react-router-dom";
 import Icono from "../ui/Icono";
 import IlustracionEquipo from "./IlustracionEquipo";
 import { capacidadTexto } from "../../data/equipos";
+import { moneda } from "../../utils/precios";
 import styles from "./TarjetaEquipo.module.css";
 
+
 export default function TarjetaEquipo({ equipo }) {
+  const requiereCotizacion = equipo.precioInstalacion === null;
+
   return (
     <article className={`tarjeta ${styles.tarjeta}`}>
       <div className={styles.imagen}>
@@ -23,13 +27,28 @@ export default function TarjetaEquipo({ equipo }) {
             Marca: <strong>{equipo.marca}</strong>
           </li>
         </ul>
-        <Link
-          to={`/catalogo/${equipo.id}`}
-          className="btn btn-secundario btn-bloque"
-          aria-label={`Ver detalle de ${equipo.nombre}`}
-        >
-          Ver detalle
-        </Link>
+        <p className={styles.precio}>
+          <span className={styles.desde}>Precio del equipo</span>
+          <strong>{moneda(equipo.precio)}</strong>
+          <span className={styles.nota}>
+            {requiereCotizacion ? "Instalación con proyecto y cotización" : `+ IVA · instalación desde ${moneda(equipo.precioInstalacion)}`}
+          </span>
+        </p>
+        <div className={styles.acciones}>
+          {!requiereCotizacion && (
+            <Link to={`/comprar/${equipo.id}`} className="btn btn-primario" aria-label={`Comprar ${equipo.nombre}`}>
+              <Icono nombre="carrito" tamano={20} />
+              Comprar
+            </Link>
+          )}
+          <Link
+            to={`/catalogo/${equipo.id}`}
+            className="btn btn-secundario"
+            aria-label={`Ver detalle de ${equipo.nombre}`}
+          >
+            Ver detalle
+          </Link>
+        </div>
       </div>
     </article>
   );

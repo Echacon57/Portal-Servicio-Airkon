@@ -1,5 +1,5 @@
 /**
- * Ilustraciones SVG de los tipos de equipo (las mismas del bosquejo).
+ * Ilustraciones SVG de los tipos de equipo
  */
 export default function IlustracionEquipo({ forma, ancho = 200, descripcion }) {
   const accesibilidad = descripcion
@@ -42,6 +42,21 @@ export default function IlustracionEquipo({ forma, ancho = 200, descripcion }) {
           <rect x="12" y="40" width="176" height="60" rx="6" fill="#fff" stroke="#0B2A4F" strokeWidth="3" />
           <path d="M34 50v40M54 50v40M74 50v40M94 50v40M114 50v40M134 50v40M154 50v40M174 50v40" stroke="#7FA3CC" strokeWidth="2.5" strokeLinecap="round" />
           <path d="M28 100v10M172 100v10" stroke="#0B2A4F" strokeWidth="3" strokeLinecap="round" />
+        </>
+      )}
+      {forma === "ventana" && (
+        <>
+          <rect x="40" y="22" width="120" height="86" rx="8" fill="#fff" stroke="#0B2A4F" strokeWidth="3" />
+          <path d="M54 38h56M54 48h56M54 58h56M54 68h56M54 78h56M54 88h56" stroke="#7FA3CC" strokeWidth="2.5" strokeLinecap="round" />
+          <rect x="122" y="38" width="24" height="18" rx="3" fill="#FFC72C" stroke="#0B2A4F" strokeWidth="2" />
+          <circle cx="134" cy="76" r="6" fill="none" stroke="#0B2A4F" strokeWidth="2.5" />
+        </>
+      )}
+      {forma === "nose" && (
+        <>
+          <circle cx="100" cy="65" r="44" fill="#fff" stroke="#0B2A4F" strokeWidth="3" strokeDasharray="8 7" />
+          <path d="M86 52a14 14 0 0 1 27 4c0 9-13 11-13 19" fill="none" stroke="#0B2A4F" strokeWidth="5" strokeLinecap="round" />
+          <circle cx="100" cy="88" r="3.5" fill="#FFC72C" stroke="#0B2A4F" strokeWidth="2" />
         </>
       )}
     </svg>

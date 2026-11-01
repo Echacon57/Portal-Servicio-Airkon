@@ -1,7 +1,17 @@
-
+/**
+ * Catálogo de equipos
+ * `forma` decide qué ilustración se dibuja (ver IlustracionEquipo.jsx).
+ * `toneladas` es numérico para poder filtrar y ordenar por capacidad.
+ * `tipoEquipo` enlaza con la lista `tiposEquipo` de servicios.js.
+ * `precio` y `precioInstalacion` están en pesos mexicanos, IVA no incluido
+ * `precioInstalacion: null` = requiere cotización.
+ */
 export const equipos = [
   {
     id: "minisplit-inverter-1tr",
+    tipoEquipo: "minisplit",
+    precio: 8490,
+    precioInstalacion: 1500,
     nombre: "Minisplit Inverter 1 TR",
     categoria: "Minisplit",
     marca: "LG",
@@ -16,6 +26,9 @@ export const equipos = [
   },
   {
     id: "minisplit-inverter-2tr",
+    tipoEquipo: "minisplit",
+    precio: 14990,
+    precioInstalacion: 1800,
     nombre: "Minisplit Inverter 2 TR",
     categoria: "Minisplit",
     marca: "Mirage",
@@ -30,6 +43,9 @@ export const equipos = [
   },
   {
     id: "minisplit-convencional-15tr",
+    tipoEquipo: "minisplit",
+    precio: 9990,
+    precioInstalacion: 2000,
     nombre: "Minisplit Convencional 1.5 TR",
     categoria: "Minisplit",
     marca: "Mirage",
@@ -44,6 +60,9 @@ export const equipos = [
   },
   {
     id: "multisplit-2x1",
+    tipoEquipo: "multisplit",
+    precio: 31500,
+    precioInstalacion: 3000,
     nombre: "Multisplit 2×1",
     categoria: "Multisplit",
     marca: "Carrier",
@@ -58,6 +77,9 @@ export const equipos = [
   },
   {
     id: "multisplit-3x1",
+    tipoEquipo: "multisplit",
+    precio: 42900,
+    precioInstalacion: 3200,
     nombre: "Multisplit 3×1",
     categoria: "Multisplit",
     marca: "LG",
@@ -72,6 +94,9 @@ export const equipos = [
   },
   {
     id: "paquete-5tr",
+    tipoEquipo: "paquete",
+    precio: 68000,
+    precioInstalacion: 5200,
     nombre: "Paquete 5 TR",
     categoria: "Paquete",
     marca: "Trane",
@@ -86,6 +111,9 @@ export const equipos = [
   },
   {
     id: "paquete-75tr",
+    tipoEquipo: "paquete",
+    precio: 92500,
+    precioInstalacion: 8000,
     nombre: "Paquete 7.5 TR",
     categoria: "Paquete",
     marca: "Carrier",
@@ -100,6 +128,9 @@ export const equipos = [
   },
   {
     id: "paquete-10tr",
+    tipoEquipo: "paquete",
+    precio: 128000,
+    precioInstalacion: 6800,
     nombre: "Paquete 10 TR",
     categoria: "Paquete",
     marca: "Carrier",
@@ -114,6 +145,9 @@ export const equipos = [
   },
   {
     id: "chiller-aire-20tr",
+    tipoEquipo: "chiller",
+    precio: 385000,
+    precioInstalacion: null,
     nombre: "Chiller enfriado por aire 20 TR",
     categoria: "Chiller",
     marca: "Trane",
@@ -128,6 +162,9 @@ export const equipos = [
   },
   {
     id: "chiller-aire-40tr",
+    tipoEquipo: "chiller",
+    precio: 690000,
+    precioInstalacion: null,
     nombre: "Chiller enfriado por aire 40 TR",
     categoria: "Chiller",
     marca: "Carrier",
@@ -142,6 +179,9 @@ export const equipos = [
   },
   {
     id: "minisplit-piso-techo-3tr",
+    tipoEquipo: "piso-techo",
+    precio: 27800,
+    precioInstalacion: 2800,
     nombre: "Piso-techo 3 TR",
     categoria: "Minisplit",
     marca: "Trane",
@@ -156,6 +196,9 @@ export const equipos = [
   },
   {
     id: "multisplit-4x1",
+    tipoEquipo: "multisplit",
+    precio: 58900,
+    precioInstalacion: 3600,
     nombre: "Multisplit 4×1",
     categoria: "Multisplit",
     marca: "Mirage",
@@ -173,6 +216,7 @@ export const equipos = [
 export const categorias = ["Minisplit", "Multisplit", "Paquete", "Chiller"];
 export const marcas = ["Carrier", "LG", "Mirage", "Trane"];
 
+/** Rangos de capacidad usados por los filtros del catálogo. */
 export const rangosCapacidad = [
   { id: "hasta2", etiqueta: "Hasta 2 TR", min: 0, max: 2 },
   { id: "3a5", etiqueta: "3 a 5 TR", min: 2.01, max: 5 },
@@ -186,4 +230,9 @@ export function buscarEquipo(id) {
 
 export function capacidadTexto(equipo) {
   return `${equipo.toneladas} TR (${equipo.btu})`;
+}
+
+export function capacidadOpcion(equipo) {
+  if (equipo.toneladas >= 5) return "5 TR o más";
+  return `${equipo.toneladas} TR`;
 }
