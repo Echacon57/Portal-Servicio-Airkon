@@ -1,9 +1,5 @@
-/*
- * Tokens del sistema de diseño (tomados de la Guía de estilos del bosquejo).
- * Cambiar un color aquí lo cambia en todo el sitio.
- */
+
 :root {
-  /* Paleta */
   --azul-marino: #0b2a4f;   /* primario: títulos, botones, encabezados (14.4:1 con blanco) */
   --azul-medio: #123e73;    /* hover del botón primario */
   --azul-claro: #e6eef8;    /* fondos de iconos y hover secundario */
@@ -21,7 +17,6 @@
   --error: #b42318;
   --error-fondo: #fef3f2;
 
-  /* Estados de solicitud (texto / fondo) */
   --pendiente-texto: #6b4a00;
   --pendiente-fondo: #fff1bf;
   --proceso-texto: #0b3a7a;
@@ -29,16 +24,14 @@
   --completada-texto: #0a5c32;
   --completada-fondo: #d5f2e1;
 
-  /* Tipografía */
   --fuente-titulos: "Montserrat", "Inter", system-ui, sans-serif;
   --fuente-texto: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* Tamaños móviles (se suben en las media queries de global.css) */
-  --h1: 1.875rem;   /* 30px */
-  --h2: 1.625rem;   /* 26px */
-  --h3: 1.125rem;   /* 18px */
+  --h1: 1.875rem;   
+  --h2: 1.625rem;   
+  --h3: 1.125rem;   
 
-  /* Forma y espaciado */
+
   --radio-control: 10px;
   --radio-tarjeta: 14px;
   --sombra: 0 1px 2px rgba(11, 42, 79, 0.06), 0 8px 24px rgba(11, 42, 79, 0.07);

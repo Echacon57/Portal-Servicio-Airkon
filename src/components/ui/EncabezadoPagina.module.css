@@ -1,0 +1,29 @@
+.banda {
+  background: var(--gris-claro);
+  border-bottom: 1px solid var(--gris-borde);
+}
+.interior {
+  padding-block: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.textos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.textos p {
+  font-size: 1.0625rem;
+  color: var(--gris-medio);
+  max-width: 640px;
+}
+
+@media (min-width: 768px) {
+  .interior {
+    padding-block: 40px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}

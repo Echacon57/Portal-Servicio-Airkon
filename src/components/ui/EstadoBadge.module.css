@@ -1,0 +1,12 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  border-radius: 999px;
+  font: 600 0.8125rem/1.2 var(--fuente-texto);
+  white-space: nowrap;
+}
+.pendiente { background: var(--pendiente-fondo); color: var(--pendiente-texto); }
+.proceso { background: var(--proceso-fondo); color: var(--proceso-texto); }
+.completada { background: var(--completada-fondo); color: var(--completada-texto); }

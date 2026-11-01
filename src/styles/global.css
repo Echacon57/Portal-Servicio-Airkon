@@ -1,13 +1,4 @@
-/*
- * Estilos globales: reset, tipografía y piezas base del sistema de diseño
- * (botones, tarjetas, campos, etiquetas de estado).
- *
- * Enfoque MOBILE-FIRST: las reglas sin media query son para 390 px.
- * Las media queries de abajo (min-width) adaptan a tableta y escritorio.
- * Los estilos de cada componente están en su propio archivo .module.css.
- */
 
-/* ---------- Reset ---------- */
 *,
 *::before,
 *::after {
@@ -71,7 +62,7 @@ textarea { font: inherit; }
 ul[role="list"],
 ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 
-/* ---------- Accesibilidad ---------- */
+/*  Accesibilidad  */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -82,7 +73,7 @@ textarea:focus-visible,
   outline-offset: 3px;
 }
 
-/* Sobre fondos oscuros el anillo de foco cambia a amarillo */
+
 .oscuro a:focus-visible,
 .oscuro button:focus-visible {
   outline-color: var(--amarillo);
@@ -119,7 +110,6 @@ main:focus {
   outline: none;
 }
 
-/* ---------- Contenedor ---------- */
 .contenedor {
   width: 100%;
   max-width: var(--ancho-max);
@@ -127,7 +117,6 @@ main:focus {
   padding-inline: var(--margen-lateral);
 }
 
-/* ---------- Iconos ---------- */
 .icono {
   width: 24px;
   height: 24px;
@@ -139,7 +128,6 @@ main:focus {
   flex: none;
 }
 
-/* ---------- Botones ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -173,7 +161,6 @@ main:focus {
   cursor: not-allowed;
 }
 
-/* ---------- Tarjeta base ---------- */
 .tarjeta {
   background: var(--blanco);
   border: 1px solid var(--gris-borde);
@@ -181,7 +168,6 @@ main:focus {
   box-shadow: var(--sombra);
 }
 
-/* ---------- Etiquetas de texto ---------- */
 .sobretitulo {
   display: inline-block;
   font: 700 0.8125rem/1 var(--fuente-texto);
@@ -203,7 +189,6 @@ main:focus {
 
 .texto-secundario { color: var(--gris-medio); }
 
-/* ---------- Campos de formulario ---------- */
 .etiqueta {
   display: block;
   font: 600 0.875rem/1.3 var(--fuente-texto);
@@ -290,7 +275,6 @@ legend { padding: 0; }
   cursor: pointer;
 }
 
-/* ---------- Encabezado de sección ---------- */
 .encabezado-seccion {
   display: flex;
   flex-direction: column;
@@ -302,9 +286,7 @@ legend { padding: 0; }
   color: var(--gris-medio);
 }
 
-/* =========================================================
-   MEDIA QUERIES GENERALES
-   ========================================================= */
+/* MEDIA QUERIES GENERALES*/
 
 /* Tableta */
 @media (min-width: 768px) {
