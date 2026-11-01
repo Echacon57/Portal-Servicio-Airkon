@@ -1,0 +1,25 @@
+.migas ol {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  font: 500 0.875rem/1.2 var(--fuente-texto);
+  color: var(--gris-medio);
+}
+.migas li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.migas a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--azul-marino);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.migas [aria-current] {
+  color: var(--gris-oscuro);
+  font-weight: 600;
+}
