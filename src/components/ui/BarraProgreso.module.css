@@ -1,0 +1,116 @@
+.progreso {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.encabezado {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.pasoActual {
+  font-size: 0.9375rem;
+  color: var(--gris-medio);
+}
+.pasoActual strong {
+  color: var(--azul-marino);
+}
+.porcentaje {
+  font: 700 0.875rem/1 var(--fuente-texto);
+  color: var(--azul-marino);
+}
+
+.barra {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--gris-linea);
+  overflow: hidden;
+}
+.relleno {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--azul-marino), var(--azul-medio));
+  transition: width 0.3s ease;
+}
+
+.pasos {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+.paso {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.boton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 2px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--gris-medio);
+  border-radius: 10px;
+}
+button.boton {
+  cursor: pointer;
+}
+button.boton:hover .nombre {
+  text-decoration: underline;
+}
+
+.circulo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #c5ced9;
+  background: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 0.9375rem/1 var(--fuente-titulos);
+  color: var(--gris-medio);
+}
+.completado .circulo {
+  background: var(--completada-fondo);
+  border-color: var(--completada-texto);
+  color: var(--completada-texto);
+}
+.completado .circulo :global(.icono) {
+  stroke-width: 3;
+}
+.actual .circulo {
+  background: var(--azul-marino);
+  border-color: var(--azul-marino);
+  color: var(--blanco);
+  box-shadow: 0 0 0 4px var(--azul-claro);
+}
+
+.nombre {
+  display: none;
+  font: 600 0.8125rem/1.25 var(--fuente-texto);
+  text-align: center;
+}
+.actual .nombre {
+  color: var(--azul-marino);
+  font-weight: 700;
+}
+.completado .nombre {
+  color: var(--gris-oscuro);
+}
+
+@media (min-width: 768px) {
+  .nombre {
+    display: block;
+  }
+}

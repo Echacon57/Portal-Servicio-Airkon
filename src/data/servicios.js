@@ -54,7 +54,7 @@ export const tiposServicio = [
   {
     id: "revision",
     nombre: "Revisión o diagnóstico",
-    descripcion: "No sé qué tiene; quiero que un técnico lo revise.",
+    descripcion: "No estoy seguro(a) qué tiene; quiero que un técnico lo revise.",
     icono: "buscar",
   },
 ];
@@ -67,10 +67,10 @@ export const tiposEquipo = [
   { id: "multisplit", nombre: "Multisplit", forma: "exterior" },
   { id: "paquete", nombre: "Paquete o de azotea", forma: "paquete" },
   { id: "chiller", nombre: "Chiller o sistema central", forma: "chiller" },
-  { id: "nose", nombre: "No sé", forma: "nose" },
+  { id: "nose", nombre: "No estoy seguro(a)", forma: "nose" },
 ];
 
-export const marcasComunes = ["Carrier", "Daikin", "LG", "Midea", "Mirage", "Samsung", "Trane", "York", "Otra", "No sé"];
+export const marcasComunes = ["Carrier", "Daikin", "LG", "Midea", "Mirage", "Samsung", "Trane", "York", "Otra", "No estoy seguro(a)"];
 
 /**
  * Dónde está el equipo. `extra` es el cargo adicional aproximado por equipo
@@ -114,9 +114,9 @@ export const sintomas = [
   "Muestra un código de error",
 ];
 
-export const capacidades = ["No sé", "1 TR", "1.5 TR", "2 TR", "3 TR", "4 TR", "5 TR o más"];
-export const refrigerantes = ["No sé", "R-410A", "R-32", "R-22", "R-134a"];
-export const antiguedades = ["No sé", "Menos de 2 años", "2 a 5 años", "5 a 10 años", "Más de 10 años"];
+export const capacidades = ["No estoy seguro(a)", "1 TR", "1.5 TR", "2 TR", "3 TR", "4 TR", "5 TR o más"];
+export const refrigerantes = ["No estoy seguro(a)", "R-410A", "R-32", "R-22", "R-134a"];
+export const antiguedades = ["No estoy seguro(a)", "Menos de 2 años", "2 a 5 años", "5 a 10 años", "Más de 10 años"];
 
 export const horarios = [
   { id: "manana", etiqueta: "Mañana (8:00 a 12:00)" },

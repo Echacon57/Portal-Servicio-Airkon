@@ -2,23 +2,35 @@ import { createContext, useContext } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { solicitudesIniciales } from "../data/solicitudesIniciales";
 
+/**
+ * Estado global de los registros del cliente:
+
+ * Cualquier componente puede leerlos o modificarlos con useSolicitudes().
+ */
 const SolicitudesContext = createContext(null);
 
-export function SolicitudesProvider({ children }) {
-  const [solicitudes, setSolicitudes] = useLocalStorage("airkon-solicitudes", solicitudesIniciales);
+/** Prefijo del folio según el tipo: SV = servicio, PD = pedido. */
+const prefijos = { servicio: "SV", compra: "PD" };
 
-  /** Genera el siguiente folio con el formato AK-AAAA-0000 */
-  function siguienteFolio() {
+export function SolicitudesProvider({ children }) {
+  const [solicitudes, setSolicitudes] = useLocalStorage("airkon-registros-v2", solicitudesIniciales);
+
+  /** Genera el siguiente folio, p. ej. SV-2026-0132 o PD-2026-0028 */
+  function siguienteFolio(tipo) {
+    const prefijo = prefijos[tipo];
     const anio = new Date().getFullYear();
-    const numeros = solicitudes.map((s) => Number(s.folio.split("-")[2]) || 0);
-    const siguiente = Math.max(140, ...numeros) + 1;
-    return `AK-${anio}-${String(siguiente).padStart(4, "0")}`;
+    const numeros = solicitudes
+      .filter((s) => s.folio.startsWith(prefijo))
+      .map((s) => Number(s.folio.split("-")[2]) || 0);
+    const siguiente = Math.max(0, ...numeros) + 1;
+    return `${prefijo}-${anio}-${String(siguiente).padStart(4, "0")}`;
   }
 
+  /** Guarda un registro nuevo. `datos.tipo` debe ser "servicio" o "compra". */
   function agregarSolicitud(datos) {
     const nueva = {
       ...datos,
-      folio: siguienteFolio(),
+      folio: siguienteFolio(datos.tipo),
       estado: "pendiente",
       creada: new Date().toISOString(),
     };
