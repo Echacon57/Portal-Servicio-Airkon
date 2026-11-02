@@ -6,6 +6,7 @@ import Catalogo from "./pages/Catalogo";
 import Solicitar from "./pages/Solicitar";
 import DetalleEquipo from "./pages/DetalleEquipo";
 import NoEncontrado from "./pages/NoEncontrado";
+import Comprar from "./pages/Comprar";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/catalogo/:id" element={<DetalleEquipo />} />
             <Route path="/solicitar" element={<Solicitar />} />
+            <Route path="/comprar/:id" element={<Comprar />} />
           </Route>
         </Routes>
       </BrowserRouter>

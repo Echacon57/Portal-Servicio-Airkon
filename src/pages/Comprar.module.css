@@ -1,0 +1,29 @@
+.barraMigas {
+  border-bottom: 1px solid var(--gris-borde);
+}
+.contenido {
+  padding-block: 24px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.encabezado {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.encabezado p {
+  color: var(--gris-medio);
+  max-width: 720px;
+}
+.encabezado a {
+  color: var(--azul-marino);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (min-width: 768px) {
+  .contenido {
+    padding-block: 32px 72px;
+  }
+}

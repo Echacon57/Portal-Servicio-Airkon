@@ -1,0 +1,88 @@
+.resumen {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.resumen h2 {
+  font-size: 1.125rem;
+}
+
+.equipo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.imagen {
+  width: 88px;
+  height: 64px;
+  border-radius: 10px;
+  background: var(--gris-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.nombre {
+  font-weight: 700;
+  color: var(--azul-marino);
+  line-height: 1.3;
+}
+.marca {
+  font-size: 0.875rem;
+  color: var(--gris-medio);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.tabla th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--gris-medio);
+  padding: 6px 12px 6px 0;
+  vertical-align: top;
+}
+.tabla td {
+  text-align: right;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 6px 0;
+  vertical-align: top;
+}
+.separador th,
+.separador td {
+  border-top: 1px solid var(--gris-linea);
+  padding-top: 12px;
+}
+
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--azul-marino);
+  color: var(--blanco);
+}
+.total span {
+  font-weight: 600;
+}
+.total strong {
+  font: 800 1.5rem/1.1 var(--fuente-titulos);
+}
+
+.nota {
+  font-size: 0.8125rem;
+  color: var(--gris-medio);
+}
+
+@media (min-width: 1024px) {
+  .resumen {
+    position: sticky;
+    top: calc(var(--alto-header) + 24px);
+    padding: 24px;
+  }
+}
