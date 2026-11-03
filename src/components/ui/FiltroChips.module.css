@@ -1,0 +1,52 @@
+.grupo {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 4px 8px;
+  margin: -4px -4px 0;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1.5px solid #c5ced9;
+  background: var(--blanco);
+  color: var(--gris-oscuro);
+  font: 600 0.875rem/1 var(--fuente-texto);
+  white-space: nowrap;
+  cursor: pointer;
+  flex: none;
+}
+.chip:hover {
+  background: var(--gris-claro);
+  border-color: var(--azul-marino);
+}
+.chip[aria-pressed="true"] {
+  background: var(--azul-marino);
+  border-color: var(--azul-marino);
+  color: var(--blanco);
+}
+.numero {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--azul-claro);
+  color: var(--azul-marino);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 0.75rem/1 var(--fuente-texto);
+  padding: 0 6px;
+}
+.chip[aria-pressed="true"] .numero {
+  background: var(--amarillo);
+}
+@media (min-width: 768px) {
+  .grupo {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
