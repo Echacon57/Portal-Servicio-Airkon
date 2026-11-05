@@ -66,6 +66,59 @@
   font-weight: 700;
 }
 
+.filtrosActivos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.etiquetaFiltros {
+  font: 700 0.8125rem/1.3 var(--fuente-texto);
+  color: var(--gris-oscuro);
+}
+
+.chipsActivos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.chipActivo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--azul-marino);
+  border-radius: 999px;
+  background: var(--azul-claro);
+  color: var(--azul-marino);
+  font: 600 0.875rem/1.2 var(--fuente-texto);
+  cursor: pointer;
+}
+.chipActivo:hover {
+  background: #d7e5f5;
+}
+.chipActivo :global(.icono) {
+  width: 16px;
+  height: 16px;
+}
+
+.quitarTodos {
+  min-height: 44px;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  color: var(--azul-marino);
+  font: 700 0.875rem/1.2 var(--fuente-texto);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .rejilla {
   display: grid;
   grid-template-columns: 1fr;
