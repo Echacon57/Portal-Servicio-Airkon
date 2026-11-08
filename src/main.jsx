@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "@fontsource-variable/archivo/wdth.css";
 import "./styles/variables.css";
 import "./styles/global.css";
 import App from "./App.jsx";

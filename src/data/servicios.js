@@ -8,26 +8,37 @@ export const servicios = [
     id: "instalacion",
     nombre: "Instalación",
     icono: "aire",
-    descripcion:
-      "Instalación de equipos minisplit, multisplit y paquete, con puesta en marcha y pruebas de operación.",
+    descripcion: "Instalación de equipos minisplit, multisplit y paquete, con puesta en marcha y pruebas de operación.",
+    cuando: "Pídelo cuando ya tienes el equipo o lo compras aquí.",
+    accion: "Solicitar instalación",
+    ruta: "/solicitar?servicio=instalacion",
   },
   {
     id: "preventivo",
     nombre: "Mantenimiento preventivo",
     icono: "copo",
     descripcion: "Limpieza, revisión y ajuste periódico para que tu equipo rinda mejor y dure más.",
+    cuando: "Pídelo antes de que empiece la temporada de calor.",
+    accion: "Solicitar mantenimiento",
+    ruta: "/solicitar?servicio=preventivo",
   },
   {
     id: "correctivo",
     nombre: "Reparación",
     icono: "herramienta",
     descripcion: "Diagnóstico y reparación de fallas para recuperar el confort lo antes posible.",
+    cuando: "Pídelo si no enfría, gotea o hace un ruido nuevo.",
+    accion: "Solicitar reparación",
+    ruta: "/solicitar?servicio=correctivo",
   },
   {
     id: "proyecto",
     nombre: "Proyectos",
     icono: "edificio",
     descripcion: "Diseño y ejecución de sistemas de climatización para comercios, oficinas e industria.",
+    cuando: "Pídelo si vas a climatizar un local, una oficina o una nave.",
+    accion: "Pedir cotización",
+    ruta: "/contacto",
   },
 ];
 
@@ -54,7 +65,7 @@ export const tiposServicio = [
   {
     id: "revision",
     nombre: "Revisión o diagnóstico",
-    descripcion: "No estoy seguro(a) qué tiene; quiero que un técnico lo revise.",
+    descripcion: "No estoy seguro(a) en qué tiene; quiero que un técnico lo revise.",
     icono: "buscar",
   },
 ];
@@ -70,11 +81,11 @@ export const tiposEquipo = [
   { id: "nose", nombre: "No estoy seguro(a)", forma: "nose" },
 ];
 
-export const marcasComunes = ["Carrier", "Daikin", "LG", "Midea", "Mirage", "Samsung", "Trane", "York", "Otra", "No estoy seguro(a)"];
+export const marcasComunes = ["Carrier", "Daikin", "LG", "Midea", "Mirage", "Samsung", "Trane", "York", "Otra", "No sé"];
 
 /**
- * Dónde está el equipo. `extra` es el cargo adicional aproximado por equipo
- * (en servicio se muestra como aviso; en compra se suma a la instalación).
+ Dónde está el equipo. `extra` es el cargo adicional aproximado por equipo
+ (en servicio se muestra como aviso; en compra se suma a la instalación).
  */
 export const ubicaciones = [
   {
@@ -114,9 +125,10 @@ export const sintomas = [
   "Muestra un código de error",
 ];
 
-export const capacidades = ["No estoy seguro(a)", "1 TR", "1.5 TR", "2 TR", "3 TR", "4 TR", "5 TR o más"];
-export const refrigerantes = ["No estoy seguro(a)", "R-410A", "R-32", "R-22", "R-134a"];
-export const antiguedades = ["No estoy seguro(a)", "Menos de 2 años", "2 a 5 años", "5 a 10 años", "Más de 10 años"];
+/** Datos técnicos opcionales: todos incluyen "No sé". */
+export const capacidades = ["No sé", "1 TR", "1.5 TR", "2 TR", "3 TR", "4 TR", "5 TR o más"];
+export const refrigerantes = ["No sé", "R-410A", "R-32", "R-22", "R-134a"];
+export const antiguedades = ["No sé", "Menos de 2 años", "2 a 5 años", "5 a 10 años", "Más de 10 años"];
 
 export const horarios = [
   { id: "manana", etiqueta: "Mañana (8:00 a 12:00)" },
@@ -132,6 +144,7 @@ export const metodosPago = [
 export const CARGO_RETIRO = 650; // retirar y desechar el equipo anterior
 export const IVA = 0.16;
 
+/** Estados posibles de una solicitud o pedido y su texto visible. */
 export const estados = {
   pendiente: "Pendiente",
   proceso: "En proceso",

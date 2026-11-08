@@ -1,11 +1,19 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px 4px 8px;
-  border-radius: 999px;
-  font: 600 0.8125rem/1.2 var(--fuente-texto);
+  gap: 8px;
+  padding: 5px 12px 5px 12px;
+  font: 700 0.875rem/1.2 var(--fuente-texto);
   white-space: nowrap;
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+}
+.ojillo {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  margin-left: 2px;
+  flex: none;
 }
 .pendiente { background: var(--pendiente-fondo); color: var(--pendiente-texto); }
 .proceso { background: var(--proceso-fondo); color: var(--proceso-texto); }

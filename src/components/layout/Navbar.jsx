@@ -7,13 +7,12 @@ import styles from "./Navbar.module.css";
 export const enlacesMenu = [
   { ruta: "/", texto: "Inicio" },
   { ruta: "/catalogo", texto: "Catálogo" },
-  { ruta: "/solicitar", texto: "Solicitar servicio" },
   { ruta: "/mis-solicitudes", texto: "Mis solicitudes" },
   { ruta: "/contacto", texto: "Contacto" },
 ];
 
 /**
-  Barra de navegación. 
+ Barra de navegación sobre el campo azul marino.
  */
 export default function Navbar() {
   const [abierto, setAbierto] = useState(false);
@@ -35,34 +34,36 @@ export default function Navbar() {
   }, [abierto]);
 
   return (
-    <header className={styles.header}>
+    <header className={`oscuro ${styles.header}`}>
       <div className={`contenedor ${styles.barra}`}>
         <Logo />
         <button
           type="button"
-          className={styles.hamburguesa}
+          className={styles.menu}
           aria-expanded={abierto}
           aria-controls="menu-principal"
-          aria-label={abierto ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
           onClick={() => setAbierto((valor) => !valor)}
         >
-          <Icono nombre={abierto ? "cerrar" : "menu"} />
+          <Icono nombre={abierto ? "cerrar" : "menu"} tamano={20} />
+          {abierto ? "Cerrar" : "Menú"}
         </button>
         <nav
           id="menu-principal"
           aria-label="Principal"
           className={`${styles.nav} ${abierto ? styles.abierto : ""}`}
         >
-          <ul role="list">
+          <ul role="list" className={styles.lista}>
             {enlacesMenu.map((enlace) => (
               <li key={enlace.ruta}>
-                <NavLink to={enlace.ruta} end={enlace.ruta === "/"}>
+                <NavLink to={enlace.ruta} end={enlace.ruta === "/"} className={styles.enlace}>
                   {enlace.texto}
-                  <Icono nombre="chevron" tamano={20} className={styles.flechaMovil} />
                 </NavLink>
               </li>
             ))}
           </ul>
+          <NavLink to="/solicitar" className={`btn btn-acento ${styles.accion}`}>
+            Solicitar servicio
+          </NavLink>
         </nav>
       </div>
     </header>

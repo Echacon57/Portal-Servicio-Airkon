@@ -1,19 +1,25 @@
 
 :root {
-  --azul-marino: #0b2a4f;   /* primario: títulos, botones, encabezados (14.4:1 con blanco) */
+  --azul-marino: #0b2a4f;   /* primario: títulos, botones, encabezados  */
   --azul-medio: #123e73;    /* hover del botón primario */
   --azul-claro: #e6eef8;    /* fondos de iconos y hover secundario */
   --azul-noche: #071b34;    /* footer */
-  --amarillo: #ffc72c;      /* acento sobre azul marino (9.2:1) */
+  --amarillo: #ffc72c;      /* "etiqueta": folios y la acción principal (9.2:1 con marino) */
+  --amarillo-ojillo: #ffe08a;
   --amarillo-hover: #ffd75e;
   --blanco: #ffffff;
-  --gris-claro: #f4f6f9;    /* fondos de secciones alternas */
+  --gris-claro: #e9eef4;    /* fondos de secciones alternas */
+  --placa: #dce3eb;         /* fondo de la placa de datos */
+  --remache: #a9b7c7;       /* remaches y divisiones de la placa */
+  --linea-lamina: #c4d0dd;  /* divisiones sobre fondo lámina */
   --gris-borde: #dde3eb;
   --gris-linea: #e7ecf2;
   --gris-campo: #6b7482;    /* borde de inputs (4.7:1) */
-  --gris-medio: #4b5563;    /* texto secundario (7.6:1) */
-  --gris-oscuro: #1f2937;   /* texto de cuerpo (14.7:1) */
-  --texto-claro: #d6e2f2;   /* texto sobre azul marino */
+  --gris-medio: #4b5563;    /* texto de apoyo (7.6:1) */
+  --texto-secundario: #3f4b5a; /* texto secundario sobre lámina (7.4:1) */
+  --gris-oscuro: #17222f;   /* "tinta": texto de cuerpo (15.8:1) */
+  --texto-claro: #d6e2f2;   /* texto sobre azul marino (10.6:1) */
+  --linea-oscura: #2c4a6e;  /* divisiones sobre azul marino */
   --error: #b42318;
   --error-fondo: #fef3f2;
 
@@ -24,14 +30,18 @@
   --completada-texto: #0a5c32;
   --completada-fondo: #d5f2e1;
 
-  --fuente-titulos: "Montserrat", "Inter", system-ui, sans-serif;
-  --fuente-texto: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+ 
+  --fuente-titulos: "Archivo Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fuente-texto: "Archivo Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ancho-titulos: 125%;
+
 
   --h1: 1.875rem;   
   --h2: 1.625rem;   
-  --h3: 1.125rem;   
+  --h3: 1.125rem;  
 
 
+  --radio-boton: 4px;       
   --radio-control: 10px;
   --radio-tarjeta: 14px;
   --sombra: 0 1px 2px rgba(11, 42, 79, 0.06), 0 8px 24px rgba(11, 42, 79, 0.07);
