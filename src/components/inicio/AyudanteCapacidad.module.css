@@ -1,0 +1,162 @@
+.ayudante {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.texto h2 {
+  max-width: 13ch;
+}
+.texto > p {
+  max-width: 42ch;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+.lectura {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+.lectura label {
+  font-weight: 700;
+  font-size: 1rem;
+}
+.valor {
+  font-weight: 900;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  color: var(--azul-marino);
+}
+
+.rango {
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  accent-color: var(--azul-marino);
+  cursor: pointer;
+}
+
+.marcas {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--gris-medio);
+}
+/* En pantallas muy angostas solo se muestran los extremos */
+.marcas span:nth-child(2),
+.marcas span:nth-child(3),
+.marcas span:nth-child(4) {
+  display: none;
+}
+
+.nota {
+  font-size: 0.9375rem;
+  color: var(--gris-medio);
+  max-width: 46ch;
+}
+
+.verTodos a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 800;
+  color: var(--azul-marino);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Barra de precio al pie de la placa */
+.precio {
+  background: var(--azul-marino);
+  color: var(--blanco);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.cifra {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.desglose {
+  font-size: 0.875rem;
+  color: var(--texto-claro);
+}
+.total {
+  font-weight: 900;
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+.total span {
+  font-stretch: 100%;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--texto-claro);
+}
+
+.revision {
+  background: var(--gris-claro);
+  border: 2px solid var(--azul-marino);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.revision h3 {
+  font-size: 1.375rem;
+}
+.revision p {
+  max-width: 44ch;
+}
+
+@media (min-width: 480px) {
+  .marcas span:nth-child(2),
+  .marcas span:nth-child(3),
+  .marcas span:nth-child(4) {
+    display: inline;
+  }
+  .precio {
+    padding: 20px 24px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .total {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .valor {
+    font-size: 2.5rem;
+  }
+  .revision {
+    padding: 40px;
+  }
+  .revision h3 {
+    font-size: 1.625rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ayudante {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 64px;
+  }
+}

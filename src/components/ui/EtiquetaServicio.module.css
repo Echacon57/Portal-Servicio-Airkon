@@ -1,0 +1,156 @@
+.etiqueta {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  background: var(--amarillo);
+  color: var(--azul-marino);
+  clip-path: polygon(22% 0, 78% 0, 100% 11%, 100% 100%, 0 100%, 0 11%);
+}
+
+.ojillo {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+.ojillo span {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--amarillo-ojillo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ojillo span::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--azul-marino);
+}
+
+.cuerpo {
+  padding: 18px 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.titulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.folio {
+  font-size: 1.625rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.datos {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  border-top: 2px solid var(--azul-marino);
+  padding-top: 14px;
+}
+.datos div {
+  display: grid;
+  grid-template-columns: 4.75rem 1fr;
+  gap: 12px;
+}
+.datos dt {
+  font-weight: 600;
+}
+.datos dd {
+  margin: 0;
+}
+
+.pasos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.pasos li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pasos svg {
+  flex: none;
+}
+
+.talon {
+  margin-top: 20px;
+  border-top: 2px dashed var(--azul-marino);
+  padding: 12px 24px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.talon a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--azul-marino);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.colgante {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  transform-origin: 50% 0;
+}
+.cordon {
+  display: block;
+  height: 64px;
+  width: 40px;
+}
+.colgante .etiqueta {
+  margin-top: -10px;
+}
+
+@keyframes vaiven {
+  0% { transform: rotate(-7deg); }
+  35% { transform: rotate(3.5deg); }
+  60% { transform: rotate(-1.6deg); }
+  80% { transform: rotate(0.6deg); }
+  100% { transform: rotate(0deg); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .colgante {
+    animation: vaiven 2.6s cubic-bezier(0.3, 0.6, 0.3, 1) 0.3s both;
+  }
+}
+
+@media (min-width: 768px) {
+  .cuerpo {
+    padding: 20px 28px 0;
+    gap: 18px;
+  }
+  .folio {
+    font-size: 1.875rem;
+  }
+  .talon {
+    padding: 12px 28px 16px;
+  }
+  .cordon {
+    height: 120px;
+  }
+  .colgante .etiqueta {
+    margin-top: -14px;
+  }
+}

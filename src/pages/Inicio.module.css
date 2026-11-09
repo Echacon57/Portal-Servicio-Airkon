@@ -1,0 +1,257 @@
+.hero {
+  background: var(--azul-marino);
+  color: var(--blanco);
+  overflow: hidden;
+}
+
+.heroRejilla {
+  padding-block: 32px 48px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.heroTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.heroTexto h1 {
+  color: var(--blanco);
+  font-size: clamp(2.5rem, 3.2vw + 1.25rem, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  max-width: 13ch;
+}
+
+.ubicacion {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--texto-claro);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.ubicacion :global(.icono) {
+  color: var(--amarillo);
+}
+
+.bajada {
+  max-width: 46ch;
+  font-size: 1.125rem;
+  color: var(--texto-claro);
+}
+
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.llamar {
+  font-size: 0.9375rem;
+  color: var(--texto-claro);
+}
+.llamar a {
+  color: var(--blanco);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.figura {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.figura figcaption {
+  font-size: 0.875rem;
+  color: var(--texto-claro);
+  text-align: center;
+  max-width: 34ch;
+}
+
+/* Secciones */
+.bloque {
+  padding-block: 64px;
+}
+
+.encabezadoSeccion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.encabezadoSeccion h2,
+.encabezadoProceso h2 {
+  font-size: 2rem;
+  line-height: 1.05;
+  max-width: 14ch;
+}
+.encabezadoSeccion p {
+  max-width: 40ch;
+  color: var(--texto-secundario);
+}
+
+/* Servicios como hoja de especificaciones */
+.servicios {
+  background: var(--gris-claro);
+}
+.hoja {
+  border-top: 3px solid var(--azul-marino);
+}
+.fila {
+  padding: 24px 0;
+  border-bottom: 2px solid var(--linea-lamina);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+.fila h3 {
+  font-size: 1.375rem;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.cuando {
+  color: var(--texto-secundario);
+}
+.accion {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 44px;
+  font-weight: 800;
+  color: var(--azul-marino);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.equipos {
+  background: var(--blanco);
+}
+.equipos h2 {
+  font-size: 2rem;
+  line-height: 1.05;
+}
+
+/* Cómo funciona */
+.proceso {
+  background: var(--azul-noche);
+  color: var(--blanco);
+}
+.encabezadoProceso {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.encabezadoProceso h2 {
+  color: var(--blanco);
+  max-width: 18ch;
+}
+.encabezadoProceso p {
+  max-width: 52ch;
+  color: var(--texto-claro);
+}
+.pasos {
+  border-top: 2px solid #3a5578;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+.pasos li {
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.pasos h3 {
+  color: var(--blanco);
+  font-size: 1.25rem;
+}
+.pasos p {
+  color: var(--texto-claro);
+  font-size: 1rem;
+}
+.numero {
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: var(--amarillo);
+}
+
+
+@media (min-width: 768px) {
+  .heroRejilla {
+    padding-block: 48px 64px;
+  }
+  .botones {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .bloque {
+    padding-block: 88px;
+  }
+  .encabezadoSeccion {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .encabezadoSeccion h2,
+  .encabezadoProceso h2,
+  .equipos h2 {
+    font-size: 2.75rem;
+  }
+  .fila {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    column-gap: 32px;
+    row-gap: 6px;
+  }
+  .fila h3 {
+    grid-row: span 3;
+  }
+  .pasos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroRejilla {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 48px;
+    align-items: start;
+    padding-block: 56px 0;
+  }
+  .heroTexto {
+    gap: 28px;
+    padding: 24px 0 96px;
+  }
+  /* La etiqueta cuelga desde el borde del encabezado */
+  .figura {
+    margin-top: -56px;
+    padding-bottom: 56px;
+  }
+  .fila {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 32px;
+    padding: 28px 0;
+  }
+  .fila h3 {
+    grid-row: auto;
+    margin-bottom: 0;
+  }
+  .bloque {
+    padding-block: 104px;
+  }
+  .pasos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,96 @@
+.placa {
+  position: relative;
+  background: var(--placa);
+  border: 1px solid var(--remache);
+  padding: 8px;
+}
+
+.remache {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--remache);
+}
+.arribaIzq { top: 8px; left: 8px; }
+.arribaDer { top: 8px; right: 8px; }
+.abajoIzq { bottom: 8px; left: 8px; }
+.abajoDer { bottom: 8px; right: 8px; }
+
+.marco {
+  margin: 12px;
+  border: 2px solid var(--azul-marino);
+  background: var(--gris-claro);
+}
+
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 16px;
+  padding: 16px 18px;
+  border-bottom: 2px solid var(--azul-marino);
+}
+.encabezado h2,
+.encabezado h3 {
+  font-size: 1.25rem;
+  line-height: 1.15;
+}
+.subtitulo {
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+
+.datos {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.datos div {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--remache);
+}
+.datos dt {
+  font-size: 0.8125rem;
+  color: var(--texto-secundario);
+}
+.datos dd {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Desde 480 px los datos van en dos columnas, como en la placa real */
+@media (min-width: 480px) {
+  .placa {
+    padding: 10px;
+  }
+  .marco {
+    margin: 14px;
+  }
+  .encabezado {
+    padding: 20px 24px;
+  }
+  .encabezado h2,
+  .encabezado h3 {
+    font-size: 1.625rem;
+  }
+  .datos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .datos div {
+    padding: 14px 24px;
+  }
+  .datos div:nth-child(odd) {
+    border-right: 1px solid var(--remache);
+  }
+  .remache {
+    width: 10px;
+    height: 10px;
+  }
+  .arribaIzq { top: 10px; left: 10px; }
+  .arribaDer { top: 10px; right: 10px; }
+  .abajoIzq { bottom: 10px; left: 10px; }
+  .abajoDer { bottom: 10px; right: 10px; }
+}
