@@ -3,8 +3,7 @@ import Icono from "../ui/Icono";
 import styles from "./FiltrosEquipos.module.css";
 
 /**
- * Panel de filtros del catálogo (<aside>). Es un componente controlado:
- * el estado vive en la página Catálogo y llega por props.
+ * Filtros desplegables del catálogo. El estado vive en la página Catálogo.
  *
  * @param {{ filtros: {categorias:string[], marcas:string[], capacidades:string[]},
  *           onCambiar: (grupo:string, valor:string) => void,
@@ -33,30 +32,40 @@ export default function FiltrosEquipos({ filtros, onCambiar, onLimpiar, abierto,
           <Icono nombre="filtros" tamano={20} />
           Filtros
         </h2>
-        <button type="button" className={styles.limpiar} onClick={onLimpiar}>
+        <button type="button" className={styles.limpiar} onClick={onLimpiar} aria-label="Limpiar filtros">
           Limpiar
         </button>
       </div>
 
-      {grupos.map((grupo) => (
-        <fieldset key={grupo.id} className={styles.grupo}>
-          <legend>{grupo.titulo}</legend>
-          {grupo.opciones.map((op) => (
-            <label key={op.valor} className="casilla">
-              <input
-                type="checkbox"
-                name={grupo.id}
-                value={op.valor}
-                checked={filtros[grupo.id].includes(op.valor)}
-                onChange={() => onCambiar(grupo.id, op.valor)}
-              />
-              {op.texto}
-            </label>
-          ))}
-        </fieldset>
-      ))}
+      <div className={styles.grupos}>
+        {grupos.map((grupo) => {
+          const seleccionadas = filtros[grupo.id].length;
 
-      {/* Solo en móvil: cierra el panel y muestra los resultados */}
+          return (
+            <details key={grupo.id} className={styles.grupo}>
+              <summary>
+                <span>{grupo.titulo}</span>
+                {seleccionadas > 0 && <span className={styles.seleccionadas}>{seleccionadas}</span>}
+              </summary>
+              <div className={styles.opciones}>
+                {grupo.opciones.map((op) => (
+                  <label key={op.valor} className="casilla">
+                    <input
+                      type="checkbox"
+                      name={grupo.id}
+                      value={op.valor}
+                      checked={filtros[grupo.id].includes(op.valor)}
+                      onChange={() => onCambiar(grupo.id, op.valor)}
+                    />
+                    {op.texto}
+                  </label>
+                ))}
+              </div>
+            </details>
+          );
+        })}
+      </div>
+
       <button type="button" className={`btn btn-primario btn-bloque ${styles.verResultados}`} onClick={onCerrar}>
         Ver {totalResultados} {totalResultados === 1 ? "resultado" : "resultados"}
       </button>
