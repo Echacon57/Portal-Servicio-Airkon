@@ -12,11 +12,18 @@ export default function TarjetaEquipo({ equipo }) {
   return (
     <article className={`tarjeta ${styles.tarjeta}`}>
       <div className={styles.imagen}>
-        <IlustracionEquipo forma={equipo.forma} ancho={180} />
+        <IlustracionEquipo forma={equipo.forma} ancho={220} />
       </div>
       <div className={styles.cuerpo}>
         <span className="etiqueta-tipo">{equipo.categoria}</span>
         <h3>{equipo.nombre}</h3>
+        <p className={styles.precio}>
+          <span className={styles.desde}>Precio del equipo</span>
+          <strong>{moneda(equipo.precio)}</strong>
+          <span className={styles.nota}>
+            {requiereCotizacion ? "Instalación con proyecto y cotización" : `+ IVA · instalación desde ${moneda(equipo.precioInstalacion)}`}
+          </span>
+        </p>
         <ul role="list" className={styles.datos}>
           <li>
             <Icono nombre="termometro" tamano={20} />
@@ -27,16 +34,9 @@ export default function TarjetaEquipo({ equipo }) {
             Marca: <strong>{equipo.marca}</strong>
           </li>
         </ul>
-        <p className={styles.precio}>
-          <span className={styles.desde}>Precio del equipo</span>
-          <strong>{moneda(equipo.precio)}</strong>
-          <span className={styles.nota}>
-            {requiereCotizacion ? "Instalación con proyecto y cotización" : `+ IVA · instalación desde ${moneda(equipo.precioInstalacion)}`}
-          </span>
-        </p>
         <div className={styles.acciones}>
           {!requiereCotizacion && (
-            <Link to={`/comprar/${equipo.id}`} className="btn btn-primario" aria-label={`Comprar ${equipo.nombre}`}>
+            <Link to={`/comprar/${equipo.id}`} className="btn btn-acento" aria-label={`Comprar ${equipo.nombre}`}>
               <Icono nombre="carrito" tamano={20} />
               Comprar
             </Link>

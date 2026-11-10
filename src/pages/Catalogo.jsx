@@ -72,6 +72,13 @@ export default function Catalogo() {
   const visibles = resultados.slice((paginaActual - 1) * POR_PAGINA, paginaActual * POR_PAGINA);
   const totalFiltros = filtros.categorias.length + filtros.marcas.length + filtros.capacidades.length;
 
+  function cerrarFiltros() {
+    setPanelAbierto(false);
+    requestAnimationFrame(() => {
+      document.getElementById("resultados")?.scrollIntoView({ block: "start" });
+    });
+  }
+
   function cambiarPagina(n) {
     setPagina(n);
     document.getElementById("resultados")?.scrollIntoView({ block: "start" });
@@ -85,15 +92,6 @@ export default function Catalogo() {
       />
 
       <div className={`contenedor ${styles.contenido}`}>
-        <FiltrosEquipos
-          filtros={filtros}
-          onCambiar={alternarFiltro}
-          onLimpiar={limpiar}
-          abierto={panelAbierto}
-          onCerrar={() => setPanelAbierto(false)}
-          totalResultados={resultados.length}
-        />
-
         <div className={styles.resultados} id="resultados">
           <h2 className="solo-lector">Resultados</h2>
           <div className={styles.controles}>
@@ -141,6 +139,15 @@ export default function Catalogo() {
               Filtros{totalFiltros > 0 && ` (${totalFiltros})`}
             </button>
           </div>
+
+          <FiltrosEquipos
+            filtros={filtros}
+            onCambiar={alternarFiltro}
+            onLimpiar={limpiar}
+            abierto={panelAbierto}
+            onCerrar={cerrarFiltros}
+            totalResultados={resultados.length}
+          />
 
           <p className={styles.conteo} aria-live="polite">
             Mostrando <strong>{resultados.length} {resultados.length === 1 ? "equipo" : "equipos"}</strong>
