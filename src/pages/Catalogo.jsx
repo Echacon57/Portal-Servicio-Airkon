@@ -71,10 +71,24 @@ export default function Catalogo() {
   const paginaActual = Math.min(pagina, totalPaginas);
   const visibles = resultados.slice((paginaActual - 1) * POR_PAGINA, paginaActual * POR_PAGINA);
   const totalFiltros = filtros.categorias.length + filtros.marcas.length + filtros.capacidades.length;
+  const filtrosActivos = [
+    ...filtros.categorias.map((valor) => ({ grupo: "categorias", valor, etiqueta: valor })),
+    ...filtros.marcas.map((valor) => ({ grupo: "marcas", valor, etiqueta: valor })),
+    ...filtros.capacidades.map((valor) => ({
+      grupo: "capacidades",
+      valor,
+      etiqueta: rangosCapacidad.find((rango) => rango.id === valor)?.etiqueta ?? valor,
+    })),
+  ];
 
   function cambiarPagina(n) {
     setPagina(n);
     document.getElementById("resultados")?.scrollIntoView({ block: "start" });
+  }
+
+  function quitarTodosFiltros() {
+    setFiltros(filtrosVacios);
+    setPagina(1);
   }
 
   return (
@@ -145,6 +159,30 @@ export default function Catalogo() {
           <p className={styles.conteo} aria-live="polite">
             Mostrando <strong>{resultados.length} {resultados.length === 1 ? "equipo" : "equipos"}</strong>
           </p>
+
+          {filtrosActivos.length > 0 && (
+            <div className={styles.filtrosActivos}>
+              <span className={styles.etiquetaFiltros}>Filtros activos</span>
+              <ul role="list" className={styles.chipsActivos}>
+                {filtrosActivos.map(({ grupo, valor, etiqueta }) => (
+                  <li key={`${grupo}-${valor}`}>
+                    <button
+                      type="button"
+                      className={styles.chipActivo}
+                      aria-label={`Quitar filtro ${etiqueta}`}
+                      onClick={() => alternarFiltro(grupo, valor)}
+                    >
+                      {etiqueta}
+                      <Icono nombre="cerrar" tamano={16} />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <button type="button" className={styles.quitarTodos} onClick={quitarTodosFiltros}>
+                Quitar todos
+              </button>
+            </div>
+          )}
 
           {visibles.length > 0 ? (
             <ul role="list" className={styles.rejilla}>

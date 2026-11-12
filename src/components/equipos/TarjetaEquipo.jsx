@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import Icono from "../ui/Icono";
 import IlustracionEquipo from "./IlustracionEquipo";
-import { capacidadTexto } from "../../data/equipos";
 import { moneda } from "../../utils/precios";
 import styles from "./TarjetaEquipo.module.css";
-
 
 export default function TarjetaEquipo({ equipo }) {
   const requiereCotizacion = equipo.precioInstalacion === null;
@@ -17,16 +15,16 @@ export default function TarjetaEquipo({ equipo }) {
       <div className={styles.cuerpo}>
         <span className="etiqueta-tipo">{equipo.categoria}</span>
         <h3>{equipo.nombre}</h3>
-        <ul role="list" className={styles.datos}>
-          <li>
-            <Icono nombre="termometro" tamano={20} />
-            Capacidad: <strong>{capacidadTexto(equipo)}</strong>
-          </li>
-          <li>
-            <Icono nombre="escudo" tamano={20} />
-            Marca: <strong>{equipo.marca}</strong>
-          </li>
-        </ul>
+        <dl className={styles.datos}>
+          <div className={styles.dato}>
+            <dt>Capacidad</dt>
+            <dd>{equipo.toneladas} TR · {equipo.btu}</dd>
+          </div>
+          <div className={styles.dato}>
+            <dt>Marca</dt>
+            <dd>{equipo.marca}</dd>
+          </div>
+        </dl>
         <p className={styles.precio}>
           <span className={styles.desde}>Precio del equipo</span>
           <strong>{moneda(equipo.precio)}</strong>
@@ -36,7 +34,7 @@ export default function TarjetaEquipo({ equipo }) {
         </p>
         <div className={styles.acciones}>
           {!requiereCotizacion && (
-            <Link to={`/comprar/${equipo.id}`} className="btn btn-primario" aria-label={`Comprar ${equipo.nombre}`}>
+            <Link to={`/comprar/${equipo.id}`} className="btn btn-acento" aria-label={`Comprar ${equipo.nombre}`}>
               <Icono nombre="carrito" tamano={20} />
               Comprar
             </Link>
