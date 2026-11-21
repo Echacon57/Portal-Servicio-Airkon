@@ -4,7 +4,7 @@
   align-items: flex-start;
   padding: 16px 18px;
   border: 2px solid var(--error);
-  border-radius: 12px;
+  border-radius: var(--radio-boton);
   background: var(--error-fondo);
   color: var(--error);
 }

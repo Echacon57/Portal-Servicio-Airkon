@@ -4,12 +4,10 @@ import styles from "./CampoFoto.module.css";
 
 const TAMANO_MAXIMO = 5 * 1024 * 1024; // 5 MB
 
-/**
- * Campo opcional para subir una foto del equipo o de su etiqueta.
- * Muestra una vista previa. 
- * en esta versión solo se guarda su nombre.
- *
- * @param {{ foto: {url:string, nombre:string}|null, onCambiar: (foto: {url:string, nombre:string}|null) => void }} props
+/*
+ Campo opcional para subir una foto del equipo o de su etiqueta.
+ Muestra una vista previa. La foto no se envía a ningún servidor:
+ en este proyecto solo se guarda su nombre.
  */
 export default function CampoFoto({ foto, onCambiar }) {
   const id = useId();

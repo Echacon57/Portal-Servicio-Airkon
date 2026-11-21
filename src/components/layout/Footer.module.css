@@ -4,6 +4,7 @@
   font-size: 0.9375rem;
 }
 
+/* Cierre con llamada a la acción (solo en Inicio) */
 .cierre {
   padding-block: 56px 40px;
   border-bottom: 2px solid var(--linea-oscura);
@@ -34,12 +35,32 @@
   font-size: 1.125rem;
 }
 
-.columnas,
-.compacto {
+.columnas {
   padding-block: 40px 32px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;
+}
+
+.compacto {
+  padding-block: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.compacto p a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--blanco);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.legalCompacto {
+  font-size: 0.8125rem;
+  color: #a9bcd3;
 }
 
 .marca {
@@ -92,7 +113,7 @@
 .legal {
   padding-block: 0 32px;
   font-size: 0.8125rem;
-  color: #a9bcd3;
+  color: #a9bcd3; 
 }
 
 @media (min-width: 768px) {
@@ -110,8 +131,10 @@
     padding-block: 48px 40px;
   }
   .compacto {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
   }
 }
 

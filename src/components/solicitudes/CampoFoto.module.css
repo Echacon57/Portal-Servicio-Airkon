@@ -9,7 +9,7 @@
   min-height: 72px;
   padding: 14px 16px;
   border: 2px dashed var(--gris-campo);
-  border-radius: 12px;
+  border-radius: var(--radio-boton);
   color: var(--azul-marino);
   cursor: pointer;
 }
@@ -25,6 +25,7 @@
   font-size: 0.8125rem;
   color: var(--gris-medio);
 }
+/* El input está oculto visualmente; el foco se muestra en la zona */
 .campo:has(input:focus-visible) .zona {
   outline: 3px solid var(--azul-marino);
   outline-offset: 3px;
@@ -36,13 +37,13 @@
   gap: 14px;
   padding: 12px;
   border: 1px solid var(--gris-borde);
-  border-radius: 12px;
+  border-radius: var(--radio-boton);
 }
 .vista img {
   width: 96px;
   height: 72px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 2px;
   flex: none;
 }
 .datos {

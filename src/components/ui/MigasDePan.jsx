@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import Icono from "./Icono";
 import styles from "./MigasDePan.module.css";
 
-/**
- * Migas de pan. Recibe una lista [{ texto, ruta }].
- * El último elemento es la página actual y no lleva enlace.
+/*
+ Migas de pan. Recibe una lista [{ texto, ruta }].
+ El último elemento es la página actual y no lleva enlace.
+ Los separadores "/" son decorativos (aria-hidden).
  */
 export default function MigasDePan({ elementos }) {
   return (
@@ -19,7 +19,7 @@ export default function MigasDePan({ elementos }) {
               ) : (
                 <>
                   <Link to={el.ruta}>{el.texto}</Link>
-                  <Icono nombre="chevron" tamano={18} />
+                  <span className={styles.separador} aria-hidden="true">/</span>
                 </>
               )}
             </li>

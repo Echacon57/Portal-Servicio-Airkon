@@ -1,15 +1,14 @@
 /*
- * Estilos compartidos por los formularios largos
- * (compra de equipo y asistente de solicitud de servicio).
+ Estilos compartidos por los formularios largos
+ (compra de equipo y asistente de solicitud de servicio).
  */
+/* Formularios planos: sin caja, secciones separadas por líneas */
 .tarjetaFormulario {
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 32px;
 }
 
-/* Cada grupo lógico de campos es un <fieldset> con su <legend> */
 .seccion {
   display: flex;
   flex-direction: column;
@@ -19,12 +18,11 @@
   clear: both;
 }
 .seccion + .seccion {
-  border-top: 1px solid var(--gris-linea);
-  padding-top: 28px;
+  border-top: 1px solid var(--linea-lamina);
+  padding-top: 32px;
 }
 
-/* La leyenda flota para que quede dentro del área de contenido
-   (por defecto el navegador la dibuja sobre el borde superior del fieldset) */
+
 .leyenda {
   float: left;
   width: 100%;
@@ -32,7 +30,8 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
-  font: 700 1.125rem/1.2 var(--fuente-titulos);
+  font: 800 1.375rem/1.15 var(--fuente-titulos);
+  font-stretch: var(--ancho-titulos);
   color: var(--azul-marino);
 }
 
@@ -108,7 +107,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  border-top: 1px solid var(--gris-linea);
+  border-top: 1px solid var(--linea-lamina);
   padding-top: 24px;
 }
 .acciones :global(.btn) {
@@ -131,14 +130,13 @@
 
 @media (min-width: 768px) {
   .tarjetaFormulario {
-    padding: 36px;
-    gap: 36px;
+    gap: 40px;
   }
   .seccion + .seccion {
     padding-top: 32px;
   }
   .leyenda {
-    font-size: 1.25rem;
+    font-size: 1.625rem;
   }
   .rejilla {
     grid-template-columns: repeat(2, minmax(0, 1fr));
