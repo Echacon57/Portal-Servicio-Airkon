@@ -1,0 +1,96 @@
+.pantalla {
+  background: var(--gris-claro);
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+:global(main):has(> .pantalla) {
+  display: flex;
+  flex-direction: column;
+}
+.oscuro {
+  background: var(--azul-marino);
+  color: var(--blanco);
+}
+
+.rejilla {
+  padding-block: 56px 72px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.textos {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.antetitulo {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.textos h1 {
+  font-size: clamp(2.25rem, 3.4vw + 1.2rem, 4rem);
+  line-height: 1;
+  max-width: 14ch;
+}
+.oscuro h1 {
+  color: var(--blanco);
+}
+.texto {
+  max-width: 46ch;
+  color: var(--texto-secundario);
+}
+.oscuro .texto {
+  color: var(--texto-claro);
+}
+.texto a {
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.oscuro .texto a {
+  color: var(--blanco);
+}
+
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.figura {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.figura figcaption {
+  font-size: 0.875rem;
+  text-align: center;
+  color: var(--texto-secundario);
+  max-width: 28ch;
+}
+.oscuro .figura figcaption {
+  color: var(--texto-claro);
+}
+
+@media (min-width: 768px) {
+  .botones {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rejilla {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    padding-block: 88px 104px;
+    gap: 48px;
+  }
+}

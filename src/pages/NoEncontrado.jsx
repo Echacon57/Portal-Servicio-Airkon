@@ -1,26 +1,30 @@
 import { Link } from "react-router-dom";
-import Icono from "../components/ui/Icono";
+import PantallaMensaje from "../components/ui/PantallaMensaje";
+import { EtiquetaPerdida } from "../components/ui/IlustracionesEtiqueta";
 import { useTituloPagina } from "../hooks/useTituloPagina";
-import styles from "./Mensaje.module.css";
 
+/** Página 404. También se reutiliza cuando un equipo no existe o requiere cotización. */
 export default function NoEncontrado({
   titulo = "No encontramos lo que buscas",
-  mensaje = "La página que buscas no existe o cambió de dirección.",
+  mensaje = "La página no existe o cambió de dirección. Si buscabas un folio, consúltalo en Mis solicitudes.",
+  antetitulo = "Error 404",
 }) {
   useTituloPagina(titulo);
   return (
-    <section className={`contenedor ${styles.envoltura}`} aria-labelledby="titulo-404">
-      <div className={`tarjeta ${styles.tarjeta}`}>
-        <span className={`${styles.icono} ${styles.neutro}`}>
-          <Icono nombre="alerta" tamano={32} />
-        </span>
-        <h1 id="titulo-404">{titulo}</h1>
-        <p className={styles.texto}>{mensaje}</p>
-        <div className={styles.botones}>
-          <Link to="/" className="btn btn-primario">Ir al inicio</Link>
-          <Link to="/catalogo" className="btn btn-secundario">Ver catálogo</Link>
-        </div>
-      </div>
-    </section>
+    <PantallaMensaje
+      oscuro
+      antetitulo={antetitulo}
+      titulo={titulo}
+      texto={<p>{mensaje}</p>}
+      ilustracion={<EtiquetaPerdida />}
+      pie="Aquí iba una etiqueta."
+    >
+      <Link to="/" className="btn btn-acento">
+        Ir al inicio
+      </Link>
+      <Link to="/catalogo" className="btn btn-contorno">
+        Ver catálogo
+      </Link>
+    </PantallaMensaje>
   );
 }
