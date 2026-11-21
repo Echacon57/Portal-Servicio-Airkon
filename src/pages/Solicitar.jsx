@@ -1,12 +1,9 @@
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import EncabezadoPagina from "../components/ui/EncabezadoPagina";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import AsistenteSolicitud from "../components/solicitudes/AsistenteSolicitud";
-import Icono from "../components/ui/Icono";
 import { buscarEquipo, capacidadOpcion } from "../data/equipos";
 import { marcasComunes, refrigerantes, tiposServicio, buscarPorId } from "../data/servicios";
 import { useSolicitudes } from "../context/SolicitudesContext";
 import { useTituloPagina } from "../hooks/useTituloPagina";
-import styles from "./Solicitar.module.css";
 
 
 function valoresDesdeUrl(params) {
@@ -41,46 +38,6 @@ export default function Solicitar() {
   }
 
   return (
-    <>
-      <EncabezadoPagina
-        titulo="Solicitar servicio"
-        descripcion={
-          <>
-            Responde unas preguntas sencillas en 5 pasos. No necesitas conocer los datos técnicos
-            de tu equipo. Los campos marcados con <span className="obligatorio">*</span> son obligatorios.
-          </>
-        }
-      />
-
-      <div className={`contenedor ${styles.contenido}`}>
-        <AsistenteSolicitud
-          valoresIniciales={desdeUrl?.valores}
-          equipoCatalogo={desdeUrl?.equipo}
-          onEnviar={enviar}
-        />
-
-        <aside className={styles.lateral} aria-label="Información adicional">
-          <section className={`tarjeta ${styles.pasos}`} aria-labelledby="titulo-pasos">
-            <h2 id="titulo-pasos">¿Qué pasa después?</h2>
-            <ol role="list">
-              <li><span aria-hidden="true">1</span>Recibimos tu solicitud y generamos un folio.</li>
-              <li><span aria-hidden="true">2</span>Te llamamos para confirmar fecha y horario.</li>
-              <li>
-                <span aria-hidden="true">3</span>
-                <p>Consulta el avance en <Link to="/mis-solicitudes">Mis solicitudes</Link>.</p>
-              </li>
-            </ol>
-          </section>
-          <section className={`tarjeta oscuro ${styles.urgencia}`} aria-labelledby="titulo-urgencia">
-            <h2 id="titulo-urgencia">¿Es una urgencia?</h2>
-            <p>Llámanos directamente y te atendemos lo antes posible.</p>
-            <a href="tel:+528110454881" className={styles.telefono}>
-              <Icono nombre="telefono" />
-              (81) 1045 4881
-            </a>
-          </section>
-        </aside>
-      </div>
-    </>
+    <AsistenteSolicitud valoresIniciales={desdeUrl?.valores} equipoCatalogo={desdeUrl?.equipo} onEnviar={enviar} />
   );
 }

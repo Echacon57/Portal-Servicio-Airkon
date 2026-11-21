@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import BarraProgreso from "../ui/BarraProgreso";
+import EncabezadoPagina from "../ui/EncabezadoPagina";
+import EtiquetaContorno from "../ui/EtiquetaContorno";
+import { buscarPorId, tiposEquipo, tiposServicio, ubicaciones } from "../../data/servicios";
+import { fechaCorta } from "../../utils/formato";
 import ResumenErrores from "../ui/ResumenErrores";
 import Icono from "../ui/Icono";
 import PasoServicio from "./pasos/PasoServicio";
@@ -9,6 +13,7 @@ import PasoDetalles, { conFalla, MAX_DETALLES } from "./pasos/PasoDetalles";
 import PasoVisita from "./pasos/PasoVisita";
 import PasoRevision from "./pasos/PasoRevision";
 import { useFormulario } from "../../hooks/useFormulario";
+import { useFeriados } from "../../hooks/useFeriados";
 import {
   validarContacto,
   validarDireccion,
@@ -17,7 +22,6 @@ import {
   limpiarErrores,
   soloDigitos,
 } from "../../utils/validaciones";
-import f from "../../styles/formulario.module.css";
 import styles from "./AsistenteSolicitud.module.css";
 
 
@@ -75,7 +79,7 @@ const ETIQUETAS = {
   terminos: "Aviso de privacidad",
 };
 
-export const VALORES_VACIOS = {
+ const VALORES_VACIOS = {
   servicio: "",
   tipoEquipo: "",
   marca: "",
@@ -97,7 +101,7 @@ export const VALORES_VACIOS = {
   terminos: false,
 };
 
-function validar(v) {
+function validar(v, feriados) {
   const falla = conFalla(v.servicio);
   const largo = v.detalles.trim().length;
   return limpiarErrores({
@@ -111,7 +115,7 @@ function validar(v) {
         : "",
     detalles: largo > MAX_DETALLES ? `La descripción no puede pasar de ${MAX_DETALLES} caracteres.` : "",
     direccion: validarDireccion(v.direccion),
-    fecha: validarFechaFutura(v.fecha),
+    fecha: validarFechaFutura(v.fecha, feriados),
     horario: requerido(v.horario, "Elige un horario."),
     ...validarContacto(v),
     terminos: v.terminos ? "" : "Debes aceptar el aviso de privacidad.",
@@ -133,7 +137,7 @@ function leerBorrador() {
  * Asistente para solicitar un servicio en 5 pasos.
  *
  * Accesibilidad y usabilidad:
- * - Barra de progreso con porcentaje y lista de pasos (los completados se pueden revisitar).
+ * - Barra de progreso con porcentaje y lista de pasos (los completados se pueden visitar).
  * - Al cambiar de paso, el foco va al encabezado del paso nuevo, así el lector
  *   de pantalla anuncia dónde está el usuario.
  * - "Siguiente" valida solo el paso actual; si hay errores, el resumen recibe el foco.
@@ -152,7 +156,9 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
     return { valores: VALORES_VACIOS, paso: 0, recuperado: false };
   });
 
-  const form = useFormulario(inicio.valores, validar);
+  // Días feriados desde la API externa: se usan para validar la fecha de visita
+  const feriados = useFeriados();
+  const form = useFormulario(inicio.valores, (v) => validar(v, feriados.feriados));
   const [paso, setPaso] = useState(inicio.paso);
   const [recuperado, setRecuperado] = useState(inicio.recuperado);
   const [desdeRevision, setDesdeRevision] = useState(false);
@@ -167,12 +173,14 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
   const actual = PASOS[paso];
   const esUltimo = paso === PASOS.length - 1;
 
+  // Gestión del foco: al cambiar de paso, mover el foco al encabezado del paso
   useEffect(() => {
     if (primerRender.current) {
       primerRender.current = false;
       return;
     }
-    refContenedor.current?.scrollIntoView({ block: "start" });
+    // Subir hasta la barra de progreso y enfocar el título del paso nuevo
+    window.scrollTo(0, 0);
     refTitulo.current?.focus({ preventScroll: true });
   }, [paso]);
 
@@ -181,6 +189,7 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
     try {
       sessionStorage.setItem(CLAVE_BORRADOR, JSON.stringify({ valores: { ...form.valores, terminos: false }, paso }));
     } catch {
+      /* almacenamiento no disponible */
     }
   }, [form.valores, paso]);
 
@@ -216,6 +225,12 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
     irA(indice);
   }
 
+  /** Desde el resumen lateral: si ya se llegó a la revisión, vuelve a ella al guardar. */
+  function editarDesdeRevisionOIr(indice) {
+    if (paso === PASOS.length - 1) editarDesdeRevision(indice);
+    else irA(indice);
+  }
+
   function empezarDeNuevo() {
     form.reiniciar(VALORES_VACIOS);
     setFoto(null);
@@ -225,11 +240,13 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
     try {
       sessionStorage.removeItem(CLAVE_BORRADOR);
     } catch {
+      /* nada */
     }
   }
 
   function manejarEnvio(evento) {
     evento.preventDefault();
+    // Enter en un campo de texto también llega aquí: avanza de paso
     if (!esUltimo) {
       siguiente();
       return;
@@ -249,6 +266,7 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
       try {
         sessionStorage.removeItem(CLAVE_BORRADOR);
       } catch {
+        /* nada */
       }
       onEnviar({
         ...datos,
@@ -268,74 +286,126 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
   const pregunta =
     actual.id === "detalles" && !conFalla(form.valores.servicio) ? "Detalles adicionales" : actual.pregunta;
 
+  const v = form.valores;
+  const tipoElegido = buscarPorId(tiposEquipo, v.tipoEquipo);
+  const resumenEquipo = tipoElegido
+    ? [tipoElegido.id === "nose" ? "Tipo por confirmar" : tipoElegido.nombre, v.marca && v.marca !== "No estoy seguro(a)" ? v.marca : ""]
+        .filter(Boolean)
+        .join(", ")
+    : "";
+
   return (
-    <div className={styles.asistente} ref={refContenedor}>
-      {recuperado && (
-        <div className={styles.borrador} role="status">
-          <p>
-            <Icono nombre="portapapeles" tamano={20} />
-            Recuperamos la solicitud que dejaste sin terminar.
-          </p>
-          <button type="button" className={f.enlaceSecundario} onClick={empezarDeNuevo}>
-            Empezar de nuevo
-          </button>
-        </div>
-      )}
-
-      <div className={`tarjeta ${styles.tarjeta}`}>
+    <>
+      <EncabezadoPagina
+        titulo="Solicitar servicio"
+        descripcion="Cinco pasos cortos. No necesitas conocer los datos técnicos de tu equipo."
+      >
         <BarraProgreso pasos={PASOS} actual={paso} onIrA={irA} />
+      </EncabezadoPagina>
 
-        <form onSubmit={manejarEnvio} noValidate className={styles.formulario}>
-          <section className={styles.paso} aria-labelledby="titulo-paso" aria-describedby="descripcion-paso">
-            <header className={styles.encabezadoPaso}>
-              <h2 id="titulo-paso" ref={refTitulo} tabIndex={-1}>
-                {pregunta}
-              </h2>
-              <p id="descripcion-paso">{actual.descripcion}</p>
-            </header>
-
-            <ResumenErrores errores={intento > 0 ? erroresPaso : {}} etiquetas={ETIQUETAS} intento={intento} />
-
-            {actual.id === "servicio" && <PasoServicio form={form} />}
-            {actual.id === "equipo" && (
-              <PasoEquipo form={form} foto={foto} onCambiarFoto={setFoto} equipoCatalogo={equipoCatalogo} />
-            )}
-            {actual.id === "detalles" && <PasoDetalles form={form} />}
-            {actual.id === "visita" && <PasoVisita form={form} />}
-            {actual.id === "revision" && <PasoRevision form={form} foto={foto} onEditar={editarDesdeRevision} />}
-          </section>
-
-          <div className={styles.navegacion}>
-            {paso > 0 && !desdeRevision && (
-              <button type="button" className="btn btn-secundario" onClick={anterior}>
-                <Icono nombre="flechaIzq" tamano={20} />
-                Anterior
+      <div className={`contenedor ${styles.distribucion}`} ref={refContenedor}>
+        <div className={styles.columna}>
+          {recuperado && (
+            <div className={styles.borrador} role="status">
+              <p>
+                <Icono nombre="portapapeles" tamano={20} />
+                Recuperamos la solicitud que dejaste sin terminar.
+              </p>
+              <button type="button" className="enlace-texto" onClick={empezarDeNuevo}>
+                Empezar de nuevo
               </button>
-            )}
-            {paso === 0 && (
-              <Link to="/" className={f.enlaceSecundario}>
-                Cancelar
-              </Link>
-            )}
+            </div>
+          )}
 
-            <button type="submit" className={`btn btn-primario ${styles.principal}`} disabled={enviando}>
-              {esUltimo
-                ? enviando
-                  ? "Enviando..."
-                  : "Enviar solicitud"
-                : desdeRevision
-                ? "Guardar y volver a revisar"
-                : `Siguiente: ${PASOS[paso + 1].titulo}`}
-              {!enviando && <Icono nombre={esUltimo ? "check" : "flecha"} tamano={20} />}
-            </button>
+          <form onSubmit={manejarEnvio} noValidate className={styles.formulario}>
+            <section className={styles.paso} aria-labelledby="titulo-paso" aria-describedby="descripcion-paso">
+              <header className={styles.encabezadoPaso}>
+                <h2 id="titulo-paso" ref={refTitulo} tabIndex={-1}>
+                  {pregunta}
+                </h2>
+                <p id="descripcion-paso">{actual.descripcion}</p>
+              </header>
+
+              <ResumenErrores errores={intento > 0 ? erroresPaso : {}} etiquetas={ETIQUETAS} intento={intento} />
+
+              {actual.id === "servicio" && <PasoServicio form={form} />}
+              {actual.id === "equipo" && (
+                <PasoEquipo form={form} foto={foto} onCambiarFoto={setFoto} equipoCatalogo={equipoCatalogo} />
+              )}
+              {actual.id === "detalles" && <PasoDetalles form={form} />}
+              {actual.id === "visita" && <PasoVisita form={form} feriados={feriados} />}
+              {actual.id === "revision" && <PasoRevision form={form} foto={foto} onEditar={editarDesdeRevision} />}
+            </section>
+
+            <div className={styles.navegacion}>
+              {paso > 0 && !desdeRevision && (
+                <button type="button" className="btn btn-secundario" onClick={anterior}>
+                  <Icono nombre="flechaIzq" tamano={20} />
+                  Anterior
+                </button>
+              )}
+              {paso === 0 && (
+                <Link to="/" className="enlace-texto">
+                  Cancelar
+                </Link>
+              )}
+
+              {/* La acción principal de la pantalla: la única en amarillo */}
+              <button type="submit" className={`btn btn-acento ${styles.principal}`} disabled={enviando}>
+                {esUltimo
+                  ? enviando
+                    ? "Enviando..."
+                    : "Enviar solicitud"
+                  : desdeRevision
+                  ? "Guardar y volver a revisar"
+                  : `Siguiente: ${PASOS[paso + 1].titulo.toLowerCase()}`}
+                {!enviando && <Icono nombre={esUltimo ? "check" : "flecha"} tamano={20} />}
+              </button>
+            </div>
+          </form>
+
+          <p className={styles.notaGuardado}>
+            <Icono nombre="escudo" tamano={18} />
+            Tu avance se guarda en este navegador mientras llenas la solicitud.
+          </p>
+        </div>
+
+        {/* Resumen en vivo: etiqueta "en blanco" porque aún no hay folio */}
+        <EtiquetaContorno as="aside" etiquetadoPor="titulo-tu-solicitud" className={styles.resumen}>
+          <div>
+            <h2 id="titulo-tu-solicitud">Tu solicitud</h2>
+            <p className={styles.resumenSub}>Recibes el folio al enviarla.</p>
           </div>
-        </form>
+          <dl className={styles.resumenDatos}>
+            <div>
+              <dt>Servicio</dt>
+              <dd>{buscarPorId(tiposServicio, v.servicio)?.nombre ?? <span className={styles.pendiente}>Por elegir</span>}</dd>
+            </div>
+            <div>
+              <dt>Equipo</dt>
+              <dd>{resumenEquipo || <span className={styles.pendiente}>Por elegir</span>}</dd>
+            </div>
+            <div>
+              <dt>Ubicación</dt>
+              <dd>{buscarPorId(ubicaciones, v.ubicacion)?.nombre ?? <span className={styles.pendiente}>Por elegir</span>}</dd>
+            </div>
+            {v.fecha && (
+              <div>
+                <dt>Visita</dt>
+                <dd>{fechaCorta(v.fecha)}</dd>
+              </div>
+            )}
+          </dl>
+          {paso > 0 && (
+            <button type="button" className="enlace-texto" onClick={() => editarDesdeRevisionOIr(0)}>
+              Cambiar el servicio
+            </button>
+          )}
+          <p className={styles.urgencia}>
+            ¿Es urgente? Llama al <a href="tel:+528100000000">(81) 0000 0000</a>.
+          </p>
+        </EtiquetaContorno>
       </div>
-
-      <p className={styles.notaGuardado}>
-        <Icono nombre="escudo" tamano={18} />
-        Tu avance se guarda en este navegador mientras llenas la solicitud.
-      </p>
-    </div>
+    </>
   );
 }
