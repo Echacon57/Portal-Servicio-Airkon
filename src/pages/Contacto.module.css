@@ -1,23 +1,19 @@
 .contenido {
-  padding-block: 24px 56px;
+  padding-block: 32px 56px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 40px;
   align-items: start;
 }
 
 .formulario {
-  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.formulario h2,
-.datos h2,
-.faq h2 {
-  font-size: 1.25rem;
+.formulario h2 {
+  font-size: 1.625rem;
 }
-
 .campos {
   display: flex;
   flex-direction: column;
@@ -26,7 +22,6 @@
 .campos > :global(.btn) {
   align-self: stretch;
 }
-
 .dosColumnas {
   display: grid;
   grid-template-columns: 1fr;
@@ -38,112 +33,103 @@
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  border-radius: var(--radio-control);
+  border-left: 4px solid var(--completada-texto);
   background: var(--completada-fondo);
   color: var(--completada-texto);
   font-weight: 600;
 }
 
-.lateral {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.datos {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.datos address {
-  font-style: normal;
-}
-.datos ul {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.datos li {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.datos li div {
-  display: flex;
-  flex-direction: column;
-  font-size: 0.9375rem;
-}
-.datos strong {
+.lateral a {
   color: var(--azul-marino);
-}
-.datos a {
-  color: var(--gris-oscuro);
   text-decoration: underline;
   text-underline-offset: 3px;
-  min-height: 32px;
   display: inline-flex;
+  min-height: 32px;
   align-items: center;
 }
-.icono {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: var(--azul-claro);
-  color: var(--azul-marino);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
+.lateral address {
+  font-style: normal;
+}
+.lateral a.telefono {
+  font-weight: 900;
+  font-size: 1.375rem;
+  text-decoration: none;
 }
 
 .faq {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  background: var(--gris-claro);
+  padding-block: 48px 64px;
 }
-.faq details {
-  padding: 0 18px;
-  box-shadow: none;
+.faq h2 {
+  font-size: 1.75rem;
+  margin-bottom: 20px;
 }
-.faq summary {
-  min-height: 52px;
+.preguntas {
+  max-width: 760px;
+  border-top: 2px solid var(--azul-marino);
+}
+.preguntas details {
+  border-bottom: 1px solid var(--linea-lamina);
+}
+.preguntas summary {
+  min-height: 56px;
+  padding: 14px 40px 14px 0;
+  position: relative;
   display: flex;
   align-items: center;
-  font-weight: 600;
-  color: var(--azul-marino);
+  font-weight: 700;
+  color: var(--gris-oscuro);
   cursor: pointer;
-  list-style-position: inside;
+  list-style: none;
 }
-.faq summary:focus-visible {
+.preguntas summary::-webkit-details-marker {
+  display: none;
+}
+.preguntas summary::after {
+  content: "+";
+  position: absolute;
+  right: 6px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--azul-marino);
+}
+.preguntas details[open] summary::after {
+  content: "×";
+}
+.preguntas summary:focus-visible {
   outline: 3px solid var(--azul-marino);
   outline-offset: 3px;
-  border-radius: 4px;
 }
-.faq details p {
+.preguntas details p {
   padding-bottom: 16px;
-  font-size: 0.9375rem;
-  color: var(--gris-medio);
+  color: var(--texto-secundario);
+  max-width: 60ch;
 }
 
 @media (min-width: 768px) {
   .contenido {
-    padding-block: 40px 72px;
-  }
-  .formulario {
-    padding: 36px;
+    padding-block: 48px 72px;
   }
   .dosColumnas {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .asunto {
+    max-width: calc(50% - 10px);
+  }
   .campos > :global(.btn) {
     align-self: flex-start;
+  }
+  .faq {
+    padding-block: 72px 88px;
+  }
+  .faq h2 {
+    font-size: 2.25rem;
   }
 }
 
 @media (min-width: 1024px) {
   .contenido {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: 40px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 56px;
   }
 }

@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import EncabezadoPagina from "../components/ui/EncabezadoPagina";
+import PlacaDatos from "../components/ui/PlacaDatos";
 import CampoFormulario from "../components/ui/CampoFormulario";
 import ResumenErrores from "../components/ui/ResumenErrores";
 import Icono from "../components/ui/Icono";
@@ -59,10 +61,17 @@ export default function Contacto() {
     <>
       <EncabezadoPagina
         titulo="Contacto"
-        descripcion="¿Tienes dudas o necesitas una cotización especial? Escríbenos o llámanos."
+        descripcion={
+          <>
+            Para cotizaciones, dudas o facturación. Si tu equipo falla, es más rápido{" "}
+            <Link to="/solicitar">solicitar un servicio</Link>.
+          </>
+        }
+        descripcionAlLado
       />
+
       <div className={`contenedor ${styles.contenido}`}>
-        <section className={`tarjeta ${styles.formulario}`} aria-labelledby="titulo-form-contacto">
+        <section className={styles.formulario} aria-labelledby="titulo-form-contacto">
           <h2 id="titulo-form-contacto">Envíanos un mensaje</h2>
           <form onSubmit={enviar} noValidate className={styles.campos}>
             <ResumenErrores errores={intento > 0 ? errores : {}} etiquetas={etiquetas} intento={intento} />
@@ -72,18 +81,35 @@ export default function Contacto() {
               <CampoFormulario id="correo" etiqueta="Correo electrónico" type="email" obligatorio autoComplete="email"
                 value={valores.correo} onChange={manejarCambio} onBlur={manejarBlur} error={errores.correo} />
             </div>
-            <CampoFormulario id="asunto" como="select" etiqueta="Asunto" obligatorio
-              value={valores.asunto} onChange={manejarCambio} onBlur={manejarBlur} error={errores.asunto}>
-              <option value="">Selecciona un asunto</option>
-              <option>Cotización</option>
-              <option>Duda sobre un servicio</option>
-              <option>Facturación</option>
-              <option>Otro</option>
-            </CampoFormulario>
-            <CampoFormulario id="mensaje" como="textarea" etiqueta="Mensaje" obligatorio maxLength={800}
-              value={valores.mensaje} onChange={manejarCambio} onBlur={manejarBlur} error={errores.mensaje} />
-            <button type="submit" className="btn btn-primario">
-              Enviar mensaje <Icono nombre="flecha" tamano={20} />
+            <div className={styles.asunto}>
+              <CampoFormulario id="asunto" como="select" etiqueta="Asunto" obligatorio
+                value={valores.asunto} onChange={manejarCambio} onBlur={manejarBlur} error={errores.asunto}>
+                <option value="">Selecciona un asunto</option>
+                <option>Cotización</option>
+                <option>Duda sobre un servicio</option>
+                <option>Facturación</option>
+                <option>Otro</option>
+              </CampoFormulario>
+            </div>
+            <CampoFormulario
+              id="mensaje"
+              como="textarea"
+              etiqueta="Mensaje"
+              obligatorio
+              maxLength={800}
+              placeholder="Cuéntanos qué necesitas. Si es una cotización, incluye el tipo de lugar y su tamaño."
+              value={valores.mensaje}
+              onChange={manejarCambio}
+              onBlur={manejarBlur}
+              error={errores.mensaje}
+              extra={
+                <p className="ayuda" aria-live="polite">
+                  {valores.mensaje.length} de 800
+                </p>
+              }
+            />
+            <button type="submit" className="btn btn-acento">
+              Enviar mensaje
             </button>
             <p role="status" className={enviado ? styles.exito : "solo-lector"}>
               {enviado && <Icono nombre="ok" tamano={20} />}
@@ -93,41 +119,41 @@ export default function Contacto() {
         </section>
 
         <aside className={styles.lateral} aria-label="Datos de contacto">
-          <section className={`tarjeta ${styles.datos}`} aria-labelledby="titulo-datos">
-            <h2 id="titulo-datos">Datos de contacto</h2>
-            <address>
-              <ul role="list">
-                <li>
-                  <span className={styles.icono}><Icono nombre="telefono" tamano={20} /></span>
-                  <div><strong>Teléfono</strong><a href="tel:+528100000000">(81) 0000 0000</a></div>
-                </li>
-                <li>
-                  <span className={styles.icono}><Icono nombre="correo" tamano={20} /></span>
-                  <div><strong>Correo</strong><a href="mailto:contacto@airkon.example">contacto@airkon.example</a></div>
-                </li>
-                <li>
-                  <span className={styles.icono}><Icono nombre="ubicacion" tamano={20} /></span>
-                  <div><strong>Ubicación</strong><span>Monterrey, Nuevo León</span></div>
-                </li>
-                <li>
-                  <span className={styles.icono}><Icono nombre="reloj" tamano={20} /></span>
-                  <div><strong>Horario</strong><span>Lunes a sábado, 8:00 a 18:00</span></div>
-                </li>
-              </ul>
-            </address>
-          </section>
+          <PlacaDatos
+            titulo="Datos de contacto"
+            nivelTitulo="h2"
+            encabezadoOscuro
+            unaColumna
+            datos={[
+              {
+                dato: "Teléfono",
+                valor: (
+                  <a href="tel:+528100000000" className={`expandido ${styles.telefono}`}>
+                    (81) 0000 0000
+                  </a>
+                ),
+              },
+              { dato: "Correo", valor: <a href="mailto:contacto@airkon.example">contacto@airkon.example</a> },
+              { dato: "Ubicación", valor: <address>Monterrey, Nuevo León</address> },
+              { dato: "Horario", valor: "Lunes a sábado, de 8:00 a 18:00" },
+            ]}
+          />
+        </aside>
+      </div>
 
-          <section className={styles.faq} aria-labelledby="titulo-faq">
-            <h2 id="titulo-faq">Preguntas frecuentes</h2>
+      <section className={styles.faq} aria-labelledby="titulo-faq">
+        <div className="contenedor">
+          <h2 id="titulo-faq">Preguntas frecuentes</h2>
+          <div className={styles.preguntas}>
             {preguntas.map((item) => (
-              <details key={item.p} className="tarjeta">
+              <details key={item.p}>
                 <summary>{item.p}</summary>
                 <p>{item.r}</p>
               </details>
             ))}
-          </section>
-        </aside>
-      </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
