@@ -6,15 +6,13 @@ import AyudanteCapacidad from "../components/inicio/AyudanteCapacidad";
 import { servicios } from "../data/servicios";
 import { equipos } from "../data/equipos";
 import { useSolicitudes } from "../context/SolicitudesContext";
-import { describirEquipo, describirTipo, textoHorario } from "../utils/registros";
-import { fechaCorta } from "../utils/formato";
+import { datosEtiqueta } from "../utils/registros";
 import { useTituloPagina } from "../hooks/useTituloPagina";
 import styles from "./Inicio.module.css";
 
-const pasosHechos = { pendiente: 1, proceso: 2, completada: 3 };
-
 /*
  Etiqueta de ejemplo para quien no ha verificado su correo.
+ El folio SV-2026-0000 no corresponde a ningún cliente.
  */
 const ejemplo = {
   titulo: "Folio de servicio · ejemplo",
@@ -28,25 +26,6 @@ const ejemplo = {
   hechos: 2,
   estado: "proceso",
 };
-
-// Convierte un registro real en los datos que muestra la etiqueta. 
-function etiquetaDeRegistro(r) {
-  const esCompra = r.tipo === "compra";
-  return {
-    titulo: esCompra ? "Folio de pedido" : "Folio de servicio",
-    folio: r.folio,
-    datos: [
-      { dato: "Equipo", valor: describirEquipo(r) },
-      { dato: esCompra ? "Tipo" : "Servicio", valor: describirTipo(r) },
-      { dato: esCompra ? "Entrega" : "Visita", valor: `${fechaCorta(r.fecha)}, ${textoHorario(r.horario).split(" (")[0]}` },
-    ],
-    pasos: esCompra
-      ? ["Pedido recibido", "Entrega confirmada por teléfono", r.instalar ? "Equipo instalado" : "Equipo entregado"]
-      : ["Solicitud recibida", "Visita confirmada por teléfono", "Servicio realizado"],
-    hechos: pasosHechos[r.estado],
-    estado: r.estado,
-  };
-}
 
 const proceso = [
   {
@@ -76,7 +55,7 @@ export default function Inicio() {
   // Solo hay registros si el cliente ya verificó su correo
   const { misSolicitudes } = useSolicitudes();
   const reciente = misSolicitudes[0];
-  const etiqueta = reciente ? etiquetaDeRegistro(reciente) : ejemplo;
+  const etiqueta = reciente ? datosEtiqueta(reciente) : ejemplo;
 
   return (
     <>
@@ -87,7 +66,7 @@ export default function Inicio() {
               <Icono nombre="ubicacion" tamano={18} />
               Monterrey y su área metropolitana
             </p>
-            <h1 id="titulo-inicio">Que el calor de Nuevo León se quede afuera.</h1>
+            <h1 id="titulo-inicio">Que el calor de Monterrey se quede afuera.</h1>
             <p className={styles.bajada}>
               Instalamos, damos mantenimiento y reparamos aire acondicionado en casas, comercios e industria. Pide tu
               servicio en línea y sigue cada visita con su folio.
@@ -101,7 +80,7 @@ export default function Inicio() {
               </Link>
             </div>
             <p className={styles.llamar}>
-              ¿Prefieres llamar? <a href="tel:+528110454881">(81) 1045 4881</a>
+              ¿Prefieres llamar? <a href="tel:+528100000000">(81) 0000 0000</a>
             </p>
           </div>
 
@@ -137,7 +116,8 @@ export default function Inicio() {
         </div>
       </section>
 
-      <section className={styles.equipos} aria-labelledby="titulo-capacidad">
+      {/* AYUDANTE DE CAPACIDAD + PLACA DE DATOS */}
+      <section id="capacidad" tabIndex={-1} className={styles.equipos} aria-labelledby="titulo-capacidad">
         <div className={`contenedor ${styles.bloque}`}>
           <AyudanteCapacidad totalEquipos={equipos.length} />
         </div>
