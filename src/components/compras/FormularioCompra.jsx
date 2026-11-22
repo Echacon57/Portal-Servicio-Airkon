@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import CampoFormulario from "../ui/CampoFormulario";
 import GrupoOpciones from "../ui/GrupoOpciones";
 import ResumenErrores from "../ui/ResumenErrores";
+import EstadoFeriados from "../ui/EstadoFeriados";
 import Icono from "../ui/Icono";
 import ResumenCompra from "./ResumenCompra";
 import { useFormulario } from "../../hooks/useFormulario";
+import { useFeriados } from "../../hooks/useFeriados";
 import { ubicaciones, horarios, metodosPago, CARGO_RETIRO } from "../../data/servicios";
 import { calcularPedido, moneda } from "../../utils/precios";
 import {
@@ -35,7 +37,7 @@ const etiquetas = {
   terminos: "Aviso de privacidad",
 };
 
-function validar(v) {
+function validar(v, feriados) {
   const cantidad = Number(v.cantidad);
   return limpiarErrores({
     cantidad:
@@ -44,7 +46,7 @@ function validar(v) {
         : "",
     ubicacion: v.instalar ? requerido(v.ubicacion, "Indica dónde se instalará el equipo.") : "",
     direccion: validarDireccion(v.direccion),
-    fecha: validarFechaFutura(v.fecha),
+    fecha: validarFechaFutura(v.fecha, feriados),
     horario: requerido(v.horario, "Elige un horario."),
     ...validarContacto(v),
     metodoPago: requerido(v.metodoPago, "Elige cómo quieres pagar."),
@@ -57,6 +59,8 @@ function validar(v) {
  El resumen de costos se recalcula en cada cambio (onChange).
  */
 export default function FormularioCompra({ equipo, onEnviar }) {
+  // Días feriados desde la API externa: se usan para validar la fecha
+  const feriados = useFeriados();
   const { valores, errores, asignar, manejarCambio, manejarBlur, validarTodo } = useFormulario(
     {
       cantidad: "1",
@@ -73,7 +77,7 @@ export default function FormularioCompra({ equipo, onEnviar }) {
       metodoPago: "",
       terminos: false,
     },
-    validar
+    (v) => validar(v, feriados.feriados)
   );
   const [intento, setIntento] = useState(0);
   const [enviando, setEnviando] = useState(false);
@@ -249,7 +253,7 @@ export default function FormularioCompra({ equipo, onEnviar }) {
               onChange={manejarCambio}
               onBlur={manejarBlur}
               error={errores.fecha}
-              ayuda="De lunes a sábado. La confirmamos por teléfono."
+              ayuda="De lunes a sábado, excepto días feriados. La confirmamos por teléfono."
             />
             <GrupoOpciones
               nombre="horario"
@@ -263,6 +267,7 @@ export default function FormularioCompra({ equipo, onEnviar }) {
               error={errores.horario}
             />
           </div>
+          <EstadoFeriados {...feriados} />
         </fieldset>
 
         {/* 3. Contacto */}

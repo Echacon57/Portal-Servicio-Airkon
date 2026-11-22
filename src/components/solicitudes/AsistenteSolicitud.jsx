@@ -13,6 +13,7 @@ import PasoDetalles, { conFalla, MAX_DETALLES } from "./pasos/PasoDetalles";
 import PasoVisita from "./pasos/PasoVisita";
 import PasoRevision from "./pasos/PasoRevision";
 import { useFormulario } from "../../hooks/useFormulario";
+import { useFeriados } from "../../hooks/useFeriados";
 import {
   validarContacto,
   validarDireccion,
@@ -23,10 +24,7 @@ import {
 } from "../../utils/validaciones";
 import styles from "./AsistenteSolicitud.module.css";
 
-/**
- * Definición de los pasos. `campos` son los que se validan al pulsar "Siguiente".
- * `titulo` aparece en la barra de progreso; `pregunta` es el encabezado del paso.
- */
+
 const PASOS = [
   {
     id: "servicio",
@@ -39,7 +37,7 @@ const PASOS = [
     id: "equipo",
     titulo: "Tu equipo",
     pregunta: "Cuéntanos de tu equipo",
-    descripcion: "No necesitas conocer todos los datos: elige “No sé” y nuestro técnico lo revisa en la visita.",
+    descripcion: "No necesitas conocer todos los datos: elige “No estoy seguro(a)” y nuestro técnico lo revisa en la visita.",
     campos: ["tipoEquipo", "marca", "ubicacion"],
   },
   {
@@ -86,9 +84,9 @@ const ETIQUETAS = {
   tipoEquipo: "",
   marca: "",
   ubicacion: "",
-  capacidad: "No sé",
-  refrigerante: "No sé",
-  antiguedad: "No sé",
+  capacidad: "No estoy seguro(a)",
+  refrigerante: "No estoy seguro(a)",
+  antiguedad: "No estoy seguro(a)",
   modelo: "",
   equipoId: "",
   sintomas: [],
@@ -103,13 +101,13 @@ const ETIQUETAS = {
   terminos: false,
 };
 
-function validar(v) {
+function validar(v, feriados) {
   const falla = conFalla(v.servicio);
   const largo = v.detalles.trim().length;
   return limpiarErrores({
     servicio: requerido(v.servicio, "Elige el tipo de servicio que necesitas."),
-    tipoEquipo: requerido(v.tipoEquipo, "Elige el tipo de equipo o la opción “No sé”."),
-    marca: requerido(v.marca, "Elige la marca o la opción “No sé”."),
+    tipoEquipo: requerido(v.tipoEquipo, "Elige el tipo de equipo o la opción “No estoy seguro(a)”."),
+    marca: requerido(v.marca, "Elige la marca o la opción “No estoy seguro(a)”."),
     ubicacion: requerido(v.ubicacion, "Indica dónde está el equipo."),
     sintomas:
       falla && v.sintomas.length === 0 && largo < 10
@@ -117,7 +115,7 @@ function validar(v) {
         : "",
     detalles: largo > MAX_DETALLES ? `La descripción no puede pasar de ${MAX_DETALLES} caracteres.` : "",
     direccion: validarDireccion(v.direccion),
-    fecha: validarFechaFutura(v.fecha),
+    fecha: validarFechaFutura(v.fecha, feriados),
     horario: requerido(v.horario, "Elige un horario."),
     ...validarContacto(v),
     terminos: v.terminos ? "" : "Debes aceptar el aviso de privacidad.",
@@ -158,7 +156,9 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
     return { valores: VALORES_VACIOS, paso: 0, recuperado: false };
   });
 
-  const form = useFormulario(inicio.valores, validar);
+  // Días feriados desde la API externa: se usan para validar la fecha de visita
+  const feriados = useFeriados();
+  const form = useFormulario(inicio.valores, (v) => validar(v, feriados.feriados));
   const [paso, setPaso] = useState(inicio.paso);
   const [recuperado, setRecuperado] = useState(inicio.recuperado);
   const [desdeRevision, setDesdeRevision] = useState(false);
@@ -289,7 +289,7 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
   const v = form.valores;
   const tipoElegido = buscarPorId(tiposEquipo, v.tipoEquipo);
   const resumenEquipo = tipoElegido
-    ? [tipoElegido.id === "nose" ? "Tipo por confirmar" : tipoElegido.nombre, v.marca && v.marca !== "No sé" ? v.marca : ""]
+    ? [tipoElegido.id === "nose" ? "Tipo por confirmar" : tipoElegido.nombre, v.marca && v.marca !== "No estoy seguro(a)" ? v.marca : ""]
         .filter(Boolean)
         .join(", ")
     : "";
@@ -333,7 +333,7 @@ export default function AsistenteSolicitud({ valoresIniciales, equipoCatalogo, o
                 <PasoEquipo form={form} foto={foto} onCambiarFoto={setFoto} equipoCatalogo={equipoCatalogo} />
               )}
               {actual.id === "detalles" && <PasoDetalles form={form} />}
-              {actual.id === "visita" && <PasoVisita form={form} />}
+              {actual.id === "visita" && <PasoVisita form={form} feriados={feriados} />}
               {actual.id === "revision" && <PasoRevision form={form} foto={foto} onEditar={editarDesdeRevision} />}
             </section>
 
