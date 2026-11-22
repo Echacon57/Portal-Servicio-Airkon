@@ -1,27 +1,33 @@
+import EtiquetaContorno from "../ui/EtiquetaContorno";
 import IlustracionEquipo from "../equipos/IlustracionEquipo";
 import { moneda } from "../../utils/precios";
 import styles from "./ResumenCompra.module.css";
 
-/**
- * Resumen de costos del pedido. Se recalcula cada vez que cambia el formulario.
- *
- * @param {{ equipo: object, calculo: {lineas:{concepto:string, importe:number}[], subtotal:number, iva:number, total:number} }} props
+/*
+ Resumen de costos del pedido, en una etiqueta en blanco: todavía no es
+ un folio real. Se recalcula cada vez que cambia el formulario.
  */
 export default function ResumenCompra({ equipo, calculo }) {
   return (
-    <aside className={`tarjeta ${styles.resumen}`} aria-labelledby="titulo-resumen">
-      <h2 id="titulo-resumen">Resumen de tu pedido</h2>
+    <EtiquetaContorno as="aside" etiquetadoPor="titulo-resumen" className={styles.resumen}>
+      <div>
+        <h2 id="titulo-resumen">Resumen de tu pedido</h2>
+        <p className={styles.sub}>El folio se genera cuando confirmas.</p>
+      </div>
+
       <div className={styles.equipo}>
         <span className={styles.imagen}>
-          <IlustracionEquipo forma={equipo.forma} ancho={72} />
+          <IlustracionEquipo forma={equipo.forma} ancho={56} />
         </span>
         <div>
           <p className={styles.nombre}>{equipo.nombre}</p>
-          <p className={styles.marca}>{equipo.marca} · {equipo.toneladas} TR</p>
+          <p className={styles.marca}>
+            {equipo.marca}, {equipo.toneladas} TR
+          </p>
         </div>
       </div>
 
-      <table className={styles.tabla}>
+      <table className={`cifras ${styles.tabla}`}>
         <caption className="solo-lector">Desglose de costos</caption>
         <thead className="solo-lector">
           <tr>
@@ -49,9 +55,9 @@ export default function ResumenCompra({ equipo, calculo }) {
 
       <div className={styles.total} aria-live="polite" aria-atomic="true">
         <span>Total</span>
-        <strong>{moneda(calculo.total)}</strong>
+        <strong className="expandido cifras">{moneda(calculo.total)}</strong>
       </div>
-      <p className={styles.nota}>No se cobra nada en línea. Un asesor te llamará para confirmar el pedido y la forma de pago.</p>
-    </aside>
+      <p className={styles.nota}>No se cobra nada en línea. Un asesor te llama para confirmar el pedido y la forma de pago.</p>
+    </EtiquetaContorno>
   );
 }

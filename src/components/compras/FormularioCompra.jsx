@@ -52,11 +52,9 @@ function validar(v) {
   });
 }
 
-/**
- * Formulario para comprar un equipo con instalación opcional.
- * El resumen de costos se recalcula en cada cambio (onChange).
- *
- * @param {{ equipo: object, onEnviar: (datos: object) => void }} props
+/*
+ Formulario para comprar un equipo con instalación opcional.
+ El resumen de costos se recalcula en cada cambio (onChange).
  */
 export default function FormularioCompra({ equipo, onEnviar }) {
   const { valores, errores, asignar, manejarCambio, manejarBlur, validarTodo } = useFormulario(
@@ -117,22 +115,20 @@ export default function FormularioCompra({ equipo, onEnviar }) {
   const opcionesUbicacion = ubicaciones.map((u) => ({
     valor: u.id,
     titulo: u.nombre,
-    descripcion: u.descripcion,
-    extra: u.extra > 0 ? `+ ${moneda(u.extra)} por equipo` : "Sin cargo extra",
+    descripcion: u.extra > 0 ? `Más ${moneda(u.extra)} por equipo` : "Sin cargo extra",
   }));
 
   return (
     <div className={styles.distribucion}>
       <ResumenCompra equipo={equipo} calculo={calculo} />
 
-      <form id="form-compra" className={`tarjeta ${f.tarjetaFormulario}`} onSubmit={manejarEnvio} noValidate>
+      <form id="form-compra" className={f.tarjetaFormulario} onSubmit={manejarEnvio} noValidate>
         <ResumenErrores errores={intento > 0 ? errores : {}} etiquetas={etiquetas} intento={intento} />
 
         {/* 1. Pedido */}
         <fieldset className={f.seccion}>
           <legend className={f.leyenda}>
-            <span className={f.numero} aria-hidden="true">1</span>
-            Tu pedido
+            Equipo e instalación
           </legend>
 
           <div>
@@ -185,18 +181,27 @@ export default function FormularioCompra({ equipo, onEnviar }) {
             )}
           </div>
 
-          <label className={`casilla ${f.radioSimple}`}>
-            <input type="checkbox" name="instalar" checked={valores.instalar} onChange={manejarCambio} />
-            <span>
-              Incluir instalación ({moneda(equipo.precioInstalacion)} por equipo)
-            </span>
-          </label>
+          <GrupoOpciones
+            nombre="instalar"
+            leyenda="¿Incluye instalación?"
+            leyendaOculta
+            opciones={[
+              {
+                valor: "si",
+                titulo: "Entrega e instalación",
+                descripcion: `Desde ${moneda(equipo.precioInstalacion)} por equipo`,
+              },
+              { valor: "no", titulo: "Solo entrega", descripcion: "Tú consigues quien lo instale" },
+            ]}
+            valor={valores.instalar ? "si" : "no"}
+            onChange={(e) => asignar("instalar", e.target.value === "si")}
+          />
 
           {valores.instalar ? (
             <>
               <GrupoOpciones
                 nombre="ubicacion"
-                leyenda="¿Dónde se instalará el equipo?"
+                leyenda="Dónde se instalará"
                 obligatorio
                 opciones={opcionesUbicacion}
                 valor={valores.ubicacion}
@@ -204,9 +209,9 @@ export default function FormularioCompra({ equipo, onEnviar }) {
                 onBlur={manejarBlur}
                 error={errores.ubicacion}
               />
-              <label className={`casilla ${f.radioSimple}`}>
+              <label className="casilla">
                 <input type="checkbox" name="retiro" checked={valores.retiro} onChange={manejarCambio} />
-                <span>Es un reemplazo: retirar el equipo anterior (+ {moneda(CARGO_RETIRO)} por equipo)</span>
+                <span>Es un reemplazo: retirar el equipo anterior (más {moneda(CARGO_RETIRO)} por equipo)</span>
               </label>
             </>
           ) : (
@@ -220,7 +225,6 @@ export default function FormularioCompra({ equipo, onEnviar }) {
         {/* 2. Entrega */}
         <fieldset className={f.seccion}>
           <legend className={f.leyenda}>
-            <span className={f.numero} aria-hidden="true">2</span>
             {valores.instalar ? "Entrega e instalación" : "Entrega"}
           </legend>
           <CampoFormulario
@@ -264,8 +268,7 @@ export default function FormularioCompra({ equipo, onEnviar }) {
         {/* 3. Contacto */}
         <fieldset className={f.seccion}>
           <legend className={f.leyenda}>
-            <span className={f.numero} aria-hidden="true">3</span>
-            Datos de contacto
+            Tus datos
           </legend>
           <div className={f.rejilla}>
             <CampoFormulario id="nombre" etiqueta="Nombre completo" obligatorio autoComplete="name"
@@ -284,7 +287,6 @@ export default function FormularioCompra({ equipo, onEnviar }) {
         {/* 4. Pago */}
         <fieldset className={f.seccion}>
           <legend className={f.leyenda}>
-            <span className={f.numero} aria-hidden="true">4</span>
             Forma de pago
           </legend>
           <GrupoOpciones
