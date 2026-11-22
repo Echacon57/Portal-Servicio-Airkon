@@ -9,10 +9,11 @@ Aplicación web interactiva de una empresa de aire acondicionado. El cliente pue
 Proyecto final de **Programación Web**, FCFM UANL (agosto-diciembre 2026).
 
 - **Autores:** Emiliano Chacón Álvarez, Regina Hernández Rodríguez
-- **Sitio publicado:** (Aqui va el link cuando lo publiquemos)
+- **Sitio publicado:** [Portal](https://airkon.netlify.app/)
+- **Repositorio:** https://github.com/Echacon57/Portal-Servicio-Airkon.git
 - **Tecnologías:** React 18, Vite 5, React Router 6, CSS Modules, localStorage
 
-> Proyecto académico. Los datos de contacto y el catálogo son de ejemplo.
+> Proyecto escolar. Los datos de contacto y el catálogo son de ejemplo.
 
 ---
 
@@ -70,12 +71,38 @@ src/
 
 ## Criterios de la rúbrica que se cumplen
 
-### 1. Diseño
-Bosquejo de alta fidelidad de 5 pantallas en escritorio y móvil, con guía de estilos (`docs/bosquejos/`).
-- **Azul marino `#0B2A4F`** como color principal: transmite confianza y se asocia con frío y climatización.
-- **Amarillo `#FFC72C`** solo como acento para la acción principal, así el ojo va directo a "Solicitar servicio".
-- **Montserrat** para títulos (geométrica y técnica) e **Inter** para texto (muy legible en pantallas pequeñas).
-- El orden de las secciones sigue el objetivo del sitio: entender qué hace la empresa → elegir servicio o equipo → solicitar → dar seguimiento.
+### Diseño
+
+## Dirección visual: "Etiqueta y placa"
+La identidad del portal se inspira en dos objetos que ven a diario los técnicos de HVAC:
+la **etiqueta amarilla de servicio** que se cuelga en el equipo y la **placa de datos** metálica
+con sus especificaciones.
+
+- **Etiqueta:** folios, resumen de compra, resumen de la solicitud y detalle de "Mis solicitudes"
+  (amarilla si sigue abierta, gris si ya se completó).
+- **Placa:** tarjetas del catálogo y ficha técnica, con marco gris y remaches.
+- Una sola acción amarilla por pantalla, para que la acción principal siempre se distinga.
+
+## Paleta
+| Token | Color | Uso |
+|---|---|---|
+| `--azul-marino` | #0B2A4F | Texto de títulos, botones primarios, bordes |
+| `--azul-noche` | #071B34 | Fondos oscuros |
+| `--amarillo` | #FFC72C | Acción principal y folios abiertos (9.2:1 con marino) |
+| `--amarillo-papel` | #FFF6DC | Cuerpo de la etiqueta de detalle |
+| `--gris-claro` (lámina) | #E9EEF4 | Bandas de sección |
+| `--placa` | #DCE3EB | Placas de datos y folios cerrados |
+| `--remache` | #A9B7C7 | Remaches y divisiones |
+| `--gris-oscuro` (tinta) | #17222F | Texto principal |
+
+Todos los pares de texto y fondo cumplen WCAG AA (4.5:1 o más). Los tokens están en
+`src/styles/variables.css`.
+
+## Tipografía
+**Archivo** (fuente variable). Los títulos usan el ancho expandido (125 %) para imitar
+las letras estampadas de las placas. Se sirve desde `public/fonts` y se precarga en
+`index.html` para evitar saltos de diseño (CLS 0).
+
 
 ### 2. Usabilidad
 | Heurística | Dónde se aplica |
@@ -95,8 +122,6 @@ Resultados en `docs/lighthouse/` y `docs/axe/`.
 
 ### 4. Diseño responsivo
 - Enfoque **mobile-first**: los estilos base son para 390 px y las media queries `min-width: 768px` y `1024px` adaptan a tableta y escritorio.
-
-
 
 ### 5. Framework y componentes
 React con componentes reutilizables que reciben datos por **props** (`TarjetaEquipo`, `CampoFormulario`, `GrupoOpciones`, `BarraProgreso`, `Modal`...). `GrupoOpciones` y `CampoFormulario` se usan en los tres formularios. Estado local con `useState`, estado global con **Context API**, valores derivados con `useMemo`, referencias con `useRef` (gestión del foco), efectos con `useEffect` y **hooks personalizados** (`useFormulario`, `useLocalStorage`, `useTituloPagina`). Cada paso del asistente es un componente propio.
@@ -139,14 +164,14 @@ Tres formularios con validación propia:
 
 ---
 
-## Seguridad:
+### Seguridad:
 
 - **Confirmación protegida:** `/solicitud-enviada/:folio` solo muestra datos si el registro se acaba de crear en esa pestaña o si es del cliente verificado. Si no, muestra el mismo aviso exista o no el folio.
 - **Inicio:** la tarjeta "Seguimiento en línea" ya no muestra folios sin sesión.
 - **Límites:** máximo 5 enlaces por hora y espera de 30 segundos para reenviar.
 - El correo se muestra parcialmente oculto (`m•••a@correo.com`).
 
-**Qué es simulación y cómo sería en producción**
+**Qué es la simulación y cómo sería en producción**
 
 | En este proyecto | En producción |
 |---|---|
@@ -159,13 +184,12 @@ Tres formularios con validación propia:
 
 ---
 
-## Pruebas de accesibilidad y rendimiento
+### Pruebas de accesibilidad y rendimiento
 
 Se usaron **Lighthouse** (Chrome DevTools) y **axe DevTools** en las rutas principales, en móvil y escritorio.
 
-### Resultados finales
-
-### LightHouse
+## Resultados finales
+# LightHouse
 Medido con Lighthouse 13 en Chrome (ventana de incógnito) sobre la versión compilada
 (`npm run build` + `npm run preview`). Los reportes completos están en [`docs/lighthouse/`](docs/lighthouse/).
 
@@ -185,12 +209,10 @@ Medido con Lighthouse 13 en Chrome (ventana de incógnito) sobre la versión com
 **Cómo leer las métricas:** LCP es cuánto tarda en verse el contenido principal (bueno: menos de 2.5 s),
 TBT es cuánto tiempo la página no responde mientras carga (bueno: menos de 200 ms) y CLS es cuánto se mueve el contenido al cargar (bueno: menos de 0.1).
 
-### Axe DevTools
+# Axe DevTools
 
 Escaneo con la extensión **axe DevTools** en Chrome, con la configuración **WCAG 2.1 AA**
 y **mejores prácticas activadas**, sobre la versión compilada (`npm run preview`).
-Como Axe solo revisa lo que está en pantalla, también se escanearon los estados
-interactivos (menús, paneles, modales y formularios con errores).
 
 **Resultado: 0 incidencias en todas las páginas** (0 críticas, 0 graves, 0 moderadas, 0 leves).
 
@@ -208,6 +230,18 @@ Durante el desarrollo, Axe sí detectó problemas, que se corrigieron antes de e
 | Lighthouse | `robots-txt` inválido (SEO 91) | Se agregó `public/robots.txt` |
 | Revisión visual | La leyenda de los fieldsets quedaba encima de la línea divisoria | `float: left` en la leyenda para que quede dentro del contenido |
 | Revisión visual | Los botones de la tarjeta de equipo se cortaban en 3 columnas | Se apilaron: "Comprar" arriba y "Ver detalle" abajo |
+
+### Uso de herramientas de IA
+Durante el desarrollo se utilizaron asistentes de IA como apoyo:
+- **Claude (Anthropic):** propuesta de la dirección visual "Etiqueta y placa", paleta, ilustraciones SVG, implementación del rediseño en los componentes, y explicación de errores.
+- **GitHub Copilot:** propuesta de rediseño del catálogo (PR `copilot/rediseno-catalogo`).
+
+Las decisiones del proyecto (funcionalidades, flujo de compra y solicitud, seguridad del acceso con enlace, qué cambios aceptar o ajustar) 
+fueron por parte del equipo, además de las revisiones, pruebas y adaptaciones de los códigos. 
+
+### Créditos
+- Tipografía **Archivo** de Omnibus-Type, bajo SIL Open Font License 1.1 (`public/fonts/OFL.txt`).
+- Airkon es una empresa real. Este portal es un proyecto académico y no es un sitio oficial.
 
 ---
 
