@@ -1,10 +1,10 @@
-import Icono from "./Icono";
 import styles from "./BarraProgreso.module.css";
 
-/**
- * Indicador de progreso de un formulario por pasos.
- 
- * @param {{ pasos: {id:string, titulo:string}[], actual: number, onIrA: (indice:number) => void }} props
+/*
+ Progreso de un formulario por pasos, en segmentos.
+ - Barra de progreso con porcentaje y paso actual.
+ - Lista de pasos con título y estado (completado, actual, pendiente).
+ - Botón para ir a un paso completado.
  */
 export default function BarraProgreso({ pasos, actual, onIrA }) {
   const total = pasos.length;
@@ -12,26 +12,26 @@ export default function BarraProgreso({ pasos, actual, onIrA }) {
 
   return (
     <nav className={styles.progreso} aria-label="Progreso de la solicitud">
-      <div className={styles.encabezado}>
-        <p className={styles.pasoActual}>
-          Paso {actual + 1} de {total}: <strong>{pasos[actual].titulo}</strong>
-        </p>
-        <p className={styles.porcentaje} aria-hidden="true">
-          {porcentaje} % completado
-        </p>
-      </div>
+      <p className={styles.texto}>
+        <strong>
+          Paso {actual + 1} de {total}
+        </strong>
+        <span className={styles.nombreActual}>: {pasos[actual].titulo}</span>
+        <span className={styles.porcentaje} aria-hidden="true">
+          {" "}
+          · {porcentaje} % completado
+        </span>
+      </p>
 
       <div
-        className={styles.barra}
+        className="solo-lector"
         role="progressbar"
         aria-label="Avance de la solicitud"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={porcentaje}
         aria-valuetext={`${porcentaje} % completado, paso ${actual + 1} de ${total}`}
-      >
-        <span className={styles.relleno} style={{ width: `${porcentaje}%` }} />
-      </div>
+      />
 
       <ol role="list" className={styles.pasos}>
         {pasos.map((paso, i) => {
@@ -39,10 +39,15 @@ export default function BarraProgreso({ pasos, actual, onIrA }) {
           const esActual = i === actual;
           const contenido = (
             <>
-              <span className={styles.circulo} aria-hidden="true">
-                {completado ? <Icono nombre="check" tamano={16} /> : i + 1}
+              <span className={styles.barra} aria-hidden="true" />
+              <span className={styles.nombre}>
+                {completado && (
+                  <span className={styles.check} aria-hidden="true">
+                    ✓{" "}
+                  </span>
+                )}
+                {paso.titulo}
               </span>
-              <span className={styles.nombre}>{paso.titulo}</span>
               <span className="solo-lector">
                 {completado ? " (completado)" : esActual ? " (paso actual)" : " (pendiente)"}
               </span>
