@@ -1,29 +1,60 @@
 .banda {
   background: var(--gris-claro);
-  border-bottom: 1px solid var(--gris-borde);
+  border-bottom: 2px solid var(--azul-marino);
 }
 .interior {
-  padding-block: 28px;
+  padding-block: 20px 28px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
+}
+
+.fila {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 .textos {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.textos p {
-  font-size: 1.0625rem;
-  color: var(--gris-medio);
-  max-width: 640px;
+.textos h1 {
+  font-size: clamp(2.125rem, 2.6vw + 1.3rem, 3.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+.textos p,
+.lateral {
+  max-width: 54ch;
+  color: var(--texto-secundario);
+}
+.lateral a,
+.textos p a {
+  font-weight: 700;
+  color: var(--azul-marino);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.accion {
+  align-self: flex-start;
 }
 
 @media (min-width: 768px) {
   .interior {
-    padding-block: 40px;
+    padding-block: 24px 36px;
+  }
+  .fila {
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
+    gap: 32px;
+  }
+  .alLado .lateral {
+    max-width: 44ch;
+    padding-bottom: 6px;
+  }
+  .accion {
+    align-self: flex-end;
   }
 }

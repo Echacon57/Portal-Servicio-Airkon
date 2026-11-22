@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "../ui/Logo";
+import { useSesion } from "../../context/SesionContext";
 import Icono from "../ui/Icono";
 import styles from "./Navbar.module.css";
 
+/** Enlaces del menú principal. */
 export const enlacesMenu = [
   { ruta: "/", texto: "Inicio" },
   { ruta: "/catalogo", texto: "Catálogo" },
@@ -11,19 +13,30 @@ export const enlacesMenu = [
   { ruta: "/contacto", texto: "Contacto" },
 ];
 
-/**
+
+function varianteAccion(ruta, verificado) {
+  if (ruta.startsWith("/solicitar")) return "actual";
+  if (ruta.startsWith("/solicitud-enviada")) return "oculto";
+  if (ruta === "/mis-solicitudes" && verificado) return "solido";
+  return "contorno";
+}
+
+/*
  Barra de navegación sobre el campo azul marino.
+ - Escritorio: enlaces + botón "Solicitar servicio" (la acción principal).
+ - Móvil: botón "Menú" que despliega los enlaces; se cierra al elegir
+   una opción o con Esc. NavLink agrega aria-current="page".
  */
 export default function Navbar() {
   const [abierto, setAbierto] = useState(false);
   const { pathname } = useLocation();
+  const { correoVerificado } = useSesion();
+  const variante = varianteAccion(pathname, Boolean(correoVerificado));
 
-  // Cerrar el menú cada vez que cambia la ruta
   useEffect(() => {
     setAbierto(false);
   }, [pathname]);
 
-  // Cerrar con la tecla Escape
   useEffect(() => {
     if (!abierto) return;
     function alPresionar(evento) {
@@ -61,9 +74,19 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <NavLink to="/solicitar" className={`btn btn-acento ${styles.accion}`}>
-            Solicitar servicio
-          </NavLink>
+          {variante === "actual" && (
+            <NavLink to="/solicitar" className={`${styles.enlace} ${styles.accionActual}`}>
+              Solicitar servicio
+            </NavLink>
+          )}
+          {(variante === "solido" || variante === "contorno") && (
+            <NavLink
+              to="/solicitar"
+              className={`btn ${variante === "solido" ? "btn-acento" : "btn-contorno-acento"} ${styles.accion}`}
+            >
+              Solicitar servicio
+            </NavLink>
+          )}
         </nav>
       </div>
     </header>

@@ -1,9 +1,8 @@
 import styles from "./FiltroChips.module.css";
 
-/**
- * Botones para filtrar una lista.
- * @param {{ etiqueta: string, opciones: {id:string, texto:string}[], activo: string,
- *           conteos: Record<string, number>, onCambiar: (id: string) => void }} props
+/*
+ Botones tipo "chip" para filtrar una lista.
+ aria-pressed indica cuál está activo (no depende solo del color).
  */
 export default function FiltroChips({ etiqueta, opciones, activo, conteos, onCambiar }) {
   return (

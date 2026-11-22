@@ -1,130 +1,39 @@
-.footer {
-  background: var(--azul-marino);
-  color: var(--texto-claro);
-  font-size: 0.9375rem;
-}
-
-.cierre {
-  padding-block: 56px 40px;
-  border-bottom: 2px solid var(--linea-oscura);
+/* Pestañas rectangulares: la activa en marino (aria-pressed lo indica también) */
+.grupo {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px;
+  margin: -4px;
 }
-.cierreTexto {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.cierreTexto h2 {
-  color: var(--blanco);
-  font-size: 1.875rem;
-  font-weight: 900;
-  line-height: 1.05;
-  max-width: 16ch;
-}
-.cierreTexto p {
-  font-size: 1.0625rem;
-  max-width: 44ch;
-}
-.cierreBoton {
-  min-height: 56px;
-  padding: 0 32px;
-  font-size: 1.125rem;
-}
-
-.columnas,
-.compacto {
-  padding-block: 40px 32px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-}
-
-.marca {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.marca p {
-  max-width: 32ch;
-}
-
-.columna ul {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.columna a {
+.chip {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  color: var(--texto-claro);
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 2px solid var(--azul-marino);
+  border-radius: var(--radio-boton);
+  background: var(--blanco);
+  color: var(--azul-marino);
+  font: 700 0.9375rem/1 var(--fuente-texto);
+  white-space: nowrap;
+  cursor: pointer;
+  flex: none;
 }
-.columna a:hover {
+.chip:hover {
+  background: var(--escarcha);
+}
+.chip[aria-pressed="true"] {
+  background: var(--azul-marino);
   color: var(--blanco);
-  text-decoration: underline;
 }
-.columna address {
-  font-style: normal;
-  min-height: 36px;
-  display: flex;
-  align-items: center;
+.numero {
+  font-variant-numeric: tabular-nums;
 }
-
-.titulo {
-  font: 700 0.9375rem/1.2 var(--fuente-texto);
-  font-stretch: 100%;
-  color: var(--blanco);
-  margin-bottom: 6px;
+.numero::before {
+  content: "(";
 }
-
-.columna a.telefono {
-  color: var(--blanco);
-  font-weight: 700;
-}
-.columna a.subrayado {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.legal {
-  padding-block: 0 32px;
-  font-size: 0.8125rem;
-  color: #a9bcd3;
-}
-
-@media (min-width: 768px) {
-  .cierre {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding-block: 72px 56px;
-  }
-  .cierreTexto h2 {
-    font-size: 2.25rem;
-  }
-  .columnas {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding-block: 48px 40px;
-  }
-  .compacto {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-  }
-}
-
-@media (min-width: 1024px) {
-  .cierre {
-    padding-block: 88px 64px;
-  }
-  .cierreTexto h2 {
-    font-size: 2.75rem;
-  }
-  .columnas {
-    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
-    gap: 40px;
-    padding-block: 56px 48px;
-  }
+.numero::after {
+  content: ")";
 }

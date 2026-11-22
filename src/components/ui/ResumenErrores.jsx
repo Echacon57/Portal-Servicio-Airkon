@@ -2,12 +2,10 @@ import { useEffect, useRef } from "react";
 import Icono from "./Icono";
 import styles from "./ResumenErrores.module.css";
 
-/**
- * Caja que lista los errores del formulario al intentar enviarlo.
- * Recibe el foco para que lectores de pantalla lo anuncien, y cada error
- * es un enlace que lleva al campo correspondiente.
- *
- * @param {{ errores: Record<string,string>, etiquetas: Record<string,string>, intento: number }} props
+/*
+ Caja que lista los errores del formulario al intentar enviarlo.
+ Recibe el foco para que lectores de pantalla lo anuncien, y cada error
+ es un enlace que lleva al campo correspondiente.
  */
 export default function ResumenErrores({ errores, etiquetas, intento }) {
   const ref = useRef(null);
@@ -15,8 +13,6 @@ export default function ResumenErrores({ errores, etiquetas, intento }) {
 
   useEffect(() => {
     if (lista.length > 0) ref.current?.focus();
-    // Solo cuando el usuario intenta enviar (cambia "intento")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intento]);
 
   if (lista.length === 0) return null;
