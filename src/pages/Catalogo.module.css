@@ -1,8 +1,8 @@
 .contenido {
-  padding-block: 20px 56px;
+  padding-block: 24px 64px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 }
 
 .resultados {
@@ -18,16 +18,10 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: end;
   gap: 12px;
-  padding: 16px;
-  background: var(--gris-claro);
-  border: 1px solid var(--gris-borde);
-  border-radius: var(--radio-tarjeta);
 }
-
 .busqueda {
   grid-column: 1 / -1;
 }
-
 .campoBusqueda {
   position: relative;
 }
@@ -41,29 +35,21 @@
 .campoBusqueda input {
   padding-left: 44px;
 }
-
 .botonFiltros {
   grid-column: 1;
   grid-row: 2;
   width: 100%;
   padding-inline: 12px;
 }
-
 .orden {
   grid-column: 2;
   grid-row: 2;
 }
 
 .conteo {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font: 500 0.9375rem/1.4 var(--fuente-texto);
-  color: var(--gris-medio);
-}
-.conteo strong {
-  color: var(--azul-marino);
   font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--gris-oscuro);
 }
 
 .filtrosActivos {
@@ -72,83 +58,85 @@
   flex-wrap: wrap;
   gap: 8px;
 }
-
 .etiquetaFiltros {
-  font: 700 0.8125rem/1.3 var(--fuente-texto);
-  color: var(--gris-oscuro);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--texto-secundario);
 }
-
 .chipsActivos {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
 }
-
 .chipActivo {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   min-height: 44px;
   padding: 0 12px;
-  border: 1px solid var(--azul-marino);
-  border-radius: 999px;
-  background: var(--azul-claro);
+  border: 2px solid var(--azul-marino);
+  border-radius: var(--radio-boton);
+  background: var(--escarcha);
   color: var(--azul-marino);
-  font: 600 0.875rem/1.2 var(--fuente-texto);
+  font: 700 0.875rem/1.2 var(--fuente-texto);
   cursor: pointer;
 }
 .chipActivo:hover {
-  background: #d7e5f5;
-}
-.chipActivo :global(.icono) {
-  width: 16px;
-  height: 16px;
-}
-
-.quitarTodos {
-  min-height: 44px;
-  padding: 0 8px;
-  border: 0;
-  background: transparent;
-  color: var(--azul-marino);
-  font: 700 0.875rem/1.2 var(--fuente-texto);
-  text-decoration: underline;
-  cursor: pointer;
+  background: var(--blanco);
 }
 
 .rejilla {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 18px;
+  gap: 20px;
 }
 
 .vacio {
   padding: 32px 24px;
+  background: var(--gris-claro);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
 }
 .vacio h2 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 }
 
-/* Tableta */
+.pie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+}
+.mostrando {
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+}
+
+@media (min-width: 640px) {
+  .rejilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
 @media (min-width: 768px) {
   .contenido {
-    padding-block: 40px 72px;
+    padding-block: 40px 88px;
     gap: 24px;
   }
   .controles {
-    grid-template-columns: minmax(0, 1fr) 220px auto;
+    grid-template-columns: minmax(0, 1fr) 240px auto;
     gap: 16px;
-    padding: 18px;
   }
   .busqueda {
     grid-column: 1;
+  }
+  .orden {
+    grid-column: 2;
+    grid-row: 1;
   }
   .botonFiltros {
     grid-column: 3;
@@ -156,32 +144,24 @@
     width: auto;
     white-space: nowrap;
   }
-  .orden {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .rejilla {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
+  .pie {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 
-/* Escritorio: filtros a la izquierda, resultados a la derecha */
+/* Escritorio: filtros a la izquierda, placas a la derecha */
 @media (min-width: 1024px) {
   .contenido {
     display: grid;
-    grid-template-columns: 272px minmax(0, 1fr);
-    gap: 32px;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 48px;
     align-items: start;
   }
   .controles {
-    grid-template-columns: minmax(0, 1fr) 220px;
+    grid-template-columns: minmax(0, 1fr) 240px;
   }
   .botonFiltros {
     display: none;
-  }
-  .rejilla {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
   }
 }

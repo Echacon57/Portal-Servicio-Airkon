@@ -1,20 +1,36 @@
 import { useEffect, useRef } from "react";
-import { categorias, marcas, rangosCapacidad } from "../../data/equipos";
+import { Link } from "react-router-dom";
+import { categorias, equipos, marcas, rangosCapacidad } from "../../data/equipos";
 import Icono from "../ui/Icono";
 import styles from "./FiltrosEquipos.module.css";
 
-
+/*
+ Panel de filtros del catálogo (<aside>).
+ */
 export default function FiltrosEquipos({ filtros, onCambiar, onLimpiar, abierto, onCerrar, totalResultados }) {
   const refPanel = useRef(null);
   const refElementoAnterior = useRef(null);
 
+  const contar = (prueba) => equipos.filter(prueba).length;
   const grupos = [
-    { id: "categorias", titulo: "Categoría", opciones: categorias.map((c) => ({ valor: c, texto: c })) },
-    { id: "marcas", titulo: "Marca", opciones: marcas.map((m) => ({ valor: m, texto: m })) },
+    {
+      id: "categorias",
+      titulo: "Categoría",
+      opciones: categorias.map((c) => ({ valor: c, texto: c, total: contar((e) => e.categoria === c) })),
+    },
+    {
+      id: "marcas",
+      titulo: "Marca",
+      opciones: marcas.map((m) => ({ valor: m, texto: m, total: contar((e) => e.marca === m) })),
+    },
     {
       id: "capacidades",
-      titulo: "Capacidad (toneladas)",
-      opciones: rangosCapacidad.map((r) => ({ valor: r.id, texto: r.etiqueta })),
+      titulo: "Capacidad",
+      opciones: rangosCapacidad.map((r) => ({
+        valor: r.id,
+        texto: r.etiqueta,
+        total: contar((e) => e.toneladas >= r.min && e.toneladas <= r.max),
+      })),
     },
   ];
 
@@ -80,14 +96,13 @@ export default function FiltrosEquipos({ filtros, onCambiar, onLimpiar, abierto,
         aria-labelledby="titulo-panel-filtros"
         role={abierto ? "dialog" : undefined}
         aria-modal={abierto ? "true" : undefined}
-        className={`tarjeta ${styles.panel} ${abierto ? styles.abierto : ""}`}
+        className={`${styles.panel} ${abierto ? styles.abierto : ""}`}
         tabIndex={abierto ? -1 : undefined}
         ref={refPanel}
         onKeyDown={manejarTecla}
       >
         <div className={styles.encabezado}>
           <h2 id="titulo-panel-filtros">
-            <Icono nombre="filtros" tamano={20} />
             Filtros
           </h2>
           <div className={styles.accionesEncabezado}>
@@ -113,11 +128,18 @@ export default function FiltrosEquipos({ filtros, onCambiar, onLimpiar, abierto,
                     checked={filtros[grupo.id].includes(op.valor)}
                     onChange={() => onCambiar(grupo.id, op.valor)}
                   />
-                  {op.texto}
+                  <span className={styles.texto}>{op.texto}</span>
+                  <span className={styles.total}>
+                    {op.total}
+                    <span className="solo-lector"> {op.total === 1 ? "equipo" : "equipos"}</span>
+                  </span>
                 </label>
               ))}
             </fieldset>
           ))}
+          <p className={styles.ayudaCapacidad}>
+            ¿No sabes qué capacidad necesitas? <Link to="/#capacidad">Calcúlala con el tamaño del cuarto</Link>.
+          </p>
         </div>
 
         <div className={styles.pie}>
