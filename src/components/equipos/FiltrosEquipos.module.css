@@ -135,8 +135,6 @@
     flex-direction: column;
     position: sticky;
     top: calc(var(--alto-header) + 24px);
-    max-height: none;
-    overflow: visible;
     border-top: 0;
     background: transparent;
     z-index: auto;

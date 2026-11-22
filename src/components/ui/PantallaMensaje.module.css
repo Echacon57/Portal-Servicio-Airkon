@@ -1,5 +1,13 @@
 .pantalla {
   background: var(--gris-claro);
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+:global(main):has(> .pantalla) {
+  display: flex;
+  flex-direction: column;
 }
 .oscuro {
   background: var(--azul-marino);

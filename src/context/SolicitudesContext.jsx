@@ -4,9 +4,16 @@ import { useSesion } from "./SesionContext";
 import { solicitudesIniciales } from "../data/solicitudesIniciales";
 import { normalizarCorreo } from "../utils/seguridad";
 
-/*
-  Estado global de los registros: solicitudes de servicio (tipo "servicio")
-  y pedidos de equipo (tipo "compra").
+/**
+ * Estado global de los registros: solicitudes de servicio (tipo "servicio")
+ * y pedidos de equipo (tipo "compra").
+ *
+ * Este contexto hace el papel del SERVIDOR en la simulación:
+ * - Nunca expone la lista completa. `misSolicitudes` solo contiene los
+ *   registros del correo verificado en la sesión.
+ * - `buscarPermitido(folio)` solo regresa un registro si es del cliente
+ *   verificado o si se acaba de crear en esta pestaña.
+ * - Cancelar o cambiar el estado revisa que el registro sea del cliente.
  */
 const SolicitudesContext = createContext(null);
 
@@ -14,7 +21,8 @@ const SolicitudesContext = createContext(null);
 const prefijos = { servicio: "SV", compra: "PD" };
 
 export function SolicitudesProvider({ children }) {
-  const [solicitudes, setSolicitudes] = useLocalStorage("airkon-registros-v2", solicitudesIniciales);
+  // La clave incluye "v2" porque la forma de los datos cambió respecto a la primera versión
+  const [solicitudes, setSolicitudes] = useLocalStorage("airkon-registros-v3", solicitudesIniciales);
   const { correoVerificado, foliosRecientes, registrarFolioReciente } = useSesion();
 
   const esDelCliente = (registro) =>

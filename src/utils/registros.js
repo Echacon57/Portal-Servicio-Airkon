@@ -16,7 +16,7 @@ export function describirEquipo(registro) {
   }
   const tipo = buscarPorId(tiposEquipo, registro.tipoEquipo);
   const nombreTipo = tipo && tipo.id !== "nose" ? tipo.nombre : "Equipo";
-  const marca = registro.marca && !["No sé", "Otra"].includes(registro.marca) ? registro.marca : "";
+  const marca = registro.marca && !["No estoy seguro(a)", "Otra"].includes(registro.marca) ? registro.marca : "";
   return [nombreTipo, marca].filter(Boolean).join(" ") || "Equipo sin especificar";
 }
 

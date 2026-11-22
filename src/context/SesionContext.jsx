@@ -9,10 +9,22 @@ import {
 } from "../utils/seguridad";
 
 /**
- SIMULACIÓN del acceso a "Mis solicitudes" con enlace por correo.
- Todo se guarda en sessionStorage (se borra al cerrar la pestaña).
- En el sistema real el token y la sesión vivirían en el servidor, y la sesión
- en una cookie HttpOnly que JavaScript no puede leer.
+ * SIMULACIÓN del acceso a "Mis solicitudes" con enlace mágico por correo.
+ *
+ * Problema que resuelve: los folios son consecutivos, así que cualquiera podría
+ * adivinar el de otro cliente y ver sus datos (IDOR / Broken Access Control).
+ *
+ * Flujo:
+ * 1. solicitarEnlace(correo): genera un token aleatorio de un solo uso que vence
+ *    en 15 minutos. En producción se enviaría por correo; aquí se muestra en
+ *    una "bandeja simulada".
+ * 2. verificarToken(token): si es válido, lo invalida y abre una sesión de
+ *    30 minutos para ese correo.
+ * 3. Las solicitudes se filtran por el correo de la sesión (ver SolicitudesContext).
+ *
+ * Todo se guarda en sessionStorage (se borra al cerrar la pestaña).
+ * En producción el token y la sesión vivirían en el servidor, y la sesión
+ * en una cookie HttpOnly que JavaScript no puede leer.
  */
 const SesionContext = createContext(null);
 

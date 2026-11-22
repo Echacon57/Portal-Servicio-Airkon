@@ -15,7 +15,7 @@ function valoresDesdeUrl(params) {
       tipoEquipo: equipo.tipoEquipo,
       marca: marcasComunes.includes(equipo.marca) ? equipo.marca : "Otra",
       capacidad: capacidadOpcion(equipo),
-      refrigerante: refrigerantes.includes(equipo.refrigerante) ? equipo.refrigerante : "No sé",
+      refrigerante: refrigerantes.includes(equipo.refrigerante) ? equipo.refrigerante : "No estoy seguro(a)",
       modelo: equipo.nombre,
     });
   }

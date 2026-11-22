@@ -1,4 +1,3 @@
-import EstadoBadge from "../ui/EstadoBadge";
 import { buscarEquipo } from "../../data/equipos";
 import { buscarPorId, metodosPago, tiposEquipo, ubicaciones } from "../../data/servicios";
 import { calcularPedido, moneda } from "../../utils/precios";
@@ -7,11 +6,11 @@ import { describirEquipo, describirTipo, textoHorario } from "../../utils/regist
 import styles from "./DetalleRegistro.module.css";
 
 /*
-  Se usa dentro del modal de "Mis solicitudes".
+ Lista de datos (<dl>) de un registro. Cambia según sea servicio o compra.
+ Se usa dentro del modal tipo etiqueta de "Mis solicitudes".
  */
 export default function DetalleRegistro({ registro: r }) {
   const comunes = [
-    ["Estado", <EstadoBadge key="e" estado={r.estado} />],
     ["Tipo", describirTipo(r)],
     ["Equipo", describirEquipo(r)],
     [r.tipo === "compra" ? (r.instalar ? "Fecha de instalación" : "Fecha de entrega") : "Fecha de visita",
@@ -32,7 +31,7 @@ export default function DetalleRegistro({ registro: r }) {
     ];
     if (equipo) desglose = calcularPedido({ equipo, ...r });
   } else {
-    const tecnicos = [r.capacidad, r.refrigerante, r.antiguedad].filter((v) => v && v !== "No sé");
+    const tecnicos = [r.capacidad, r.refrigerante, r.antiguedad].filter((v) => v && v !== "No estoy seguro(a)");
     if (r.modelo) tecnicos.push(`Modelo ${r.modelo}`);
     especificos = [
       ["Tipo de equipo", buscarPorId(tiposEquipo, r.tipoEquipo)?.nombre],
@@ -55,7 +54,7 @@ export default function DetalleRegistro({ registro: r }) {
         ))}
       </dl>
       {desglose && (
-        <table className={styles.desglose}>
+        <table className={`cifras ${styles.desglose}`}>
           <caption>Desglose del pedido</caption>
           <tbody>
             {desglose.lineas.map((l) => (
