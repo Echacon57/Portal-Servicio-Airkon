@@ -1,0 +1,120 @@
+.hero {
+  background: var(--azul-marino);
+  color: var(--blanco);
+  overflow: hidden;
+}
+.rejilla {
+  padding-block: 40px 56px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+.textos {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.recibido {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+.textos h1 {
+  color: var(--blanco);
+  font-size: clamp(2.75rem, 4vw + 1.25rem, 5rem);
+  line-height: 0.98;
+}
+.bajada {
+  max-width: 44ch;
+  font-size: 1.125rem;
+  color: var(--texto-claro);
+}
+.bajada strong {
+  color: var(--blanco);
+}
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.figura {
+  display: flex;
+  justify-content: center;
+}
+
+.sigue {
+  background: var(--gris-claro);
+  padding-block: 56px 64px;
+}
+.sigue h2 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+.pasos {
+  border-top: 2px solid var(--azul-marino);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+.pasos li {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.numero {
+  font-weight: 900;
+  font-size: 1.125rem;
+  color: var(--azul-marino);
+}
+.pasos h3 {
+  font-size: 1.25rem;
+}
+.pasos p {
+  color: var(--texto-secundario);
+  max-width: 36ch;
+}
+.cambios {
+  margin-top: 32px;
+}
+.cambios a {
+  font-weight: 800;
+  color: var(--azul-marino);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .botones {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .pasos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .sigue {
+    padding-block: 72px 88px;
+  }
+  .sigue h2 {
+    font-size: 2.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rejilla {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 48px;
+    align-items: start;
+    padding-block: 56px 0;
+  }
+  .textos {
+    padding: 40px 0 88px;
+  }
+  /* La etiqueta cuelga desde el borde del encabezado */
+  .figura {
+    margin-top: -56px;
+    padding-bottom: 56px;
+  }
+}

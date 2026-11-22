@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import Icono from "../components/ui/Icono";
+import PantallaMensaje from "../components/ui/PantallaMensaje";
+import { EtiquetaVencida } from "../components/ui/IlustracionesEtiqueta";
 import { useSesion } from "../context/SesionContext";
 import { useTituloPagina } from "../hooks/useTituloPagina";
-import styles from "./Mensaje.module.css";
 
 /*
- Si el token es válido abre la sesión y manda a "Mis solicitudes";
- si no, explica qué pasó y ofrece pedir otro enlace.
+ Destino del enlace del correo: /verificar?token=...
+ Si el token es válido abre la sesión y manda a "Mis solicitudes"; si no, explica qué pasó y ofrece pedir otro enlace.
  */
 export default function VerificarAcceso() {
   useTituloPagina("Verificando acceso");
@@ -33,28 +33,27 @@ export default function VerificarAcceso() {
 
   if (!error) {
     return (
-      <section className={`contenedor ${styles.envoltura}`} aria-labelledby="titulo-verificando">
-        <div className={`tarjeta ${styles.tarjeta}`} role="status">
-          <h1 id="titulo-verificando">Verificando tu enlace...</h1>
-        </div>
-      </section>
+      <PantallaMensaje titulo="Verificando tu enlace..." texto={<p role="status">Un momento, por favor.</p>} />
     );
   }
 
   return (
-    <section className={`contenedor ${styles.envoltura}`} aria-labelledby="titulo-verificar">
-      <div className={`tarjeta ${styles.tarjeta}`}>
-        <span className={`${styles.icono} ${styles.neutro}`}>
-          <Icono nombre="alerta" tamano={32} />
-        </span>
-        <h1 id="titulo-verificar">No pudimos verificar el enlace</h1>
-        <p className={styles.texto} role="alert">{error}</p>
-        <p className={styles.nota}>Por seguridad, cada enlace vence en 15 minutos y solo se puede usar una vez.</p>
-        <div className={styles.botones}>
-          <Link to="/mis-solicitudes" className="btn btn-primario">Pedir un enlace nuevo</Link>
-          <Link to="/" className="btn btn-secundario">Ir al inicio</Link>
-        </div>
-      </div>
-    </section>
+    <PantallaMensaje
+      titulo="No pudimos verificar el enlace"
+      texto={
+        <>
+          <p role="alert">{error}</p>
+          <p>Por seguridad, cada enlace vence en 15 minutos y solo se puede usar una vez. Pide uno nuevo con el mismo correo.</p>
+        </>
+      }
+      ilustracion={<EtiquetaVencida />}
+    >
+      <Link to="/mis-solicitudes" className="btn btn-acento">
+        Pedir un enlace nuevo
+      </Link>
+      <Link to="/" className="btn btn-secundario">
+        Ir al inicio
+      </Link>
+    </PantallaMensaje>
   );
 }

@@ -12,8 +12,14 @@ import styles from "./Catalogo.module.css";
 const POR_PAGINA = 6;
 const filtrosVacios = { categorias: [], marcas: [], capacidades: [] };
 
+/* Quitar acentos y pasar a minúsculas para comparar búsquedas. */
 function normalizar(texto) {
   return texto.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+}
+
+function unirConY(lista) {
+  if (lista.length <= 1) return lista.join("");
+  return `${lista.slice(0, -1).join(", ")} y ${lista[lista.length - 1]}`;
 }
 
 export default function Catalogo() {
@@ -46,13 +52,17 @@ export default function Catalogo() {
     setPagina(1);
   }
 
+  function quitarTodosFiltros() {
+    setFiltros(filtrosVacios);
+    setPagina(1);
+  }
+
   const resultados = useMemo(() => {
     const texto = normalizar(busqueda.trim());
     const rangos = rangosCapacidad.filter((r) => filtros.capacidades.includes(r.id));
 
     const filtrados = equipos.filter((e) => {
-      const coincideTexto =
-        !texto || normalizar(`${e.nombre} ${e.marca} ${e.categoria}`).includes(texto);
+      const coincideTexto = !texto || normalizar(`${e.nombre} ${e.marca} ${e.categoria}`).includes(texto);
       const coincideCategoria = filtros.categorias.length === 0 || filtros.categorias.includes(e.categoria);
       const coincideMarca = filtros.marcas.length === 0 || filtros.marcas.includes(e.marca);
       const coincideCapacidad =
@@ -61,6 +71,8 @@ export default function Catalogo() {
     });
 
     const ordenados = [...filtrados];
+    if (orden === "precio-asc") ordenados.sort((a, b) => a.precio - b.precio);
+    if (orden === "precio-desc") ordenados.sort((a, b) => b.precio - a.precio);
     if (orden === "cap-asc") ordenados.sort((a, b) => a.toneladas - b.toneladas);
     if (orden === "cap-desc") ordenados.sort((a, b) => b.toneladas - a.toneladas);
     if (orden === "nombre") ordenados.sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
@@ -71,6 +83,7 @@ export default function Catalogo() {
   const paginaActual = Math.min(pagina, totalPaginas);
   const visibles = resultados.slice((paginaActual - 1) * POR_PAGINA, paginaActual * POR_PAGINA);
   const totalFiltros = filtros.categorias.length + filtros.marcas.length + filtros.capacidades.length;
+
   const filtrosActivos = [
     ...filtros.categorias.map((valor) => ({ grupo: "categorias", valor, etiqueta: valor })),
     ...filtros.marcas.map((valor) => ({ grupo: "marcas", valor, etiqueta: valor })),
@@ -81,21 +94,23 @@ export default function Catalogo() {
     })),
   ];
 
-  function cambiarPagina(n) {
-    setPagina(n);
-    document.getElementById("resultados")?.scrollIntoView({ block: "start" });
-  }
+  const n = resultados.length;
+  const resumen = `${n} ${n === 1 ? "equipo" : "equipos"}${
+    filtros.categorias.length ? ` de ${unirConY(filtros.categorias)}` : ""
+  }${busqueda.trim() ? ` para “${busqueda.trim()}”` : ""}`;
 
-  function quitarTodosFiltros() {
-    setFiltros(filtrosVacios);
-    setPagina(1);
+  function cambiarPagina(numero) {
+    setPagina(numero);
+    document.getElementById("resultados")?.scrollIntoView({ block: "start" });
   }
 
   return (
     <>
       <EncabezadoPagina
         titulo="Catálogo de equipos"
-        descripcion="Consulta los equipos con los que trabajamos y solicita instalación o servicio directamente desde cada ficha."
+        migas={[{ texto: "Inicio", ruta: "/" }, { texto: "Catálogo" }]}
+        descripcion="Equipos con los que trabajamos. Cómpralos con instalación o pide servicio desde cada ficha."
+        descripcionAlLado
       />
 
       <div className={`contenedor ${styles.contenido}`}>
@@ -124,6 +139,7 @@ export default function Catalogo() {
                   placeholder="Nombre, marca o modelo"
                   value={busqueda}
                   onChange={(e) => {
+                    // Búsqueda en vivo: filtra mientras se escribe
                     setBusqueda(e.target.value);
                     setPagina(1);
                   }}
@@ -139,6 +155,8 @@ export default function Catalogo() {
               </label>
               <select id="orden" className="campo" value={orden} onChange={(e) => setOrden(e.target.value)}>
                 <option value="relevancia">Relevancia</option>
+                <option value="precio-asc">Precio: menor a mayor</option>
+                <option value="precio-desc">Precio: mayor a menor</option>
                 <option value="cap-asc">Capacidad: menor a mayor</option>
                 <option value="cap-desc">Capacidad: mayor a menor</option>
                 <option value="nombre">Nombre (A–Z)</option>
@@ -157,7 +175,7 @@ export default function Catalogo() {
           </div>
 
           <p className={styles.conteo} aria-live="polite">
-            Mostrando <strong>{resultados.length} {resultados.length === 1 ? "equipo" : "equipos"}</strong>
+            {resumen}
           </p>
 
           {filtrosActivos.length > 0 && (
@@ -178,7 +196,7 @@ export default function Catalogo() {
                   </li>
                 ))}
               </ul>
-              <button type="button" className={styles.quitarTodos} onClick={quitarTodosFiltros}>
+              <button type="button" className="enlace-texto" onClick={quitarTodosFiltros}>
                 Quitar todos
               </button>
             </div>
@@ -193,7 +211,7 @@ export default function Catalogo() {
               ))}
             </ul>
           ) : (
-            <div className={`tarjeta ${styles.vacio}`}>
+            <div className={styles.vacio}>
               <h2>No encontramos equipos</h2>
               <p>Prueba con otra búsqueda o quita algunos filtros.</p>
               <button type="button" className="btn btn-primario" onClick={limpiar}>
@@ -202,7 +220,14 @@ export default function Catalogo() {
             </div>
           )}
 
-          <Paginacion pagina={paginaActual} totalPaginas={totalPaginas} onCambiar={cambiarPagina} />
+          {resultados.length > 0 && (
+            <div className={styles.pie}>
+              <p className={styles.mostrando}>
+                Mostrando {visibles.length} de {resultados.length}
+              </p>
+              <Paginacion pagina={paginaActual} totalPaginas={totalPaginas} onCambiar={cambiarPagina} />
+            </div>
+          )}
         </div>
       </div>
     </>

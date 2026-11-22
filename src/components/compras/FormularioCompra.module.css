@@ -48,15 +48,16 @@
   color: var(--azul-marino);
 }
 
-/* Escritorio: formulario a la izquierda, resumen fijo a la derecha */
 @media (min-width: 1024px) {
   .distribucion {
-    grid-template-columns: minmax(0, 1fr) 340px;
-    gap: 40px;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 56px;
   }
   .distribucion > aside {
     grid-column: 2;
     grid-row: 1;
+    position: sticky;
+    top: calc(var(--alto-header) + 24px);
   }
   .distribucion > form {
     grid-column: 1;

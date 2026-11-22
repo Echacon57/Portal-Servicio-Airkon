@@ -11,6 +11,7 @@ import MisSolicitudes from "./pages/MisSolicitudes";
 import {SesionProvider} from "./context/SesionContext";
 import VerificarAcceso from "./pages/VerificarAcceso";
 import Confirmacion from "./pages/Confirmacion";
+import Contacto from "./pages/Contacto";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/verificar" element={<VerificarAcceso />} />
             <Route path="/mis-solicitudes" element={<MisSolicitudes />} />
             <Route path="/solicitud-enviada/:folio" element={<Confirmacion />} />
+            <Route path="/contacto" element={<Contacto />} />
           </Route>
         </Routes>
       </BrowserRouter>

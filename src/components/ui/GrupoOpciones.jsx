@@ -2,18 +2,9 @@ import Icono from "./Icono";
 import IlustracionEquipo from "../equipos/IlustracionEquipo";
 import styles from "./GrupoOpciones.module.css";
 
-/**
- * Grupo de opciones grandes (tarjetas) con radio o checkbox nativos.
- * Al usar inputs reales funciona con teclado (flechas en radios, espacio
- * en checkbox) y con lectores de pantalla sin trabajo extra.
- *
- * @param {object} props
- * @param {string} props.nombre        name de los inputs (= nombre del campo)
- * @param {string} props.leyenda       texto del <legend>
- * @param {{valor:string, titulo:string, descripcion?:string, icono?:string, forma?:string, extra?:string}[]} props.opciones
- * @param {string|string[]} props.valor  valor actual (arreglo si tipo="checkbox")
- * @param {"radio"|"checkbox"} [props.tipo]
- * @param {"lista"|"rejilla"|"compacta"} [props.diseno]
+/* Grupo de opciones grandes con radio o checkbox nativos.
+ Al usar inputs reales funciona con teclado (flechas en radios, espacio
+ en checkbox) y con lectores de pantalla sin trabajo extra.
  */
 export default function GrupoOpciones({
   nombre,
@@ -78,9 +69,6 @@ export default function GrupoOpciones({
               <span className={styles.titulo}>{op.titulo}</span>
               {op.descripcion && <span className={styles.descripcion}>{op.descripcion}</span>}
               {op.extra && <span className={styles.extra}>{op.extra}</span>}
-            </span>
-            <span className={styles.marca} aria-hidden="true">
-              <Icono nombre="check" tamano={16} />
             </span>
           </label>
         ))}

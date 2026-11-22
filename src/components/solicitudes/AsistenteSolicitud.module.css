@@ -1,8 +1,16 @@
-.asistente {
+/* Formulario a la izquierda y "Tu solicitud" a la derecha (en escritorio) */
+.distribucion {
+  padding-block: 28px 64px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.columna {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  scroll-margin-top: calc(var(--alto-header) + 16px);
+  min-width: 0;
 }
 
 .borrador {
@@ -11,8 +19,8 @@
   align-items: flex-start;
   gap: 4px;
   padding: 12px 16px;
-  border-radius: 12px;
-  background: var(--azul-claro);
+  border-left: 4px solid var(--azul-marino);
+  background: var(--escarcha);
   color: var(--azul-marino);
   font-weight: 500;
 }
@@ -25,19 +33,10 @@
   min-height: 44px;
 }
 
-.tarjeta {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
 .formulario {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  border-top: 1px solid var(--gris-linea);
-  padding-top: 24px;
+  gap: 28px;
 }
 
 .paso {
@@ -52,7 +51,7 @@
   gap: 6px;
 }
 .encabezadoPaso h2 {
-  font-size: 1.375rem;
+  font-size: 1.625rem;
 }
 .encabezadoPaso h2:focus {
   outline: none;
@@ -63,7 +62,8 @@
   border-radius: 4px;
 }
 .encabezadoPaso p {
-  color: var(--gris-medio);
+  color: var(--texto-secundario);
+  max-width: 56ch;
 }
 
 .subgrupo {
@@ -87,13 +87,12 @@
 }
 
 .opcionales {
-  border: 1px solid var(--gris-borde);
-  border-radius: 12px;
-  background: #fafbfd;
+  border-top: 1px solid var(--linea-lamina);
+  border-bottom: 1px solid var(--linea-lamina);
 }
 .opcionales summary {
   min-height: 56px;
-  padding: 12px 16px;
+  padding: 12px 48px 12px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,7 +102,6 @@
   color: var(--azul-marino);
   list-style: none;
   position: relative;
-  padding-right: 48px;
 }
 .opcionales summary::-webkit-details-marker {
   display: none;
@@ -126,7 +124,6 @@
 .opcionales summary:focus-visible {
   outline: 3px solid var(--azul-marino);
   outline-offset: 3px;
-  border-radius: 12px;
 }
 .resumenAyuda {
   font-weight: 400;
@@ -134,7 +131,7 @@
   color: var(--gris-medio);
 }
 .opcionalesContenido {
-  padding: 4px 16px 20px;
+  padding: 4px 0 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -147,9 +144,8 @@
   gap: 16px;
 }
 .bloqueRevision {
-  padding: 16px;
-  border: 1px solid var(--gris-borde);
-  border-radius: 12px;
+  padding: 14px 0 16px;
+  border-top: 2px solid var(--azul-marino);
 }
 .bloqueEncabezado {
   display: flex;
@@ -183,16 +179,56 @@
   font-style: italic;
 }
 
-/* Botones de navegación: en móvil el principal va arriba (orden visual) */
 .navegacion {
   display: flex;
   flex-direction: column-reverse;
   gap: 12px;
-  border-top: 1px solid var(--gris-linea);
-  padding-top: 20px;
+  border-top: 1px solid var(--linea-lamina);
+  padding-top: 24px;
 }
 .navegacion :global(.btn) {
   min-height: 52px;
+}
+
+.resumen h2 {
+  font-size: 1.375rem;
+}
+.resumenSub {
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--azul-marino);
+}
+.resumenDatos {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.resumenDatos dt {
+  font-size: 0.8125rem;
+  color: var(--texto-secundario);
+}
+.resumenDatos dd {
+  margin: 0;
+  font-weight: 700;
+}
+.pendiente {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--texto-secundario);
+}
+.urgencia {
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+  border-top: 1px solid var(--linea-lamina);
+  padding-top: 12px;
+}
+.urgencia a {
+  font-weight: 800;
+  color: var(--azul-marino);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .notaGuardado {
@@ -209,11 +245,11 @@
     align-items: center;
     justify-content: space-between;
   }
-  .tarjeta {
-    padding: 32px 36px;
+  .distribucion {
+    padding-block: 40px 88px;
   }
   .encabezadoPaso h2 {
-    font-size: 1.625rem;
+    font-size: 2rem;
   }
   .revision {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -225,5 +261,16 @@
   .principal {
     margin-left: auto;
     padding: 0 28px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .distribucion {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 56px;
+  }
+  .resumen {
+    position: sticky;
+    top: calc(var(--alto-header) + 24px);
   }
 }

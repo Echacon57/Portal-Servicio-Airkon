@@ -1,6 +1,3 @@
-/**
- * Ilustraciones SVG de los tipos de equipo
- */
 export default function IlustracionEquipo({ forma, ancho = 200, descripcion }) {
   const accesibilidad = descripcion
     ? { role: "img", "aria-label": descripcion }

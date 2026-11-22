@@ -1,3 +1,4 @@
+/* Hero */
 .hero {
   background: var(--azul-marino);
   color: var(--blanco);
@@ -131,13 +132,16 @@
 
 .equipos {
   background: var(--blanco);
+  scroll-margin-top: var(--alto-header);
+}
+.equipos:focus {
+  outline: none;
 }
 .equipos h2 {
   font-size: 2rem;
   line-height: 1.05;
 }
 
-/* Cómo funciona */
 .proceso {
   background: var(--azul-noche);
   color: var(--blanco);
@@ -182,7 +186,6 @@
   font-size: 1.25rem;
   color: var(--amarillo);
 }
-
 
 @media (min-width: 768px) {
   .heroRejilla {

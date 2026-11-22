@@ -1,0 +1,27 @@
+.contorno {
+  --corte: polygon(18% 0, 82% 0, 100% 9%, 100% 100%, 0 100%, 0 9%);
+  background: var(--azul-marino);
+  clip-path: var(--corte);
+  padding: 2px;
+}
+.cuerpo {
+  background: var(--blanco);
+  clip-path: var(--corte);
+  padding: 14px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ojillo {
+  align-self: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px dashed var(--azul-marino);
+}
+
+@media (min-width: 768px) {
+  .cuerpo {
+    padding: 16px 24px 26px;
+  }
+}

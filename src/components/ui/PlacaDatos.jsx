@@ -1,9 +1,18 @@
 import styles from "./PlacaDatos.module.css";
 
-/*
- Placa de datos: Simulando la placa o etiqueta de un equipo, con marco y remaches.
+/**
+ Placa de datos: como la placa metálica atornillada a cada equipo.
+ Marco con 4 remaches, título y datos técnicos en rejilla.
  */
-export default function PlacaDatos({ titulo, subtitulo, datos, nivelTitulo = "h3", children }) {
+export default function PlacaDatos({
+  titulo,
+  subtitulo,
+  datos,
+  nivelTitulo = "h3",
+  encabezadoOscuro = false,
+  unaColumna = false,
+  children,
+}) {
   const Titulo = nivelTitulo;
   return (
     <article className={styles.placa}>
@@ -11,11 +20,11 @@ export default function PlacaDatos({ titulo, subtitulo, datos, nivelTitulo = "h3
         <span key={r} className={`${styles.remache} ${styles[r]}`} aria-hidden="true" />
       ))}
       <div className={styles.marco}>
-        <header className={styles.encabezado}>
+        <header className={`${styles.encabezado} ${encabezadoOscuro ? `oscuro ${styles.oscuro}` : ""}`}>
           <Titulo>{titulo}</Titulo>
           {subtitulo && <span className={styles.subtitulo}>{subtitulo}</span>}
         </header>
-        <dl className={styles.datos}>
+        <dl className={`${styles.datos} ${unaColumna ? styles.unaColumna : ""}`}>
           {datos.map((d) => (
             <div key={d.dato}>
               <dt>{d.dato}</dt>

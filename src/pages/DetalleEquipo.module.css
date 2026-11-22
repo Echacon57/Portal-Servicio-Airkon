@@ -1,18 +1,16 @@
-.barraMigas {
-  border-bottom: 1px solid var(--gris-borde);
-  background: var(--blanco);
+.migas {
+  padding-top: 16px;
 }
 
 .resumen {
-  padding-block: 24px 40px;
+  padding-block: 20px 48px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 28px;
 }
 
 .imagen {
   background: var(--gris-claro);
-  box-shadow: none;
   min-height: 220px;
   display: flex;
   align-items: center;
@@ -23,186 +21,136 @@
 .info {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
-.marca {
-  color: var(--gris-medio);
+.antetitulo {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--texto-secundario);
 }
-.marca strong {
-  color: var(--gris-oscuro);
+.info h1 {
+  font-size: clamp(2.125rem, 2.4vw + 1.3rem, 3.25rem);
+  line-height: 1.02;
+  margin-top: -6px;
 }
 .descripcion {
-  font-size: 1.0625rem;
-  color: var(--gris-oscuro);
+  max-width: 52ch;
 }
 
-.datosClave {
+.franja {
+  margin: 4px 0 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-block: 6px;
+  border-top: 2px solid var(--azul-marino);
+  border-bottom: 1px solid var(--linea-lamina);
 }
-.datosClave li {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 14px 12px;
-  border: 1px solid var(--gris-borde);
-  border-radius: 12px;
+.franja div {
+  padding: 10px 12px 12px 0;
+}
+.franja div + div {
+  padding-left: 12px;
+  border-left: 1px solid var(--linea-lamina);
+}
+.franja dt,
+.precios dt {
   font-size: 0.8125rem;
-  color: var(--gris-medio);
+  color: var(--texto-secundario);
 }
-.datosClave strong {
-  font: 700 1rem/1.2 var(--fuente-titulos);
+.franja dd {
+  margin: 2px 0 0;
+  font-weight: 800;
+  font-size: 1.125rem;
   color: var(--azul-marino);
-}
-.datoIcono {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--azul-claro);
-  color: var(--azul-marino);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 4px;
 }
 
-.precio {
-  padding: 16px 18px;
-  border-radius: 12px;
-  background: var(--gris-claro);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.precio dl {
+.precios {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 32px;
+  align-items: flex-end;
+  gap: 8px 32px;
 }
-.precio dt {
-  font: 600 0.75rem/1.2 var(--fuente-texto);
-  color: var(--gris-medio);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.precio dd {
-  margin: 4px 0 0;
-  font: 700 1.0625rem/1.2 var(--fuente-titulos);
+.precios dd {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.25rem;
   color: var(--azul-marino);
 }
-.precio dd.precioPrincipal {
-  font-size: 1.75rem;
-  font-weight: 800;
+.precios dd.precioPrincipal {
+  font-weight: 900;
+  font-size: 2.25rem;
+  line-height: 1.05;
 }
-.precio p {
-  font-size: 0.8125rem;
-  color: var(--gris-medio);
+.nota {
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+  max-width: 56ch;
 }
 
 .botones {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
-.bandaFicha {
+/* Ficha técnica y relacionados sobre lámina */
+.banda {
   background: var(--gris-claro);
 }
 .ficha {
-  padding-block: 40px;
+  padding-block: 48px 64px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 40px;
   align-items: start;
 }
-.ficha h2 {
-  font-size: 1.5rem;
-  margin-bottom: 16px;
+.ficha > div > h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
-.tablaEnvoltura {
-  overflow: hidden;
-}
-.tabla {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9375rem;
-  line-height: 1.5;
-}
-.tabla th {
-  width: 38%;
-  text-align: left;
-  font-weight: 600;
-  color: var(--azul-marino);
-  background: var(--gris-claro);
-  padding: 14px 16px;
-  border-bottom: 1px solid #e1e7ee;
-  vertical-align: top;
-}
-.tabla td {
-  padding: 14px 16px;
-  border-bottom: 1px solid #e1e7ee;
-}
-.tabla tr:last-child th,
-.tabla tr:last-child td {
-  border-bottom: 0;
-}
-
-.llamado {
-  background: var(--azul-marino);
-  border-color: var(--azul-marino);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.llamado h2 {
-  color: var(--blanco);
-  font-size: 1.125rem;
-  margin: 0;
-}
-.llamado p {
-  color: var(--texto-claro);
-  font-size: 0.9375rem;
-}
-.llamado a:focus-visible {
-  outline-color: var(--amarillo);
-}
-
-.relacionados {
-  padding-block: 40px 64px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
 .relacionados h2 {
-  font-size: 1.5rem;
+  font-size: 1.375rem;
+  margin-bottom: 12px;
 }
-.rejilla {
-  display: grid;
-  grid-template-columns: 1fr;
+.relacionados ul {
+  border-top: 2px solid var(--azul-marino);
+  margin-bottom: 8px;
+}
+.relacionados li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--linea-lamina);
+}
+.relacionados li a {
+  font-weight: 800;
+  color: var(--azul-marino);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.relacionados li p {
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+}
+.relacionados li > span {
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 @media (min-width: 768px) {
   .resumen {
-    padding-block: 32px 56px;
+    padding-block: 24px 64px;
   }
   .botones {
     flex-direction: row;
     flex-wrap: wrap;
   }
-  .rejilla {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-  }
-  .ficha h2,
-  .relacionados h2 {
-    font-size: 1.75rem;
+  .ficha > div > h2 {
+    font-size: 2.75rem;
   }
 }
 
@@ -213,17 +161,14 @@
     align-items: center;
   }
   .imagen {
-    min-height: 380px;
+    min-height: 420px;
   }
   .ficha {
-    padding-block: 64px;
+    padding-block: 72px 88px;
     grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-    gap: 40px;
+    gap: 56px;
   }
-  .llamado {
-    margin-top: 52px;
-  }
-  .rejilla {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .relacionados {
+    padding-top: 12px;
   }
 }
