@@ -8,10 +8,12 @@ Aplicación web interactiva de una empresa de aire acondicionado. El cliente pue
 
 Proyecto final de **Programación Web**, FCFM UANL (agosto-diciembre 2026).
 
-- **Autores:** Emiliano Chacón Álvarez, Regina Hernández Rodríguez
+- **Autores:** 
+  - Emiliano Chacón Álvarez: Idea y diseño inicial, flujo de datos y direccionamiento de pantallas, realizamiento de pruebas de accesibilidad y despliegue de plataforma.
+  - Regina Hernández Rodríguez: Implementación del Rediseño, lógica de pantallas, orden de contenido en cada pantalla, implementacion de la API y corrección de errores de lógica.
 - **Sitio publicado:** [Portal](https://airkon.netlify.app/)
 - **Repositorio:** https://github.com/Echacon57/Portal-Servicio-Airkon.git
-- **Tecnologías:** React 18, Vite 5, React Router 6, CSS Modules, localStorage
+- **Tecnologías:** React 18, Vite 8, React Router 7 , CSS Modules, localStorage, Nager.Date
 
 > Proyecto escolar. Los datos de contacto y el catálogo son de ejemplo.
 
@@ -21,8 +23,8 @@ Proyecto final de **Programación Web**, FCFM UANL (agosto-diciembre 2026).
 
 | Escritorio | Móvil |
 |---|---|
-| ![Inicio escritorio](docs/capturas/inicio-escritorio.png) | ![Inicio móvil](docs/capturas/inicio-movil.png) |
-| ![Compra escritorio](docs/capturas/comprar-escritorio.png) | ![Asistente móvil](docs/capturas/asistente-paso2-movil.png) |
+| ![Inicio escritorio](docs/capturas/Despues/inicio-escritorio.png) | ![Inicio móvil](docs/capturas/Despues/inicio-movil.png) |
+| ![Compra escritorio](docs/capturas/Despues/comprar-escritorio.png) | ![Asistente móvil](docs/capturas/Despues/mis-solicitudes-movil1.png) |
 
 El bosquejo original (HTML y capturas de las 5 pantallas en 1440 px y 390 px, más la guía de estilos) está en [`docs/bosquejos/`](docs/bosquejos/). Las pantallas que se agregaron después (compra y asistente por pasos) se documentan con capturas del diseño final en [`docs/capturas/`](docs/capturas/).
 
@@ -36,20 +38,22 @@ src/
 │   ├── layout/        Layout, Navbar (menú hamburguesa), Footer
 │   ├── ui/            Icono, Logo, CampoFormulario, GrupoOpciones, BarraProgreso,
 │   │                  Modal, EstadoBadge, FiltroChips, MigasDePan, Paginacion,
-│   │                  ResumenErrores, EncabezadoPagina
+│   │                  ResumenErrores, EncabezadoPagina,EstadoFeriados.jsx,
+│   │                  EtiquetaContorno, FolioEtiqueta, IlustracionesEtiqueta, PantallaMensaje
 │   ├── equipos/       TarjetaEquipo, FiltrosEquipos, IlustracionEquipo
 │   ├── compras/       FormularioCompra, ResumenCompra
 │   └── solicitudes/   AsistenteSolicitud, pasos/ (5 pasos), CampoFoto,
-│                      TablaSolicitudes, DetalleRegistro, AccesoSolicitudes
+│                      TablaSolicitudes,ListaSolicitudes DetalleRegistro, AccesoSolicitudes
 ├── pages/             Inicio, Catalogo, DetalleEquipo, Comprar, Solicitar,
 │                      Confirmacion, MisSolicitudes, VerificarAcceso, Contacto,
 │                      NoEncontrado (404)
 ├── context/           SesionContext (acceso simulado) y SolicitudesContext
 │                      (servicios y pedidos, filtrados por dueño)
-├── hooks/             useLocalStorage, useFormulario, useTituloPagina
+├── hooks/             useLocalStorage, useFormulario, useTituloPagina, useFeriados
 ├── data/              equipos (con precios), servicios (listas), registros de ejemplo
 ├── utils/             validaciones, precios, registros, formato, seguridad
-└── styles/            variables.css, global.css y formulario.module.css (compartido)
+├── styles/            variables.css, global.css y formulario.module.css (compartido)
+└── servicios/         feriados.js
 ```
 
 ## Rutas
@@ -73,7 +77,7 @@ src/
 
 ### Diseño
 
-## Dirección visual: "Etiqueta y placa"
+#### Dirección visual: "Etiqueta y placa"
 La identidad del portal se inspira en dos objetos que ven a diario los técnicos de HVAC:
 la **etiqueta amarilla de servicio** que se cuelga en el equipo y la **placa de datos** metálica
 con sus especificaciones.
@@ -81,9 +85,9 @@ con sus especificaciones.
 - **Etiqueta:** folios, resumen de compra, resumen de la solicitud y detalle de "Mis solicitudes"
   (amarilla si sigue abierta, gris si ya se completó).
 - **Placa:** tarjetas del catálogo y ficha técnica, con marco gris y remaches.
-- Una sola acción amarilla por pantalla, para que la acción principal siempre se distinga.
+- Una sola acción amarilla por pantalla, para que la acción principal siempre se distinga (a excepción del catálogo).
 
-## Paleta
+#### Paleta
 | Token | Color | Uso |
 |---|---|---|
 | `--azul-marino` | #0B2A4F | Texto de títulos, botones primarios, bordes |
@@ -98,41 +102,38 @@ con sus especificaciones.
 Todos los pares de texto y fondo cumplen WCAG AA (4.5:1 o más). Los tokens están en
 `src/styles/variables.css`.
 
-## Tipografía
+#### Tipografía
 **Archivo** (fuente variable). Los títulos usan el ancho expandido (125 %) para imitar
 las letras estampadas de las placas. Se sirve desde `public/fonts` y se precarga en
 `index.html` para evitar saltos de diseño (CLS 0).
 
 
-### 2. Usabilidad
+### Usabilidad
 | Heurística | Dónde se aplica |
 |---|---|
 | Visibilidad del estado del sistema | Barra de progreso con porcentaje y "Paso 2 de 5", total del pedido que se actualiza en vivo, menú con la página actual, botón "Enviando...", etiquetas de estado |
-| Relación con el mundo real | Preguntas en lenguaje del cliente ("¿Dónde está el equipo?", "¿Qué le pasa?"), tipos de equipo con dibujo, opción "No sé" en todo dato técnico |
+| Relación con el mundo real | Preguntas en lenguaje del cliente ("¿Dónde está el equipo?", "¿Qué le pasa?"), tipos de equipo con dibujo, opción "No estoy seguro(a)" en todo dato técnico |
 | Control y libertad | Botón "Anterior" sin perder datos, pasos completados clicables, "Editar" desde la revisión, "Empezar de nuevo", cerrar modal con Esc, confirmación antes de cancelar |
 | Consistencia | Mismos componentes (botón, tarjeta de opción, campo, badge) en compra, asistente y contacto |
-| Prevención de errores | Paso de revisión antes de enviar, validación por paso, fecha mínima de mañana y sin domingos, cantidad máxima, aviso de cargo extra por ubicación |
+| Prevención de errores | Paso de revisión antes de enviar, validación por paso, fecha mínima de mañana, sin domingos ni días feriados, cantidad máxima, aviso de cargo extra por ubicación |
 | Reconocer en vez de recordar | Datos del equipo llenados desde el catálogo, resumen de todo lo capturado, borrador recuperado al recargar |
 | Flexibilidad | Enter avanza de paso; los datos técnicos y la foto son opcionales para quien sí los conoce |
 | Diseño minimalista | Una pregunta principal por paso; datos técnicos dentro de una sección plegable |
 | Ayuda a reconocer errores | Mensajes específicos con icono y resumen de errores con enlaces a cada campo |
 
-### 3. Pruebas de Lighthouse y Axe
-Resultados en `docs/lighthouse/` y `docs/axe/`.
-
-### 4. Diseño responsivo
+### Diseño responsivo
 - Enfoque **mobile-first**: los estilos base son para 390 px y las media queries `min-width: 768px` y `1024px` adaptan a tableta y escritorio.
 
-### 5. Framework y componentes
-React con componentes reutilizables que reciben datos por **props** (`TarjetaEquipo`, `CampoFormulario`, `GrupoOpciones`, `BarraProgreso`, `Modal`...). `GrupoOpciones` y `CampoFormulario` se usan en los tres formularios. Estado local con `useState`, estado global con **Context API**, valores derivados con `useMemo`, referencias con `useRef` (gestión del foco), efectos con `useEffect` y **hooks personalizados** (`useFormulario`, `useLocalStorage`, `useTituloPagina`). Cada paso del asistente es un componente propio.
+### Framework y componentes
+React con componentes reutilizables que reciben datos por **props** (`TarjetaEquipo`, `CampoFormulario`, `GrupoOpciones`, `BarraProgreso`, `Modal`...). `GrupoOpciones` y `CampoFormulario` se usan en los cuatro formularios. Estado local con `useState`, estado global con **Context API**, valores derivados con `useMemo`, referencias con `useRef` (gestión del foco), efectos con `useEffect` y **hooks personalizados** (`useFormulario`, `useLocalStorage`, `useTituloPagina`). Cada paso del asistente es un componente propio.
 
-### 6. Navegación interna
+### Navegación interna
 React Router con 9 rutas más la 404, `NavLink` con `aria-current="page"`, ruta dinámica `/catalogo/:id`, parámetros de búsqueda (`?equipo=`), migas de pan y navegación programática con `useNavigate` al enviar el formulario.
 
-### 7. Semántica HTML5
+### Semántica HTML5
 `header`, `nav` (menú, migas de pan y progreso), `main`, `section`, `article`, `aside`, `footer`, `form`, `fieldset`/`legend` (cada grupo lógico), `label`, `table` con `caption`/`thead`/`th scope` (también en el desglose de costos), `dl`/`dt`/`dd`, `ol` en los pasos y migas de pan, `time`, `address`, `details`/`summary` (datos técnicos opcionales y preguntas frecuentes).
 
-### 8. Formularios
+### Formularios
 Tres formularios con validación propia:
 - **Asistente de servicio por pasos**: valida solo el paso actual; los datos técnicos son opcionales; foto con validación de tipo y tamaño; síntomas o descripción obligatorios solo cuando hay falla.
 - **Compra de equipo**: cantidad de 1 a 10 con botones − / +, instalación opcional, ubicación, retiro del equipo anterior, forma de pago (sin datos de tarjeta) y total recalculado con IVA.
@@ -141,14 +142,14 @@ Tres formularios con validación propia:
 - Controles: texto, correo, teléfono, número, fecha, select, textarea, radios y checkboxes en forma de tarjeta, archivo.
 - Errores accesibles: `aria-invalid`, `aria-describedby`, resumen con `role="alert"` que recibe el foco.
 
-#### Accesibilidad del asistente por pasos
+### Accesibilidad del asistente por pasos
 - Al cambiar de paso el foco va al encabezado del paso (`h2` con `tabIndex="-1"`), así el lector de pantalla anuncia la nueva pregunta.
 - La barra usa `role="progressbar"` con `aria-valuenow` y `aria-valuetext` ("40 % completado, paso 3 de 5"); el paso actual lleva `aria-current="step"` y cada paso dice si está completado, actual o pendiente.
 - Si hay errores, el resumen recibe el foco y cada error enlaza a su campo.
-- Las tarjetas de opción son `input` radio/checkbox reales: funcionan con flechas y espacio, y muestran foco visible, borde, fondo y palomita (no solo color).
+- Las tarjetas de opción son `input` radio/checkbox reales: funcionan con flechas y espacio, y muestran foco visible, borde, fondo y texto (no solo color).
 - El total del pedido está en una región `aria-live` para que se anuncie al cambiar opciones.
 
-### 9. Eventos
+### Eventos
 | Evento | Uso |
 |---|---|
 | `onSubmit` | Envío de formularios |
@@ -184,12 +185,18 @@ Tres formularios con validación propia:
 
 ---
 
-### Pruebas de accesibilidad y rendimiento
+## Uso de API en el proyecto
+### API: Nager.Date
+- Uso mediante uso feriados.js y useFeriados.js, el propósito de la inclusión de esta API fue la selección de los días feriados del año en México, para de esta manera bloquearlos en la selección de visita al momento de Solicitar algún servicio, mostrando mensajes como: "El 25 dic 2026 es día feriado (Navidad) y no damos servicio. Elige otro día.".
+E incluso anunciando los próximios 3 días feriados para la consideración del cliente.
+De esta manera se asegura claridad en los días en los que no es posible realizar trabajos o servicios, para más información revisar [`docs/api-feriados.md/`](docs/api-feriados.md)
+
+## Pruebas de accesibilidad y rendimiento
 
 Se usaron **Lighthouse** (Chrome DevTools) y **axe DevTools** en las rutas principales, en móvil y escritorio.
 
-## Resultados finales
-# LightHouse
+### Resultados finales
+#### LightHouse
 Medido con Lighthouse 13 en Chrome (ventana de incógnito) sobre la versión compilada
 (`npm run build` + `npm run preview`). Los reportes completos están en [`docs/lighthouse/`](docs/lighthouse/).
 
@@ -209,7 +216,7 @@ Medido con Lighthouse 13 en Chrome (ventana de incógnito) sobre la versión com
 **Cómo leer las métricas:** LCP es cuánto tarda en verse el contenido principal (bueno: menos de 2.5 s),
 TBT es cuánto tiempo la página no responde mientras carga (bueno: menos de 200 ms) y CLS es cuánto se mueve el contenido al cargar (bueno: menos de 0.1).
 
-# Axe DevTools
+#### Axe DevTools
 
 Escaneo con la extensión **axe DevTools** en Chrome, con la configuración **WCAG 2.1 AA**
 y **mejores prácticas activadas**, sobre la versión compilada (`npm run preview`).
@@ -231,15 +238,16 @@ Durante el desarrollo, Axe sí detectó problemas, que se corrigieron antes de e
 | Revisión visual | La leyenda de los fieldsets quedaba encima de la línea divisoria | `float: left` en la leyenda para que quede dentro del contenido |
 | Revisión visual | Los botones de la tarjeta de equipo se cortaban en 3 columnas | Se apilaron: "Comprar" arriba y "Ver detalle" abajo |
 
-### Uso de herramientas de IA
+## Uso de herramientas de IA
 Durante el desarrollo se utilizaron asistentes de IA como apoyo:
 - **Claude (Anthropic):** propuesta de la dirección visual "Etiqueta y placa", paleta, ilustraciones SVG, implementación del rediseño en los componentes, y explicación de errores.
 - **GitHub Copilot:** propuesta de rediseño del catálogo (PR `copilot/rediseno-catalogo`).
 
 Las decisiones del proyecto (funcionalidades, flujo de compra y solicitud, seguridad del acceso con enlace, qué cambios aceptar o ajustar) 
 fueron por parte del equipo, además de las revisiones, pruebas y adaptaciones de los códigos. 
+Revisar docs/bitacoraIA.md
 
-### Créditos
+## Créditos
 - Tipografía **Archivo** de Omnibus-Type, bajo SIL Open Font License 1.1 (`public/fonts/OFL.txt`).
 - Airkon es una empresa real. Este portal es un proyecto académico y no es un sitio oficial.
 
