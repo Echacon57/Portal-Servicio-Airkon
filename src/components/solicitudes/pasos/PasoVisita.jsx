@@ -1,12 +1,13 @@
 import CampoFormulario from "../../ui/CampoFormulario";
 import GrupoOpciones from "../../ui/GrupoOpciones";
+import EstadoFeriados from "../../ui/EstadoFeriados";
 import { horarios } from "../../../data/servicios";
 import { mananaISO } from "../../../utils/validaciones";
 import f from "../../../styles/formulario.module.css";
 import styles from "../AsistenteSolicitud.module.css";
 
 /** Paso 4: dirección, fecha y datos de contacto (dos grupos lógicos). */
-export default function PasoVisita({ form }) {
+export default function PasoVisita({ form, feriados }) {
   const { valores, errores, manejarCambio, manejarBlur } = form;
   const props = (id) => ({ id, value: valores[id], onChange: manejarCambio, onBlur: manejarBlur, error: errores[id] });
 
@@ -28,7 +29,7 @@ export default function PasoVisita({ form }) {
             etiqueta="Fecha de visita"
             obligatorio
             min={mananaISO()}
-            ayuda="De lunes a sábado. La confirmamos por teléfono."
+            ayuda="De lunes a sábado, excepto días feriados. La confirmamos por teléfono."
           />
           <GrupoOpciones
             nombre="horario"
@@ -42,6 +43,7 @@ export default function PasoVisita({ form }) {
             error={errores.horario}
           />
         </div>
+        <EstadoFeriados {...feriados} />
       </fieldset>
 
       <fieldset className={styles.subgrupo}>

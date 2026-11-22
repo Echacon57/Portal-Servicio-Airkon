@@ -80,3 +80,131 @@
     padding-inline: 28px;
   }
 }
+
+/* =========================================================
+   Variante "etiqueta": el detalle de un folio se ve como la
+   etiqueta de servicio que se cuelga en el equipo.
+   Mobile-first: en celular sube desde abajo a todo lo ancho;
+   en escritorio queda centrada con hombros más marcados.
+   ========================================================= */
+.etiqueta {
+  --hombro: 28px;
+  --corte: polygon(22% 0, 78% 0, 100% var(--hombro), 100% 100%, 0 100%, 0 var(--hombro));
+  border: 0;
+  border-radius: 0;
+  clip-path: var(--corte);
+  color: var(--azul-marino);
+  overflow: hidden; /* solo se desplaza el cuerpo, así la cabecera y las acciones no se mueven */
+  padding-top: calc(var(--hombro) + 24px);
+}
+/* El amarillo saturado solo va en la banda superior (donde está el ojillo).
+   El cuerpo usa un amarillo papel: sigue siendo "la etiqueta" pero no cansa la vista
+   en una superficie tan grande. La banda mide lo mismo que los hombros más un margen. */
+.etiqueta {
+  --banda: calc(var(--hombro) + 12px);
+  --linea: var(--azul-marino);
+  background: linear-gradient(var(--color-banda) 0 var(--banda), var(--color-papel) var(--banda));
+}
+.abierto {
+  --color-banda: var(--amarillo);
+  --color-papel: var(--amarillo-papel);
+  --ojillo: var(--amarillo-papel);
+}
+.cerrado {
+  --color-banda: var(--remache);
+  --color-papel: var(--gris-claro);
+  --ojillo: var(--gris-claro);
+}
+
+/* Ojillo decorativo, como el agujero por donde pasa el cordón */
+.ojillo {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  border-radius: 50%;
+  background: var(--ojillo);
+}
+.etiqueta {
+  position: relative;
+}
+
+.etiqueta .encabezado {
+  align-items: flex-start;
+  padding: 0 20px 14px;
+  margin-inline: 20px;
+  padding-inline: 0;
+  border-bottom: 2px solid var(--linea);
+}
+.etiqueta .encabezado h2 {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 1.75rem;
+  font-weight: 900;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+.antetitulo {
+  font: 600 0.9375rem/1.2 var(--fuente-texto);
+  font-stretch: 100%;
+  color: var(--azul-marino);
+}
+
+/* El botón cerrar es un cuadro con contorno, como en la dirección visual */
+.etiqueta .cerrar {
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: 2px solid var(--azul-marino);
+}
+.etiqueta .cerrar:hover {
+  background: rgba(11, 42, 79, 0.08);
+}
+
+.etiqueta .cuerpo {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+
+/* Línea perforada: separa los datos de lo que se puede hacer */
+.etiqueta .acciones {
+  border-top: 2px dashed var(--linea);
+  padding: 18px 20px 24px;
+}
+
+@media (min-width: 768px) {
+  .fondoEtiqueta {
+    padding: 24px 32px;
+  }
+  .etiqueta {
+    --hombro: 44px;
+    --corte: polygon(26% 0, 74% 0, 100% var(--hombro), 100% 100%, 0 100%, 0 var(--hombro));
+    max-width: 700px;
+    max-height: calc(100vh - 48px);
+    padding-top: calc(var(--hombro) + 28px);
+  }
+  .ojillo {
+    top: 16px;
+    width: 36px;
+    height: 36px;
+    margin-left: -18px;
+  }
+  .etiqueta .encabezado {
+    margin-inline: 40px;
+  }
+  .etiqueta .encabezado h2 {
+    font-size: 2.5rem;
+  }
+  .etiqueta .cuerpo {
+    padding: 20px 40px;
+  }
+  .etiqueta .acciones {
+    align-items: center;
+    padding: 20px 40px 28px;
+  }
+}

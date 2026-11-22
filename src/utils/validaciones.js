@@ -1,4 +1,5 @@
-/** Funciones de validación reutilizables. Cada una regresa un mensaje o "" si es válido. */
+/* Funciones de validación reutilizables. Cada una regresa un mensaje o "" si es válido. */
+import { fechaCorta } from "./formato";
 
 export const REGEX_CORREO = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -29,7 +30,7 @@ export function validarCorreo(valor) {
   return "";
 }
 
-/** Fecha en formato AAAA-MM-DD de hoy (zona local). */
+/* Fecha en formato AAAA-MM-DD de hoy (zona local). */
 export function hoyISO(desfaseDias = 0) {
   const d = new Date();
   d.setDate(d.getDate() + desfaseDias);
@@ -43,11 +44,16 @@ export function mananaISO() {
   return hoyISO(1);
 }
 
-export function validarFechaFutura(valor) {
+/*
+ Si la API no responde llega vacío y solo se aplican las reglas locales.
+ */
+export function validarFechaFutura(valor, feriados = []) {
   if (requerido(valor)) return "Elige la fecha de la visita.";
   if (valor <= hoyISO()) return "Elige una fecha a partir de mañana.";
   const d = new Date(valor + "T12:00:00");
   if (d.getDay() === 0) return "No damos servicio los domingos. Elige otro día.";
+  const feriado = feriados.find((dia) => dia.fecha === valor);
+  if (feriado) return `El ${fechaCorta(valor)} es día feriado (${feriado.nombre}) y no damos servicio. Elige otro día.`;
   return "";
 }
 
@@ -58,12 +64,12 @@ export function validarLongitud(valor, min, max, nombreCampo = "El texto") {
   return "";
 }
 
-/** Quita las entradas vacías de un objeto de errores. */
+/* Quita las entradas vacías de un objeto de errores. */
 export function limpiarErrores(errores) {
   return Object.fromEntries(Object.entries(errores).filter(([, msg]) => msg));
 }
 
-/** Validaciones de los datos de contacto, compartidas por los formularios. */
+/* Validaciones de los datos de contacto, compartidas por los formularios. */
 export function validarContacto(v) {
   return {
     nombre: validarNombre(v.nombre),

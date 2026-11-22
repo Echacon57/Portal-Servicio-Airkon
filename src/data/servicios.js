@@ -1,14 +1,10 @@
-/**
-  Listas que usan los formularios y las páginas.
- */
 
-/** Servicios que se muestran en Inicio. `icono` corresponde a un nombre de Icono.jsx */
 export const servicios = [
   {
     id: "instalacion",
     nombre: "Instalación",
     icono: "aire",
-    descripcion: "Instalación de equipos minisplit, multisplit y paquete, con puesta en marcha y pruebas de operación.",
+    descripcion: "Minisplit, multisplit y paquete, con puesta en marcha y pruebas de operación.",
     cuando: "Pídelo cuando ya tienes el equipo o lo compras aquí.",
     accion: "Solicitar instalación",
     ruta: "/solicitar?servicio=instalacion",
@@ -17,7 +13,7 @@ export const servicios = [
     id: "preventivo",
     nombre: "Mantenimiento preventivo",
     icono: "copo",
-    descripcion: "Limpieza, revisión y ajuste periódico para que tu equipo rinda mejor y dure más.",
+    descripcion: "Limpieza, revisión y ajuste para que el equipo rinda mejor y dure más.",
     cuando: "Pídelo antes de que empiece la temporada de calor.",
     accion: "Solicitar mantenimiento",
     ruta: "/solicitar?servicio=preventivo",
@@ -26,7 +22,7 @@ export const servicios = [
     id: "correctivo",
     nombre: "Reparación",
     icono: "herramienta",
-    descripcion: "Diagnóstico y reparación de fallas para recuperar el confort lo antes posible.",
+    descripcion: "Diagnóstico y reparación de fallas para recuperar el clima lo antes posible.",
     cuando: "Pídelo si no enfría, gotea o hace un ruido nuevo.",
     accion: "Solicitar reparación",
     ruta: "/solicitar?servicio=correctivo",
@@ -42,7 +38,7 @@ export const servicios = [
   },
 ];
 
-/** Paso 1 del asistente: qué necesita el cliente. */
+/* Paso 1 del asistente: qué necesita el cliente. */
 export const tiposServicio = [
   {
     id: "instalacion",
@@ -65,12 +61,12 @@ export const tiposServicio = [
   {
     id: "revision",
     nombre: "Revisión o diagnóstico",
-    descripcion: "No estoy seguro(a) en qué tiene; quiero que un técnico lo revise.",
+    descripcion: "No estoy seguro(a) qué tiene; quiero que un técnico lo revise.",
     icono: "buscar",
   },
 ];
 
-/** Tipos de equipo, pensados para que el cliente los reconozca por su forma. */
+/* Tipos de equipo, pensados para que el cliente los reconozca por su forma. */
 export const tiposEquipo = [
   { id: "minisplit", nombre: "Minisplit de pared", forma: "pared" },
   { id: "ventana", nombre: "De ventana", forma: "ventana" },
@@ -81,11 +77,10 @@ export const tiposEquipo = [
   { id: "nose", nombre: "No estoy seguro(a)", forma: "nose" },
 ];
 
-export const marcasComunes = ["Carrier", "Daikin", "LG", "Midea", "Mirage", "Samsung", "Trane", "York", "Otra", "No sé"];
+export const marcasComunes = ["Carrier", "Daikin", "LG", "Midea", "Mirage", "Samsung", "Trane", "York", "Otra", "No estoy seguro(a)"];
 
-/**
- Dónde está el equipo. `extra` es el cargo adicional aproximado por equipo
- (en servicio se muestra como aviso; en compra se suma a la instalación).
+/* Dónde está el equipo. `extra` es el cargo adicional aproximado por equipo
+ * (en servicio se muestra como aviso; en compra se suma a la instalación).
  */
 export const ubicaciones = [
   {
@@ -98,19 +93,19 @@ export const ubicaciones = [
     id: "altura",
     nombre: "En altura",
     descripcion: "A más de 3 metros; se necesita escalera grande.",
-    extra: 300,
+    extra: 450,
   },
   {
     id: "azotea",
     nombre: "En azotea o techo",
     descripcion: "Hay acceso por escalera fija o escotilla.",
-    extra: 400,
+    extra: 350,
   },
   {
     id: "fachada",
     nombre: "Fachada exterior en altura",
     descripcion: "Se necesita andamio o equipo de seguridad.",
-    extra: 800,
+    extra: 1200,
   },
 ];
 
@@ -125,10 +120,10 @@ export const sintomas = [
   "Muestra un código de error",
 ];
 
-/** Datos técnicos opcionales: todos incluyen "No sé". */
-export const capacidades = ["No sé", "1 TR", "1.5 TR", "2 TR", "3 TR", "4 TR", "5 TR o más"];
-export const refrigerantes = ["No sé", "R-410A", "R-32", "R-22", "R-134a"];
-export const antiguedades = ["No sé", "Menos de 2 años", "2 a 5 años", "5 a 10 años", "Más de 10 años"];
+/* Datos técnicos opcionales: todos incluyen "No estoy seguro(a)". */
+export const capacidades = ["No estoy seguro(a)", "1 TR", "1.5 TR", "2 TR", "3 TR", "4 TR", "5 TR o más"];
+export const refrigerantes = ["No estoy seguro(a)", "R-410A", "R-32", "R-22", "R-134a"];
+export const antiguedades = ["No estoy seguro(a)", "Menos de 2 años", "2 a 5 años", "5 a 10 años", "Más de 10 años"];
 
 export const horarios = [
   { id: "manana", etiqueta: "Mañana (8:00 a 12:00)" },
@@ -141,10 +136,11 @@ export const metodosPago = [
   { id: "efectivo", nombre: "Efectivo al entregar", descripcion: "Pagas al recibir el equipo." },
 ];
 
+/* Cargos fijos (pesos, sin IVA). */
 export const CARGO_RETIRO = 650; // retirar y desechar el equipo anterior
 export const IVA = 0.16;
 
-/** Estados posibles de una solicitud o pedido y su texto visible. */
+/* Estados posibles de una solicitud o pedido y su texto visible. */
 export const estados = {
   pendiente: "Pendiente",
   proceso: "En proceso",

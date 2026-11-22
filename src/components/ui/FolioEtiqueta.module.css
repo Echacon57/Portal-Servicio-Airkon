@@ -1,0 +1,18 @@
+.folio {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px 5px 16px;
+  font-weight: 800;
+  font-size: 0.875rem;
+  font-stretch: var(--ancho-titulos);
+  white-space: nowrap;
+  color: var(--azul-marino);
+  clip-path: polygon(9px 0, 100% 0, 100% 100%, 9px 100%, 0 50%);
+}
+.abierto {
+  background: var(--amarillo);
+}
+.cerrado {
+  background: var(--placa);
+  color: var(--texto-secundario);
+}
